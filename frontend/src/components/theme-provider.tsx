@@ -21,15 +21,15 @@ function getSystemTheme(): ResolvedTheme {
 }
 
 function getStoredTheme(): ThemeMode {
-  if (typeof window === 'undefined') return 'system';
+  if (typeof window === 'undefined') return 'dark'; // Default to dark as per DESIGN.md
   const stored = localStorage.getItem(STORAGE_KEY);
-  return stored === 'light' || stored === 'dark' || stored === 'system' ? stored : 'system';
+  return stored === 'light' || stored === 'dark' || stored === 'system' ? stored : 'dark';
 }
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [theme, setThemeState] = useState<ThemeMode>(getStoredTheme);
   const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() =>
-    theme === 'system' ? getSystemTheme() : theme,
+    theme === 'system' ? getSystemTheme() : (theme as ResolvedTheme),
   );
 
   useEffect(() => {

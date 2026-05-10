@@ -1,0 +1,19 @@
+
+> frontend@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.4 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.0.2:3000
+✓ Ready in 604ms
+
+○ Compiling / ...
+ HEAD / 200 in 8.1s (next.js: 7.4s, application-code: 683ms)
+ GET / 200 in 155ms (next.js: 11ms, application-code: 144ms)
+ GET /auth/login 200 in 2.8s (next.js: 2.2s, application-code: 577ms)
+ GET /onboarding 200 in 914ms (next.js: 837ms, application-code: 77ms)
+ GET /dashboard/guest 200 in 1250ms (next.js: 1012ms, application-code: 238ms)
+ GET /dashboard/creator 200 in 767ms (next.js: 667ms, application-code: 100ms)
+ GET /dashboard/event-host 200 in 801ms (next.js: 717ms, application-code: 84ms)
+ GET /dashboard/guest 200 in 79ms (next.js: 3ms, application-code: 76ms)
+✓ Compiled in 99ms
