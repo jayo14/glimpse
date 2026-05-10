@@ -9,6 +9,7 @@
   --dusk: #1c1b2e;
   --slate-600: #475569;
   --slate-300: #cbd5e1;
+  --slate-400: #94a3b8;
   --champagne: #faf7f2;
   --white: #ffffff;
 
@@ -70,6 +71,13 @@
 @theme inline {
   --color-background: var(--bg-page);
   --color-foreground: var(--text-primary);
+  --color-viola: var(--viola);
+  --color-deep-viola: var(--deep-viola);
+  --color-blush: var(--blush);
+  --color-ink: var(--ink);
+  --color-dusk: var(--dusk);
+  --color-champagne: var(--champagne);
+  --color-flash-gold: var(--flash-gold);
 }
 
 * {
@@ -85,20 +93,15 @@ body {
 body {
   background: var(--bg-page);
   color: var(--text-primary);
-  font-family: 'DM Sans', 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-dm-sans), 'Inter', system-ui, -apple-system, sans-serif;
   min-height: 100vh;
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
 }
 
 .gl-heading-display-xl,
 .gl-heading-display-lg,
 .gl-heading-display-md,
 .gl-wordmark {
-  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-family: var(--font-cormorant), Georgia, serif;
   letter-spacing: -0.02em;
 }
 
@@ -145,7 +148,7 @@ a {
 }
 
 .gl-mono {
-  font-family: 'IBM Plex Mono', 'SFMono-Regular', Menlo, monospace;
+  font-family: var(--font-ibm-plex-mono), 'SFMono-Regular', Menlo, monospace;
 }
 
 .gl-container {
@@ -173,6 +176,10 @@ a {
   border: 1.5px solid transparent;
   cursor: pointer;
   transition: all var(--duration-fast) var(--ease-out-silk);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .gl-btn-primary {
@@ -215,15 +222,29 @@ a {
 
 .gl-card {
   background: var(--bg-layer-1);
-  border: 1px solid #e2e8f0;
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-md);
+  overflow: hidden;
 }
 
-.gl-card-dark {
-  background: #1c1b2e;
-  border-color: #2d2b42;
-  box-shadow: var(--shadow-lg);
+.gl-card-feature {
+  background: #ffffff;
+  border-left: 4px solid var(--viola);
+  border-radius: 0 0 16px 16px;
+  padding: 32px;
+}
+
+.gl-card-pricing {
+  border: 1.5px solid var(--border-default);
+  border-radius: 20px;
+  padding: 40px;
+}
+
+.gl-card-pricing.is-popular {
+  background: var(--ink);
+  color: #ffffff;
+  border-color: var(--viola);
 }
 
 .gl-input-wrap {
@@ -258,11 +279,6 @@ a {
   box-shadow: 0 0 0 3px rgba(194, 24, 91, 0.12);
 }
 
-.gl-input-hint {
-  font-size: 13px;
-  color: var(--text-secondary);
-}
-
 .gl-badge {
   display: inline-flex;
   align-items: center;
@@ -281,6 +297,24 @@ a {
 .gl-badge-processing {
   background: #ede7f6;
   color: #6a1b9a;
+  position: relative;
+  overflow: hidden;
+}
+
+.gl-badge-processing::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(50%); }
 }
 
 .gl-badge-uploading {
@@ -291,6 +325,21 @@ a {
 .gl-badge-event-live {
   background: #fce4ec;
   color: #b71c1c;
+}
+
+.gl-badge-event-live::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--viola);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1); opacity: 0; }
 }
 
 .gl-theme-toggle {
@@ -313,6 +362,7 @@ a {
   align-items: center;
   gap: 6px;
   cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-out-silk);
 }
 
 .gl-theme-toggle-option.is-active {
@@ -352,4 +402,22 @@ a {
   .gl-photo-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
+}
+
+/* Custom Upload Zone */
+.gl-upload-zone {
+  border: 2px dashed rgba(194, 24, 91, 0.4);
+  background: var(--blush);
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+  transition: all var(--duration-fast) var(--ease-out-silk);
+  cursor: pointer;
+}
+
+.gl-upload-zone:hover, .gl-upload-zone.is-dragover {
+  background: rgba(194, 24, 91, 0.2);
+  border-style: solid;
+  border-color: var(--viola);
+  transform: scale(1.01);
 }
