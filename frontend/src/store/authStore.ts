@@ -1,8 +1,15 @@
 import { create } from 'zustand';
 
+export interface AuthUser {
+  id: string;
+  email: string;
+  fullName?: string;
+  role?: 'creator' | 'guest' | 'event_host' | 'admin';
+}
+
 interface AuthState {
-  user: any | null;
-  setUser: (user: any) => void;
+  user: AuthUser | null;
+  setUser: (user: AuthUser | null) => void;
   logout: () => void;
 }
 

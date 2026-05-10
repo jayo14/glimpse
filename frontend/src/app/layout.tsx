@@ -1,12 +1,10 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+import type { Metadata } from 'next';
+import { ThemeProvider } from '@/components/theme-provider';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: "EventLens | AI-Powered Photo Retrieval",
-  description: "Find your event photos in seconds using AI face recognition.",
+  title: 'Glimpse | See yourself in every shot',
+  description: 'AI-powered event photo retrieval for guests, creators, and event hosts.',
 };
 
 export default function RootLayout({
@@ -15,9 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} font-sans antialiased`}>
-        {children}
+    <html lang="en" data-theme="dark" className="scroll-smooth" suppressHydrationWarning>
+      <body>
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );
