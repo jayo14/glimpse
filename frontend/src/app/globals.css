@@ -20,15 +20,17 @@
   --bg-page: #faf7f2;
   --bg-layer-1: #ffffff;
   --bg-layer-2: #f4f2ee;
+  --bg-layer-3: #eae8e4;
   --border-default: #e2d9d0;
   --text-primary: #0f0e17;
   --text-secondary: #475569;
-  --text-muted: #cbd5e1;
+  --text-muted: #94a3b8;
 
   --gradient-event: linear-gradient(135deg, #1c1b2e 0%, #0f0e17 60%, #2d0a1e 100%);
   --gradient-viola: linear-gradient(135deg, #c2185b 0%, #8e0038 100%);
   --gradient-magic: radial-gradient(ellipse at 60% 40%, rgba(194, 24, 91, 0.18) 0%, transparent 65%);
   --gradient-warm: linear-gradient(180deg, #faf7f2 0%, #fce4ec 100%);
+  --gradient-gold: linear-gradient(135deg, #ffd54f 0%, #ffb300 100%);
 
   --shadow-xs: 0 1px 2px rgba(15, 14, 23, 0.06);
   --shadow-sm: 0 2px 8px rgba(15, 14, 23, 0.08), 0 1px 3px rgba(15, 14, 23, 0.06);
@@ -62,10 +64,11 @@
   --bg-page: #0f0e17;
   --bg-layer-1: #1c1b2e;
   --bg-layer-2: #242333;
+  --bg-layer-3: #2e2c40;
   --border-default: #3a3850;
   --text-primary: #ffffff;
   --text-secondary: #94a3b8;
-  --text-muted: #cbd5e1;
+  --text-muted: #64748b;
 }
 
 @theme inline {
@@ -420,4 +423,25 @@ body {
   border-style: solid;
   border-color: var(--viola);
   transform: scale(1.01);
+}
+
+.gl-glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dark .gl-glass {
+  background: rgba(15, 14, 23, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

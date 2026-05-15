@@ -390,7 +390,7 @@ export default function LandingPage() {
         {/* CTA Section */}
         <section className="py-24">
           <div className="gl-container">
-            <div className="relative rounded-[32px] overflow-hidden bg-[var(--ink)] p-12 lg:p-24 text-center">
+            <div className="relative rounded-[24px] overflow-hidden bg-[var(--ink)] p-12 lg:p-24 text-center">
                {/* Background texture */}
                <div className="absolute inset-0 opacity-10 pointer-events-none mix-blend-overlay">
                   <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?q=80&w=2070&auto=format&fit=crop" alt="texture" className="w-full h-full object-cover" />
