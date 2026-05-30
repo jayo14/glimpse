@@ -15,6 +15,7 @@ DEBUG = env('DEBUG', default=True)
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -26,6 +27,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'drf_spectacular',
+    'channels',
 
     'users',
     'events',
@@ -62,9 +64,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'core.wsgi.application'
+ASGI_APPLICATION = 'core.asgi.application'
 
 DATABASES = {
-    'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': BASE_DIR / 'db.sqlite3'}
+    'default': env.db('DATABASE_URL', default='sqlite:///db.sqlite3')
 }
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -105,10 +108,34 @@ SIMPLE_JWT = {
 CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://localhost:6379/0')
 CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND', default='redis://localhost:6379/0')
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
+}
+
 CORS_ALLOW_ALL_ORIGINS = True
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Glimpse API',
+    'DESCRIPTION': 'API for Glimpse - Event Photography and Real-time Live Wall',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    'COMPONENT_SPLIT_PATCH': True,
+    'COMPONENT_SPLIT_REQUEST': True,
+}
 
 # Testing settings
 import sys
 if 'test' in sys.argv or 'test' in str(os.environ.get('DJANGO_SETTINGS_MODULE', '')):
+    DATABASES = {
+        'default': {'ENGINE': 'django.db.backends.sqlite3', 'NAME': ':memory:'}
+    }
     CELERY_TASK_ALWAYS_EAGER = True
     CELERY_TASK_EAGER_PROPAGATES = True
+    CHANNEL_LAYERS = {
+        'default': {'BACKEND': 'channels.layers.InMemoryChannelLayer'},
+    }
