@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { ArrowLeft, Check, Users, Image as ImageIcon, Zap, Trophy, TrendingUp, Sparkles } from "lucide-react";
 
 interface CaseStudy {
