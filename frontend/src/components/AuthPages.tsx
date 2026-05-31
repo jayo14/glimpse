@@ -62,7 +62,7 @@ export default function AuthPages({ initialMode = "login", onBackToHome, onSucce
 
           <div className="flex items-center space-x-2 cursor-pointer font-serif" onClick={onBackToHome}>
             <div className="h-2 w-2 rounded-full bg-[#263043]"></div>
-            <span className="font-medium text-md tracking-tight">glimpse.</span>
+            <span className="font-medium text-base tracking-tight">glimpse.</span>
           </div>
         </div>
       </header>

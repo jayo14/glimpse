@@ -104,8 +104,8 @@ export default function App() {
       
       {/* TOAST SYSTEM */}
       {toastMessage && (
-        <div className="fixed bottom-8 right-8 z-55 max-w-sm rounded-[16px] bg-white border border-[#E4E4E7] p-4.5 shadow-cluely-premium flex items-start space-x-3.5 text-sm text-[#18171C] animate-fade-in">
-          <div className="h-5.5 w-5.5 mt-0.5 rounded-full bg-[#18171C] flex items-center justify-center text-white shrink-0 text-xs text-center font-bold">
+        <div className="fixed bottom-8 right-8 z-50 max-w-sm rounded-[16px] bg-white border border-[#E4E4E7] p-4 shadow-cluely-premium flex items-start space-x-3.5 text-sm text-[#18171C] animate-fade-in">
+          <div className="h-6 w-6 mt-0.5 rounded-full bg-[#18171C] flex items-center justify-center text-white shrink-0 text-xs text-center font-bold">
             ✓
           </div>
           <div className="font-sans">
@@ -154,10 +154,10 @@ export default function App() {
               </MenubarMenu>
 
               <MenubarMenu>
-                <MenubarTrigger className="text-[10px] uppercase font-semibold text-[#898B91] tracking-widest hover:text-[#263043] transition-all cursor-pointer px-3 py-1.5 rounded-lg hover:bg-stone-150 aria-expanded:bg-stone-200">
+                <MenubarTrigger className="text-[10px] uppercase font-semibold text-[#898B91] tracking-widest hover:text-[#263043] transition-all cursor-pointer px-3 py-1.5 rounded-lg hover:bg-stone-100 aria-expanded:bg-stone-200">
                   Case Studies
                 </MenubarTrigger>
-                <MenubarContent className="bg-white border border-[#E4E4E7]/60 p-1 rounded-xl shadow-lg min-w-[200px] z-55">
+                <MenubarContent className="bg-white border border-[#E4E4E7]/60 p-1 rounded-xl shadow-lg min-w-[200px] z-50">
                   <MenubarItem 
                     onClick={() => {
                       setActiveCaseId("wedding");
@@ -209,10 +209,10 @@ export default function App() {
               </MenubarMenu>
 
               <MenubarMenu>
-                <MenubarTrigger className="text-[10px] uppercase font-semibold text-[#898B91] tracking-widest hover:text-[#263043] transition-all cursor-pointer px-3 py-1.5 rounded-lg hover:bg-stone-150 aria-expanded:bg-stone-200">
+                <MenubarTrigger className="text-[10px] uppercase font-semibold text-[#898B91] tracking-widest hover:text-[#263043] transition-all cursor-pointer px-3 py-1.5 rounded-lg hover:bg-stone-100 aria-expanded:bg-stone-200">
                   Host Portal
                 </MenubarTrigger>
-                <MenubarContent className="bg-white border border-[#E4E4E7]/60 p-1 rounded-xl shadow-lg min-w-[200px] z-55">
+                <MenubarContent className="bg-white border border-[#E4E4E7]/60 p-1 rounded-xl shadow-lg min-w-[200px] z-50">
                   <MenubarItem 
                     onClick={() => {
                       setAuthMode("login");
@@ -319,11 +319,15 @@ export default function App() {
               </div>
 
               <h1 className="font-serif font-light text-[42px] sm:text-5xl md:text-6xl lg:text-7xl text-[#18171C] tracking-tight leading-[1.02] sm:leading-[0.95]">
-                Capture every <span className="italic font-normal text-[#263043]">perspective</span> of your gathering.
+                Stop asking guests to download an app.
               </h1>
               
               <p className="text-[#898B91] text-sm md:text-base leading-relaxed font-sans font-light max-w-xl">
-                Skip app store downloads, logins, and intrusive account setups. Glimpse generates an immersive web portal that opens directly inside your guests' native phone cameras when they scan your placard. Let them stream raw, candid joy straight to your venue screen in seconds.
+                Asking guests to download an app kills the vibe. Blurry photos, forgotten cameras, and login screens do the rest.
+              </p>
+
+              <p className="text-[#18171C] text-sm md:text-base leading-relaxed font-sans font-medium max-w-xl">
+                <strong>Guests just scan a QR code with their regular camera. No app. No password. No typing.</strong> The upload starts in about one second.
               </p>
               
               <div className="flex flex-wrap items-center gap-4 pt-2">
@@ -335,7 +339,7 @@ export default function App() {
                   }}
                   className="px-6 py-3.5 rounded-xl bg-[#263043] hover:bg-black text-[11px] font-sans font-semibold text-white tracking-widest uppercase transition-all shadow-cluely-large hover:-translate-y-0.5 cursor-pointer"
                 >
-                  Create free event
+                  Start a free test
                 </button>
                 <button
                   id="hero-scroll-showcase"
@@ -345,7 +349,7 @@ export default function App() {
                   }}
                   className="inline-flex items-center gap-2 group text-xs font-semibold text-[#263043] hover:text-[#898B91] uppercase tracking-widest transition-colors cursor-pointer"
                 >
-                  View Showcase
+                  See it live
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </button>
               </div>
@@ -353,19 +357,19 @@ export default function App() {
               <div className="border-t border-[#E4E4E7]/60 pt-8 grid grid-cols-2 sm:grid-cols-4 gap-6 text-[10px] uppercase tracking-widest text-[#898B91]">
                 <div>
                   <p className="font-serif text-lg text-[#18171C] mb-0.5 font-light">0s Sign-up</p>
-                  <p className="font-sans font-light">Zero friction</p>
+                  <p className="font-sans font-light">No app needed</p>
                 </div>
                 <div>
                   <p className="font-serif text-lg text-[#18171C] mb-0.5 font-light">100% Web</p>
-                  <p className="font-sans font-light font-normal">Browser native</p>
+                  <p className="font-sans font-light font-normal">Works from the camera they already have</p>
                 </div>
                 <div>
                   <p className="font-serif text-lg text-[#18171C] mb-0.5 font-light">Unlimited</p>
-                  <p className="font-sans font-light">High-res archive</p>
+                  <p className="font-sans font-light">Every photo stays in full quality</p>
                 </div>
                 <div>
                   <p className="font-serif text-lg text-[#18171C] mb-0.5 font-light">Live Sync</p>
-                  <p className="font-sans font-light font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded shadow-sm inline-block">● Immediate</p>
+                  <p className="font-sans font-light font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded shadow-sm inline-block">● On screen fast</p>
                 </div>
               </div>
             </motion.div>
@@ -418,11 +422,11 @@ export default function App() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <div className="space-y-4 text-left">
-              <span className="text-[10px] font-mono uppercase tracking-widest text-[#898B91]">Core mechanics</span>
-              <h2 className="font-serif text-3xl md:text-5xl text-[#18171C] font-light tracking-tight">Structured simplicity.</h2>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#898B91]">How it works</span>
+              <h2 className="font-serif text-3xl md:text-5xl text-[#18171C] font-light tracking-tight">Scan. Upload. Done.</h2>
             </div>
             <p className="text-xs text-[#898B91] font-sans max-w-sm font-light text-left">
-              We focus on removing steps. We optimized the user tunnel so guests upload more, faster.
+              <strong className="text-[#18171C] font-semibold">Guests just scan a QR code with their regular camera. No app. No password. No typing.</strong> That is the whole trick.
             </p>
           </motion.div>
 
@@ -437,27 +441,27 @@ export default function App() {
             {/* Step 1 */}
             <motion.div className="space-y-6" variants={fadeUpVariant}>
               <span className="font-serif text-3xl font-light text-[#E4E4E7] block">01 /</span>
-              <h3 className="font-medium text-sm text-[#18171C] uppercase tracking-wider">Generate Table QR</h3>
+              <h3 className="font-medium text-sm text-[#18171C] uppercase tracking-wider">Put the QR code out</h3>
               <p className="text-xs text-[#898B91] leading-relaxed font-light">
-                Draft your live canvas in Glimpse under 30 seconds. A bespoke high-fidelity table card vectors instantly. No payment parameters or passwords necessary.
+                Put it on tables, at the bar, or on a screen. Guests already know what to do when they see a camera prompt.
               </p>
             </motion.div>
 
             {/* Step 2 */}
             <motion.div className="space-y-6" variants={fadeUpVariant}>
               <span className="font-serif text-3xl font-light text-[#E4E4E7] block">02 /</span>
-              <h3 className="font-medium text-sm text-[#18171C] uppercase tracking-wider">Display at the Venue</h3>
+              <h3 className="font-medium text-sm text-[#18171C] uppercase tracking-wider">They upload in one tap</h3>
               <p className="text-xs text-[#898B91] leading-relaxed font-light">
-                Position printed plaques on bars, entry counters, or slideshow intervals. Guests align cameras to auto-activate the visual feed natively.
+                They pick a photo, add a note if they want, and hit send. The whole thing feels as fast as texting.
               </p>
             </motion.div>
 
             {/* Step 3 */}
             <motion.div className="space-y-6" variants={fadeUpVariant}>
               <span className="font-serif text-3xl font-light text-[#E4E4E7] block">03 /</span>
-              <h3 className="font-medium text-sm text-[#18171C] uppercase tracking-wider">Beaming the Stream</h3>
+              <h3 className="font-medium text-sm text-[#18171C] uppercase tracking-wider">The room sees it immediately</h3>
               <p className="text-xs text-[#898B91] leading-relaxed font-light">
-                All memories integrate securely into your unified gallery. Transform guests into roaming documentary assets, projecting instant crowd joy onto any screens.
+                Photos appear on the big screen before your guest even puts their phone back in their pocket.
               </p>
             </motion.div>
 
@@ -498,7 +502,7 @@ export default function App() {
               }}
               className="px-8 py-4 bg-[#263043] hover:bg-black text-[12px] text-white font-sans font-semibold uppercase tracking-widest transition-all hover:-translate-y-0.5 rounded-xl flex items-center gap-2.5 shadow-cluely-large cursor-pointer"
             >
-              <Tv className="h-4.5 w-4.5 text-[#F4C9C8]" />
+              <Tv className="h-4 w-4 text-[#F4C9C8]" />
               Launch Projector Display
             </button>
           </div>
@@ -522,10 +526,10 @@ export default function App() {
             whileInView="whileInView"
             viewport={{ once: true }}
           >
-            <span className="text-[10px] font-mono uppercase tracking-widest text-[#898B91]">Financial comparison</span>
-            <h2 className="font-serif text-3xl md:text-5xl text-[#18171C] font-light tracking-tight">The visual math.</h2>
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[#898B91]">Why waste money on disposable cameras?</span>
+            <h2 className="font-serif text-3xl md:text-5xl text-[#18171C] font-light tracking-tight">For two cocktails per person, keep the memories forever.</h2>
             <p className="text-xs text-[#898B91] max-w-lg font-light leading-relaxed">
-              Ditching unstable chemical film and complex polaroid kits isn't merely more economical—it ensures your visual assets are secured, downloadable, and presented in high resolution.
+              <strong className="text-[#18171C] font-semibold">For the price of 2 cocktails per guest, you get a lifetime of memories.</strong> That beats disposable cameras, half-used film rolls, and the post-event hunt for missing prints.
             </p>
           </motion.div>
 
@@ -545,8 +549,11 @@ export default function App() {
             whileInView="whileInView"
             viewport={{ once: true }}
           >
-            <span className="text-[10px] font-mono uppercase tracking-widest text-[#898B91]">Common curiosities</span>
-            <h2 className="font-serif text-3xl md:text-5xl text-[#18171C] font-light tracking-tight">Questions Answered.</h2>
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[#898B91]">Common questions</span>
+            <h2 className="font-serif text-3xl md:text-5xl text-[#18171C] font-light tracking-tight">The questions hosts actually ask.</h2>
+            <p className="text-xs text-[#898B91] max-w-lg font-light leading-relaxed">
+              <strong className="text-[#18171C] font-semibold">If your guests can use a camera, they can use Glimpse.</strong> That is the short answer to almost every FAQ below.
+            </p>
           </motion.div>
 
           {/* Accordion list stack */}
@@ -561,9 +568,9 @@ export default function App() {
                   <button
                     id={`faq-toggle-${index}`}
                     onClick={() => setActiveFaq(isOpen ? null : index)}
-                    className="w-full flex items-center justify-between text-left focus:outline-hidden hover:text-[#898B91] transition-colors cursor-pointer"
+                    className="w-full flex items-center justify-between text-left focus:outline-none hover:text-[#898B91] transition-colors cursor-pointer"
                   >
-                    <span className="font-serif font-light text-[#18171C] text-md md:text-lg pr-4">
+                    <span className="font-serif font-light text-[#18171C] text-base md:text-lg pr-4">
                       {faq.question}
                     </span>
                     <ChevronDown className={`h-4 w-4 text-[#898B91] transition-transform duration-300 transform ${isOpen ? "rotate-180" : ""}`} />
@@ -596,7 +603,7 @@ export default function App() {
             viewport={{ once: true }}
           >
             <span className="inline-block h-px w-12 bg-[#B2B3BA] mb-2"></span>
-            <h3 className="font-serif text-xl md:text-2xl text-[#18171C] font-light">Secure crowdsourced candidate files instantly.</h3>
+            <h3 className="font-serif text-xl md:text-2xl text-[#18171C] font-light">Stop begging for photos. Start collecting joy. Pick your plan below.</h3>
             <div className="flex justify-center pt-2">
               <button
                 id="faq-launch-event-btn"
@@ -606,7 +613,7 @@ export default function App() {
                 }}
                 className="btn-cluely-primary px-8 py-3.5 bg-[#263043] text-white text-[11px] font-sans font-semibold uppercase tracking-widest hover:-translate-y-0.5 rounded-xl transition-all cursor-pointer shadow-cluely-large"
               >
-                Launch your Glimpse
+                Pick a plan
               </button>
             </div>
           </motion.div>
@@ -629,7 +636,7 @@ export default function App() {
                 
                 {/* iOS BADGE COMPANION BLOCK */}
                 <motion.div 
-                  className="bg-white border border-[#E4E4E7]/60 p-8 rounded-2xl md:rounded-3xl shadow-xs text-left flex flex-col justify-between hover:shadow-md transition-shadow"
+                  className="bg-white border border-[#E4E4E7]/60 p-8 rounded-2xl md:rounded-3xl shadow-sm text-left flex flex-col justify-between hover:shadow-md transition-shadow"
                   variants={fadeUpVariant}
                   initial="initial"
                   whileInView="whileInView"
@@ -677,7 +684,7 @@ export default function App() {
 
                 {/* ANDROID BADGE COMPANION BLOCK */}
                 <motion.div 
-                  className="bg-white border border-[#E4E4E7]/60 p-8 rounded-2xl md:rounded-3xl shadow-xs text-left flex flex-col justify-between hover:shadow-md transition-shadow"
+                  className="bg-white border border-[#E4E4E7]/60 p-8 rounded-2xl md:rounded-3xl shadow-sm text-left flex flex-col justify-between hover:shadow-md transition-shadow"
                   variants={fadeUpVariant}
                   initial="initial"
                   whileInView="whileInView"

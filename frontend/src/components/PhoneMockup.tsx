@@ -151,7 +151,7 @@ export default function PhoneMockup({
       <div className="relative aspect-[9/19] w-full rounded-[40px] border-[10px] border-deep-slate bg-[#18171C] p-2 shadow-2xl">
         
         {/* Dynamic Island Camera Notch */}
-        <div className="absolute top-4 left-1/2 z-30 h-4.5 w-24 -translate-x-1/2 rounded-full bg-[#18171C]"></div>
+        <div className="absolute top-4 left-1/2 z-30 h-4 w-24 -translate-x-1/2 rounded-full bg-[#18171C]"></div>
         
         {/* Screen Container */}
         <div className="relative flex h-full w-full flex-col overflow-hidden rounded-[28px] bg-[#18171C] text-platinum font-sans">
@@ -170,7 +170,7 @@ export default function PhoneMockup({
           {/* Web App Header inside Screen */}
           <header className={`px-4 py-3 text-center bg-[#263043]/30 border-b border-silver/15`}>
             <div className="flex items-center justify-center space-x-1.5">
-              <Camera className={`h-4.5 w-4.5 ${getThemeTextClass()}`} />
+              <Camera className={`h-4 w-4 ${getThemeTextClass()}`} />
               <span className="font-serif font-medium text-sm text-platinum">Glimpse Portal</span>
             </div>
             <p className="mt-0.5 text-[10px] text-stone truncate max-w-[200px] mx-auto">
@@ -179,7 +179,7 @@ export default function PhoneMockup({
           </header>
 
           {/* Screen Scrollable Body */}
-          <div className="flex-1 overflow-y-auto px-4.5 py-4 scrollbar-thin scrollbar-thumb-deep-slate scrollbar-track-transparent">
+          <div className="flex-1 overflow-y-auto px-4 py-4 scrollbar-thin scrollbar-thumb-deep-slate scrollbar-track-transparent">
             {uploadSuccess ? (
               <div className="flex flex-col items-center justify-center py-10 text-center animate-fade-in">
                 <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sage-green/10 border border-sage-green/20 text-sage-green mb-4 animate-bounce">
@@ -226,7 +226,7 @@ export default function PhoneMockup({
                     placeholder="e.g. Grandma, Cousin Sarah"
                     value={uploaderName}
                     onChange={(e) => setUploaderName(e.target.value)}
-                    className={`w-full rounded-xl bg-charcoal/40 px-3 py-2 text-xs text-platinum border placeholder:text-stone/50 focus:outline-hidden transition-all ${getThemeBorderClass()}`}
+                    className={`w-full rounded-xl bg-charcoal/40 px-3 py-2 text-xs text-platinum border placeholder:text-stone/50 focus:outline-none transition-all ${getThemeBorderClass()}`}
                   />
                 </div>
 
@@ -254,7 +254,7 @@ export default function PhoneMockup({
                   ) : (
                     <div 
                       onClick={triggerFileInput}
-                      className={`border border-dashed rounded-2xl p-4.5 flex flex-col items-center justify-center cursor-pointer hover:bg-platinum/5 transition-all text-center ${getThemeBorderClass()}`}
+                      className={`border border-dashed rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-platinum/5 transition-all text-center ${getThemeBorderClass()}`}
                     >
                       <input 
                         type="file" 
@@ -280,7 +280,7 @@ export default function PhoneMockup({
                     placeholder="Add a silly tag or toast..."
                     value={caption}
                     onChange={(e) => setCaption(e.target.value)}
-                    className={`w-full rounded-xl bg-charcoal/40 px-3 py-2 text-xs text-platinum border placeholder:text-stone/50 focus:outline-hidden transition-all ${getThemeBorderClass()}`}
+                    className={`w-full rounded-xl bg-charcoal/40 px-3 py-2 text-xs text-platinum border placeholder:text-stone/50 focus:outline-none transition-all ${getThemeBorderClass()}`}
                   />
                 </div>
 

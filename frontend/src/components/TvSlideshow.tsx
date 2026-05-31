@@ -156,7 +156,7 @@ export default function TvSlideshow({ eventName, themeColor, photos, onClose }: 
             className="flex items-center justify-center h-10 px-4 gap-1.5 rounded-xl bg-deep-rose/20 border border-deep-rose/30 text-rose-mist hover:text-platinum hover:bg-deep-rose hover:border-transparent transition-all cursor-pointer text-xs font-semibold"
             title="Exit Projector Cast"
           >
-            <X className="h-4.5 w-4.5" />
+            <X className="h-4 w-4" />
             Exit Cast
           </button>
         </div>

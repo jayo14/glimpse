@@ -206,8 +206,8 @@ export default function CaseStudies({ currentCaseId, onBack, onNavigateToCase }:
           </div>
 
           {/* Testimonial Panel */}
-          <div className={`p-8 rounded-3xl border ${isDark ? "bg-[#1F1E24]/60 border-stone-800" : "bg-white border-[#E4E4E7]/60 shadow-xs"} space-y-4`}>
-            <p className={`font-serif italic font-light text-md sm:text-lg leading-relaxed ${isDark ? "text-stone-200" : "text-[#263043]"}`}>
+          <div className={`p-8 rounded-3xl border ${isDark ? "bg-[#1F1E24]/60 border-stone-800" : "bg-white border-[#E4E4E7]/60 shadow-sm"} space-y-4`}>
+            <p className={`font-serif italic font-light text-base sm:text-lg leading-relaxed ${isDark ? "text-stone-200" : "text-[#263043]"}`}>
               "{caseStudy.quote}"
             </p>
             <div className="flex items-center gap-2 font-sans text-[11px] uppercase tracking-wider font-semibold">
@@ -220,7 +220,7 @@ export default function CaseStudies({ currentCaseId, onBack, onNavigateToCase }:
 
         {/* Right Column: Performance Data Widgets */}
         <div className="lg:col-span-4 space-y-6">
-          <div className={`p-6 rounded-[24px] border ${isDark ? "bg-[#1E1D22] border-stone-800" : "bg-white border-[#E4E4E7]/80 shadow-md"} space-y-6.5`}>
+          <div className={`p-6 rounded-[24px] border ${isDark ? "bg-[#1E1D22] border-stone-800" : "bg-white border-[#E4E4E7]/80 shadow-md"} space-y-6`}>
             <span className="text-[10px] font-mono uppercase tracking-widest text-[#898B91] block border-b border-[#E4E4E7]/10 pb-2">Gathering Metrics</span>
             
             <div className="space-y-5">

@@ -212,36 +212,33 @@ export interface FaqItem {
 }
 
 export const FAQS: FaqItem[] = [
+  
   {
-    question: "Do guests need to download an app or log in?",
-    answer: "Absolutely not. This is Glimpse's core superpower. Guests simply scan your event's unique QR code or click your link to instantly open a beautifully branded web page on their phone's native browser. They select their photos, write a quick name or caption, and hit publish."
+    question: "Do I get all the photos after the event?",
+    answer: "Yes. You get every upload in full quality, and you can download the whole event in one shot when the party is over."
   },
   {
-    question: "How do I download all the pictures after the event?",
-    answer: "As the host, you have full dashboard controls. You can instantly download a single compressed ZIP file containing all photos uploaded by your guests in high quality, or export them directly to your Google Drive or Dropbox."
+    question: "Can guests see everyone else's photos?",
+    answer: "They can, if you want them to. Leave the shared feed on for more energy, or turn it off and keep everything host-only."
   },
   {
-    question: "Can guests see each other's uploaded photos?",
-    answer: "Yes! By default, Glimpse creates a beautiful shared feed view where guests can view, heart, or download photos taken by other friends. If you prefer high privacy, you can switch your event settings to 'Host Only', which lets guests upload directly but hides the public feed."
+    question: "How does the live screen part work?",
+    answer: "Open the display on a laptop, tablet, or TV, and the newest photos appear almost instantly. Guests see their picture on the big screen before they even sit back down."
   },
   {
-    question: "How does the Live Slideshow mode work?",
-    answer: "Glimpse provides a 'Live TV Cast' view. Open this URL on any laptop, tablet, or web-connected smart TV and project it onto a wall at your venue. As guests upload photos, they immediately pop up with lovely transitions, turning your crowd into a live-updating interactive entertainment wall."
+    question: "What if the venue Wi-Fi is bad?",
+    answer: "Uploads are designed to recover cleanly when the connection comes back. Guests can keep moving, and you do not have to babysit the network."
   },
   {
-    question: "How do we handle poor internet signals or remote venues?",
-    answer: "Our web portal is fully robust. If a guest loses cell signal at your venue, our offline caching system queues their photos in memory. The moment they walk near high-speed Wi-Fi or regain a solid cellular connection, Glimpse automatically beams their queued photos safely in the background."
+    question: "Can I remove blurry or unwanted photos?",
+    answer: "Yes. You can hide or delete anything that does not belong, so the gallery stays clean and on-brand."
   },
   {
-    question: "Is there moderation to delete unwanted or inappropriate photos?",
-    answer: "Yes, you have absolute control. Your host command panel allows you to view uploaded photos in real time. If a guest uploads something blurry, off-topic, or inappropriate, you can permanently delete or hide it with a single tap so it disappears from the stream and slides instantly."
+    question: "Can I match the QR page to my event?",
+    answer: "Absolutely. You can customize colors, headers, and the look of the upload page so it feels like part of the event, not a random tool."
   },
   {
-    question: "Can I customize the QR placards and look of Glimpse?",
-    answer: "Completely. Spotlight Pro lets you customize event headers, choosing colors, typography, and personalized cover images. You can print high-resolution SVG or PDF table cards that perfectly coordinate with your existing signage and tablescapes."
-  },
-  {
-    question: "Are there any file upload limits or attendee caps?",
-    answer: "Not under our Pro plan. You can have 10 or 10,000 attendees upload an unlimited number of high-resolution photos. We never charge by the image, nor do we throttle guest speed during peak event moments."
+    question: "Are there any upload limits?",
+    answer: "The full plan is built for real parties, not tiny test cases. Guests can keep uploading without you counting every image."
   }
 ];

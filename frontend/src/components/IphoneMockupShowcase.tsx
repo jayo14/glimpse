@@ -52,7 +52,7 @@ export default function IphoneMockupShowcase() {
           {/* PHONE CONTAINER */}
           <div className="relative w-full max-w-[280px] aspect-[9/18.5] rounded-[48px] border-[8px] border-[#18171C] bg-[#1d1d22] p-2.5 shadow-cluely-large transition-all duration-500 hover:-translate-y-2 ring-1 ring-zinc-200/10">
             {/* Dynamic Island */}
-            <div className="absolute top-4.5 left-1/2 z-30 h-4.5 w-20 -translate-x-1/2 rounded-full bg-[#18171C] flex items-center justify-end pr-2">
+            <div className="absolute top-4 left-1/2 z-30 h-4 w-20 -translate-x-1/2 rounded-full bg-[#18171C] flex items-center justify-end pr-2">
               <div className="h-1.5 w-1.5 rounded-full bg-[#A7C3A8] animate-pulse"></div>
             </div>
             {/* Camera Control button on right */}
@@ -125,7 +125,7 @@ export default function IphoneMockupShowcase() {
                     <Check className="h-3 w-3" />
                     Beam Memory
                   </button>
-                  <p className="text-[7.5px] text-zinc-650 text-center mt-1 font-sans">
+                  <p className="text-[7.5px] text-zinc-600 text-center mt-1 font-sans">
                     Secure Web SSL connection
                   </p>
                 </div>
@@ -147,7 +147,7 @@ export default function IphoneMockupShowcase() {
           {/* PHONE CONTAINER */}
           <div className="relative w-full max-w-[280px] aspect-[9/18.5] rounded-[48px] border-[8px] border-[#18171C] bg-[#1d1d22] p-2.5 shadow-cluely-large transition-all duration-500 hover:-translate-y-2 ring-1 ring-zinc-200/10">
             {/* Dynamic Island */}
-            <div className="absolute top-4.5 left-1/2 z-30 h-4.5 w-20 -translate-x-1/2 rounded-full bg-[#18171C] flex items-center justify-end pr-2"></div>
+            <div className="absolute top-4 left-1/2 z-30 h-4 w-20 -translate-x-1/2 rounded-full bg-[#18171C] flex items-center justify-end pr-2"></div>
             {/* Camera Control button */}
             <div className="absolute right-[-10px] top-32 w-1 h-12 bg-[#2d2d34] rounded-l-md z-10"></div>
             {/* Buttons */}
@@ -167,7 +167,7 @@ export default function IphoneMockupShowcase() {
               {/* Web feed screen */}
               <div className="flex-1 overflow-y-auto px-3.5 py-2 flex flex-col justify-between">
                 <div>
-                  <div className="flex items-center justify-between border-b border-zinc-850 pb-2 mb-3">
+                  <div className="flex items-center justify-between border-b border-zinc-800 pb-2 mb-3">
                     <span className="text-[10px] font-semibold text-zinc-300 font-serif">Community Stream</span>
                     <span className="text-[8px] font-sans font-medium bg-[#263043] text-[#F4C9C8] px-2 py-0.5 rounded-full shadow-cluely-lifted">
                       142 pieces
@@ -232,7 +232,7 @@ export default function IphoneMockupShowcase() {
                           />
                         </div>
                         <div className="flex-1 min-w-0 text-[8.5px] font-sans">
-                          <p className="font-bold text-zinc-350">Jessica P.</p>
+                          <p className="font-bold text-zinc-300">Jessica P.</p>
                           <p className="text-zinc-500 truncate italic">"Sunset love shots..."</p>
                         </div>
                         <div className="flex items-center gap-1.5 text-[#A7C3A8]">
@@ -278,7 +278,7 @@ export default function IphoneMockupShowcase() {
           {/* PHONE CONTAINER */}
           <div className="relative w-full max-w-[280px] aspect-[9/18.5] rounded-[48px] border-[8px] border-[#18171C] bg-[#1d1d22] p-2.5 shadow-cluely-large transition-all duration-500 hover:-translate-y-2 ring-1 ring-zinc-200/10">
             {/* Dynamic Island */}
-            <div className="absolute top-4.5 left-1/2 z-30 h-4.5 w-20 -translate-x-1/2 rounded-full bg-[#18171C] flex items-center justify-end pr-2"></div>
+            <div className="absolute top-4 left-1/2 z-30 h-4 w-20 -translate-x-1/2 rounded-full bg-[#18171C] flex items-center justify-end pr-2"></div>
             {/* Camera Control button */}
             <div className="absolute right-[-10px] top-32 w-1 h-12 bg-[#2d2d34] rounded-l-md z-10"></div>
             {/* Buttons */}
@@ -305,7 +305,7 @@ export default function IphoneMockupShowcase() {
                     Host Control Room
                   </div>
 
-                  <div className="p-2.5 bg-[#1f1f24] border border-zinc-850 rounded-xl space-y-2 mb-4 shadow-cluely-input">
+                  <div className="p-2.5 bg-[#1f1f24] border border-zinc-800 rounded-xl space-y-2 mb-4 shadow-cluely-input">
                     <div className="flex items-center justify-between">
                       <span className="text-[9px] font-bold text-zinc-400 uppercase tracking-tight font-sans">Active Cast</span>
                       <span className="text-[8px] bg-emerald-500/10 text-[#A7C3A8] border border-[#A7C3A8]/20 px-1.5 py-0.5 rounded-sm">Connected</span>
@@ -317,7 +317,7 @@ export default function IphoneMockupShowcase() {
 
                   {/* Active checklist toggles */}
                   <div className="space-y-2.5 text-left font-sans">
-                    <span className="text-[7.5px] uppercase tracking-wider text-zinc-550 font-mono font-medium">Stream Guard Setup</span>
+                    <span className="text-[7.5px] uppercase tracking-wider text-zinc-500 font-mono font-medium">Stream Guard Setup</span>
                     
                     {/* Switch Toggle 1 */}
                     <div className="flex items-center justify-between p-2 bg-[#26262c]/50 rounded-xl border border-zinc-800 shadow-cluely-lifted">
@@ -336,7 +336,7 @@ export default function IphoneMockupShowcase() {
                         <span className="text-[8.5px] font-semibold text-zinc-200 block">High-Res ZIP Export</span>
                         <span className="text-[7.5px] text-zinc-400 block">124 source units compiled</span>
                       </div>
-                      <button className="text-[7px] bg-[#263043] hover:bg-zinc-750 text-[#F4C9C8] px-1.5 py-0.5 rounded font-bold uppercase transition-colors shadow-cluely-lifted">
+                      <button className="text-[7px] bg-[#263043] hover:bg-zinc-700 text-[#F4C9C8] px-1.5 py-0.5 rounded font-bold uppercase transition-colors shadow-cluely-lifted">
                         Ready
                       </button>
                     </div>
@@ -344,7 +344,7 @@ export default function IphoneMockupShowcase() {
                     {/* Pending review mini placeholder */}
                     <div className="p-2 border border-dashed border-[#F4C9C8]/40 bg-[#481F1E]/20 rounded-xl flex items-center justify-between gap-1.5">
                       <div className="flex items-center gap-1.5 min-w-0">
-                        <div className="h-6 w-6 rounded bg-zinc-850 overflow-hidden relative shrink-0">
+                        <div className="h-6 w-6 rounded bg-zinc-800 overflow-hidden relative shrink-0">
                           <img 
                             src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=80&q=80" 
                             className="w-full h-full object-cover opacity-60"
@@ -389,7 +389,7 @@ export default function IphoneMockupShowcase() {
           {/* PHONE CONTAINER */}
           <div className="relative w-full max-w-[280px] aspect-[9/18.5] rounded-[48px] border-[8px] border-[#18171C] bg-[#1d1d22] p-2.5 shadow-cluely-large transition-all duration-500 hover:-translate-y-2 ring-1 ring-zinc-200/10">
             {/* Dynamic Island */}
-            <div className="absolute top-4.5 left-1/2 z-30 h-4.5 w-20 -translate-x-1/2 rounded-full bg-[#18171C] flex items-center justify-end pr-2"></div>
+            <div className="absolute top-4 left-1/2 z-30 h-4 w-20 -translate-x-1/2 rounded-full bg-[#18171C] flex items-center justify-end pr-2"></div>
             {/* Camera Control button */}
             <div className="absolute right-[-10px] top-32 w-1 h-12 bg-[#2d2d34] rounded-l-md z-10"></div>
             {/* Buttons */}
@@ -424,7 +424,7 @@ export default function IphoneMockupShowcase() {
                   </div>
 
                   {/* MINI INTERACTIVE PREVIEW */}
-                  <div className="p-2 border border-zinc-850 bg-[#26262c]/30 rounded-xl relative shadow-cluely-input">
+                  <div className="p-2 border border-zinc-800 bg-[#26262c]/30 rounded-xl relative shadow-cluely-input">
                     <div className="text-[7px] text-zinc-500 font-sans uppercase tracking-wider mb-1.5 flex items-center justify-center gap-1">
                       <Tv className="h-2 w-2 text-zinc-500" /> Currently Projected
                     </div>
@@ -445,7 +445,7 @@ export default function IphoneMockupShowcase() {
                 </div>
 
                 <div className="space-y-2 font-sans">
-                  <button className="w-full bg-zinc-850 hover:bg-zinc-800 text-zinc-300 font-semibold text-[9px] uppercase tracking-wider py-2 rounded-lg border border-zinc-800 font-sans shadow-cluely-lifted">
+                  <button className="w-full bg-zinc-800 hover:bg-zinc-700 text-zinc-300 font-semibold text-[9px] uppercase tracking-wider py-2 rounded-lg border border-zinc-800 font-sans shadow-cluely-lifted">
                     Share direct feedback
                   </button>
                   <p className="text-[7px] text-[#898B91] mt-1">
