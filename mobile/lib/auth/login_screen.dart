@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:io' show Platform;
-import '../shared/theme.dart';
+import 'signup_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           const SizedBox(height: 16),
           TextButton(
-            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const SignUpScreen())),
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => SignUpScreen())),
             child: const Text("Don't have an account? Sign Up"),
           ),
         ],

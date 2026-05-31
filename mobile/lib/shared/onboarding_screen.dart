@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'theme.dart';
 import '../events/landing_screen.dart';
 
@@ -18,17 +17,17 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     OnboardingData(
       title: "Capture the Magic",
       description: "Snap photos at the event and see them appear instantly on the live wall.",
-      icon: PhosphorIconsFill.camera,
+      icon: Icons.camera_alt_rounded,
     ),
     OnboardingData(
       title: "Find Yourself",
       description: "Our AI magic finds you in the crowd. Scan once, see all your moments.",
-      icon: PhosphorIconsFill.sparkle,
+      icon: Icons.auto_awesome_rounded,
     ),
     OnboardingData(
       title: "Private & Secure",
       description: "Your memories are safe. You control who sees your photos.",
-      icon: PhosphorIconsFill.shieldCheck,
+      icon: Icons.verified_user_rounded,
     ),
   ];
 
@@ -54,7 +53,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         Container(
                           padding: const EdgeInsets.all(32),
                           decoration: BoxDecoration(
-                            color: GlimpseColors.primaryViola.withOpacity(0.1),
+                            color: GlimpseColors.primaryViola.withValues(alpha: 0.1),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(

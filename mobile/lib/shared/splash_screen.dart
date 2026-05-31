@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 import 'theme.dart';
 import 'onboarding_screen.dart';
-import 'storage_service.dart';
-import '../events/landing_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -41,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(
-              PhosphorIconsFill.aperture,
+              Icons.center_focus_strong_rounded,
               color: GlimpseColors.primaryViola,
               size: 80,
             )

@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
-import 'image_processor.dart';
-import 'upload_queue.dart';
-import '../shared/theme.dart';
 
 class CameraScreen extends StatefulWidget {
   final String eventId;
@@ -15,7 +11,7 @@ class CameraScreen extends StatefulWidget {
 class _CameraScreenState extends State<CameraScreen> {
   CameraController? _controller;
   Future<void>? _initializeControllerFuture;
-  bool _isProcessing = false;
+  final bool _isProcessing = false;
 
   @override
   void initState() {
