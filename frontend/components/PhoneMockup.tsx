@@ -5,7 +5,7 @@
 
 import React, { useState, useRef } from "react";
 import { Camera, Upload, Check, Sparkles, Image as ImageIcon } from "lucide-react";
-import { Photo } from "../types";
+import { Photo } from "@/lib/types";
 
 interface PhoneMockupProps {
   eventName: string;

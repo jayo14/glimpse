@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { ArrowLeft, BookOpen, Clock, Tag, ArrowRight } from "lucide-react";
 
 interface BlogPost {

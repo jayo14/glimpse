@@ -5,7 +5,7 @@
 
 import React, { useState, useEffect } from "react";
 import { X, Play, Pause, ChevronLeft, ChevronRight, Tv, Heart, Sparkles, Flame, Calendar } from "lucide-react";
-import { Photo } from "../types";
+import { Photo } from "@/lib/types";
 
 interface TvSlideshowProps {
   eventName: string;

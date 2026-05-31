@@ -1,6 +1,6 @@
 import React from "react";
 import "@fontsource-variable/geist";
-import "../src/index.css";
+import "./globals.css";
 
 export const metadata = {
   title: "Glimpse - Event Visual Accumulator",
@@ -14,7 +14,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="font-sans antialiased bg-[#F5F5F5] text-[#18171C]">
+      <body className="font-sans antialiased">
         {children}
       </body>
     </html>
