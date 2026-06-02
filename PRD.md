@@ -237,44 +237,33 @@ The design system is documented in full in `DESIGN.md` within the repository roo
 ### 7.1 — System Overview
 
 ```
-┌────────────────────────────────────────────────────────────────┐
-│                 CLIENT LAYER                                   │
-│  Flutter App (Host/Photographer)   Next.js PWA (Guest)        │
-└──────────────────────┬─────────────────────────┬──────────────┘
-                       │                         │
-             (API Requests)          (Presigned URL Direct Upload)
-                       │                         │
-         ┌─────────────▼──────────┐   ┌──────────▼──────────────┐
-         │  FastAPI Gateway       │   │   Supabase Storage      │
-         │  api.glimpse.com       │   │   (event-uploads bucket)│
-         └─────────────┬──────────┘   └──────────┬──────────────┘
-                       │                         │
-                (Auth/Validation)     (DB Insert Trigger on upload)
-                       │                         │
-         ┌─────────────▼─────────────────────────▼──────────────┐
-         │                  Supabase PostgreSQL                  │
-         │            (pgvector enabled, RLS policies)           │
-         └───────────────────────────┬────────────────────────── ┘
-                                     │
-                         (Supabase Webhook → HTTP POST)
-                                     │
-         ┌───────────────────────────▼───────────────────────────┐
-         │              Redis Message Queue (ARQ)                │
-         └───────────────────────────┬───────────────────────────┘
-                                     │
-                             (Worker job fetch)
-                                     │
-         ┌───────────────────────────▼───────────────────────────┐
-         │        FastAPI ML Worker (InsightFace / ArcFace)      │
-         │   SCRFD detection → 512-dim embedding → vector search │
-         └───────────────────────────┬───────────────────────────┘
-                                     │
-                           (Write matched_profile_id back)
-                                     │
-         ┌───────────────────────────▼───────────────────────────┐
-         │          Supabase Realtime (WebSocket broadcast)      │
-         │   Streams new matched photo records to guest clients  │
-         └───────────────────────────────────────────────────────┘
+graph TD
+    %% Client Layer Subgraph
+    subgraph CLIENT_LAYER ["CLIENT LAYER"]
+        direction LR
+        Flutter["Flutter App<br>(Host/Photographer)"]
+        NextJS["Next.js PWA<br>(Guest)"]
+    end
+
+    %% Infrastructure Components
+    Gateway["FastAPI Gateway<br>api.glimpse.com"]
+    Storage["Supabase Storage<br>(event-uploads bucket)"]
+    Postgres[("Supabase PostgreSQL<br>(pgvector enabled, RLS policies)")]
+    Redis["Redis Message Queue (ARQ)"]
+    MLWorker["FastAPI ML Worker (InsightFace / ArcFace)<br>SCRFD detection → 512-dim embedding → vector search"]
+    Realtime["Supabase Realtime (WebSocket broadcast)<br>Streams new matched photo records to guest clients"]
+
+    %% Relationships and Data Flow
+    CLIENT_LAYER -->|API Requests| Gateway
+    CLIENT_LAYER -->|Presigned URL Direct Upload| Storage
+
+    Gateway -->|Auth/Validation| Postgres
+    Storage -->|DB Insert Trigger on upload| Postgres
+
+    Postgres -->|Supabase Webhook ➔ HTTP POST| Redis
+    Redis -->|Worker job fetch| MLWorker
+    MLWorker -->|Write matched_profile_id back| Realtime
+
 ```
 
 ### 7.2 — Upload Flow (Critical Path)
