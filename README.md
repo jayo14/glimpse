@@ -38,3 +38,7 @@ AI-powered event media platform for photographers, hosts, and guests.
 - Guest selfie search
 - Photographer dashboard
 - Branded galleries
+
+
+
+Figma Link: https://www.figma.com/design/FbOrLIFy2Asr60nvCOXmTF/Design-Glimpse-Mobile-Screens
