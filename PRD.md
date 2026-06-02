@@ -236,7 +236,7 @@ The design system is documented in full in `DESIGN.md` within the repository roo
 
 ### 7.1 — System Overview
 
-```
+```mermaid
 graph TD
     %% Client Layer Subgraph
     subgraph CLIENT_LAYER ["CLIENT LAYER"]
@@ -263,7 +263,6 @@ graph TD
     Postgres -->|Supabase Webhook ➔ HTTP POST| Redis
     Redis -->|Worker job fetch| MLWorker
     MLWorker -->|Write matched_profile_id back| Realtime
-
 ```
 
 ### 7.2 — Upload Flow (Critical Path)
