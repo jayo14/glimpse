@@ -1,10 +1,10 @@
 # Glimpse — Product Requirements Document
 
-**Project:** Glimpse
-**Status:** Active Development — Sprint 1
-**Version:** 2.0.0
-**Last Updated:** June 2026
-**Target Launch:** September 2026 (3-Month Sprint)
+- **Project:** Glimpse
+- **Status:** Active Development — Sprint 1
+- **Version:** 2.0.0
+- **Last Updated:** June 2026
+- **Target Launch:** September 2026 (3-Month Sprint)
 
 ---
 
