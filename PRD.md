@@ -1,7 +1,6 @@
 # Glimpse — Product Requirements Document
 
 **Project:** Glimpse
-**Author:** John (Solo Founder / Lead Engineer)
 **Status:** Active Development — Sprint 1
 **Version:** 2.0.0
 **Last Updated:** June 2026
@@ -224,7 +223,7 @@ glimpse-main/
 
 Figma designs for the full Flutter mobile app have been completed.
 
-> **📐 Figma Design File:** `[INSERT FIGMA LINK HERE]`
+> **📐 Figma Design File:** `https://www.figma.com/design/FbOrLIFy2Asr60nvCOXmTF/Design-Glimpse-Mobile-Screens`
 
 The Figma file covers all screens across the three user journeys: Host, Photographer, and Guest. Reference the design file alongside Section 11 (Screen-by-Screen Specification) during implementation.
 
@@ -654,7 +653,7 @@ The system must be designed to handle a single event with up to 500 simultaneous
 
 The full design specification lives in `DESIGN.md` in the repository root. This is a summary for quick reference during development.
 
-> **Figma Reference:** `[INSERT FIGMA LINK HERE]`
+> **Figma Reference:** `https://www.figma.com/design/FbOrLIFy2Asr60nvCOXmTF/Design-Glimpse-Mobile-Screens`
 
 ### Color Palette
 
@@ -770,12 +769,12 @@ These items require a decision before or during Month 1.
 
 | # | Question | Owner | Decision Needed By |
 |---|---|---|---|
-| 1 | Should the Next.js guest experience be a PWA only, or should we build an iOS App Clip as well for the first launch? App Clips provide better camera access but require Apple Developer account overhead. | John | Week 1 |
-| 2 | What is the pricing model? Free beta → paid per-event for hosts? What's the host-facing price point? | John | Week 9 |
-| 3 | Should photographers use the Flutter app or a separate web dashboard for uploads? The `frontend-old/` directory has a photographer dashboard component that could be revived. | John | Week 2 |
-| 4 | What is the candid photo attribution UX? Show the giver's name always, or make it anonymous by default with opt-in reveal? | John | Week 7 |
-| 5 | For the first beta event, is the target audience a LASUSTECH student event, a wedding, or a corporate event? This determines QR distribution strategy and guest technical literacy assumptions. | John | Week 1 |
-| 6 | Does the `invite_token` for photographers expire after first use, or remain valid for the full event duration? | John | Week 2 |
+| 1 | Should the Next.js guest experience be a PWA only, or should we build an iOS App Clip as well for the first launch? App Clips provide better camera access but require Apple Developer account overhead. | Week 1 |
+| 2 | What is the pricing model? Free beta → paid per-event for hosts? What's the host-facing price point? |  Week 9 |
+| 3 | Should photographers use the Flutter app or a separate web dashboard for uploads? The `frontend-old/` directory has a photographer dashboard component that could be revived. | Week 2 |
+| 4 | What is the candid photo attribution UX? Show the giver's name always, or make it anonymous by default with opt-in reveal? | Week 7 |
+| 5 | For the first beta event, is the target audience a LASUSTECH student event, a wedding, or a corporate event? This determines QR distribution strategy and guest technical literacy assumptions. |  Week 1 |
+| 6 | Does the `invite_token` for photographers expire after first use, or remain valid for the full event duration? | Week 2 |
 
 ---
 
