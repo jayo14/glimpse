@@ -7,6 +7,7 @@ class GlimpseTheme {
     useMaterial3: true,
     brightness: Brightness.light,
     scaffoldBackgroundColor: GlimpseColors.background,
+    fontFamily: 'Geist',
     colorScheme: ColorScheme.fromSeed(
       seedColor: GlimpseColors.primary,
       primary: GlimpseColors.primary,
@@ -24,6 +25,7 @@ class GlimpseTheme {
     useMaterial3: true,
     brightness: Brightness.dark,
     scaffoldBackgroundColor: GlimpseColors.darkBackground,
+    fontFamily: 'Geist',
     colorScheme: const ColorScheme.dark(
       primary: GlimpseColors.primaryForeground,
       onPrimary: GlimpseColors.primary,

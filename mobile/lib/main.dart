@@ -14,8 +14,12 @@ class GlimpseApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Glimpse',
-      theme: GlimpseTheme.light,
-      darkTheme: GlimpseTheme.dark,
+      theme: GlimpseTheme.light.copyWith(
+        textTheme: GlimpseTheme.light.textTheme.apply(fontFamily: 'Geist')
+      ),
+      darkTheme: GlimpseTheme.dark.copyWith(
+        textTheme: GlimpseTheme.dark.textTheme.apply(fontFamily: 'Geist')
+      ),
       themeMode: ThemeMode.dark,
       routerConfig: router,
       debugShowCheckedModeBanner: false,
