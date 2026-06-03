@@ -18,8 +18,11 @@ class SessionState {
   }
 }
 
-class SessionNotifier extends StateNotifier<SessionState> {
-  SessionNotifier() : super(SessionState());
+class SessionNotifier extends Notifier<SessionState> {
+  @override
+  SessionState build() {
+    return SessionState();
+  }
 
   void setRole(String role) => state = state.copyWith(role: role);
   void setEventName(String name) => state = state.copyWith(eventName: name);
@@ -27,6 +30,6 @@ class SessionNotifier extends StateNotifier<SessionState> {
   void setUserName(String name) => state = state.copyWith(userName: name);
 }
 
-final sessionProvider = StateNotifierProvider<SessionNotifier, SessionState>((ref) {
+final sessionProvider = NotifierProvider<SessionNotifier, SessionState>(() {
   return SessionNotifier();
 });
