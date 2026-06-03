@@ -1,0 +1,68 @@
+2026-06-03 19:36:52 [error]: ReferenceError: googleAuthSchema is not defined
+    at googleSignIn (file:///C:/Archive/Web/glimpse/api/src/controllers/auth.controller.js:12:18)
+    at Layer.handleRequest (C:\Archive\Web\glimpse\api\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Archive\Web\glimpse\api\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Archive\Web\glimpse\api\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Archive\Web\glimpse\api\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Archive\Web\glimpse\api\node_modules\router\lib\layer.js:152:17)
+    at C:\Archive\Web\glimpse\api\node_modules\router\index.js:295:15
+    at processParams (C:\Archive\Web\glimpse\api\node_modules\router\index.js:582:12)
+    at next (C:\Archive\Web\glimpse\api\node_modules\router\index.js:291:5)
+    at Function.handle (C:\Archive\Web\glimpse\api\node_modules\router\index.js:186:3)
+2026-06-03 19:38:03 [error]: TypeError: googleAuthSchema.safeParse is not a function
+    at googleSignIn (file:///C:/Archive/Web/glimpse/api/src/controllers/auth.controller.js:13:35)
+    at Layer.handleRequest (C:\Archive\Web\glimpse\api\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Archive\Web\glimpse\api\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Archive\Web\glimpse\api\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Archive\Web\glimpse\api\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Archive\Web\glimpse\api\node_modules\router\lib\layer.js:152:17)
+    at C:\Archive\Web\glimpse\api\node_modules\router\index.js:295:15
+    at processParams (C:\Archive\Web\glimpse\api\node_modules\router\index.js:582:12)
+    at next (C:\Archive\Web\glimpse\api\node_modules\router\index.js:291:5)
+    at Function.handle (C:\Archive\Web\glimpse\api\node_modules\router\index.js:186:3)
+2026-06-03 19:51:15 [error]: registerUser profile error: 
+Invalid `prisma.profile.create()` invocation:
+
+{
+  data: {
+    id: "900babde-9e00-42d4-9e46-e2668583ea63",
++   full_name: String
+  }
+}
+
+Argument `full_name` is missing.
+2026-06-03 19:51:15 [error]: register controller error: 
+Invalid `prisma.profile.create()` invocation:
+
+{
+  data: {
+    id: "900babde-9e00-42d4-9e46-e2668583ea63",
++   full_name: String
+  }
+}
+
+Argument `full_name` is missing.
+2026-06-03 20:37:45 [error]: registerUser error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea23ea35e1sm22250187b3.43 - gsmtp
+2026-06-03 20:37:45 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea23ea35e1sm22250187b3.43 - gsmtp
+2026-06-03 20:38:22 [error]: registerUser error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea24098d1csm22422647b3.46 - gsmtp
+2026-06-03 20:38:22 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea24098d1csm22422647b3.46 - gsmtp
+2026-06-03 20:42:28 [error]: registerUser error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea23b91689sm21914857b3.40 - gsmtp
+2026-06-03 20:42:28 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea23b91689sm21914857b3.40 - gsmtp
+2026-06-03 20:46:01 [error]: registerUser error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea23ea35e1sm22374177b3.43 - gsmtp
+2026-06-03 20:46:01 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea23ea35e1sm22374177b3.43 - gsmtp
+2026-06-03 20:50:06 [error]: registerUser error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea21a621c3sm22230267b3.22 - gsmtp
+2026-06-03 20:50:06 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea21a621c3sm22230267b3.22 - gsmtp
+2026-06-03 20:53:16 [error]: registerUser error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-490bc413adbsm14350035e9.15 - gsmtp
+2026-06-03 20:53:16 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-490bc413adbsm14350035e9.15 - gsmtp

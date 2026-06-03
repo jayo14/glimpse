@@ -1,0 +1,157 @@
+2026-06-02 23:16:01 [info]: Server is running on port 5002
+2026-06-02 23:17:16 [info]: Server is running on port 5002
+2026-06-02 23:19:12 [info]: Server is running on port 5002
+2026-06-02 23:19:43 [info]: POST /user 404 9.768 ms
+2026-06-02 23:19:55 [info]: POST /users 500 18.178 ms
+2026-06-02 23:20:26 [info]: Server is running on port 5002
+2026-06-02 23:20:27 [info]: POST /users 500 6.883 ms
+2026-06-02 23:32:23 [info]: Server is running on port 5002
+2026-06-02 23:32:55 [info]: POST /users 200 220.562 ms
+2026-06-02 23:34:07 [info]: Server is running on port 5002
+2026-06-02 23:36:54 [info]: Server is running on port 5002
+2026-06-02 23:37:07 [info]: Server is running on port 5002
+2026-06-02 23:46:01 [info]: Server is running on port 5002
+2026-06-02 23:49:21 [info]: Server is running on port 5002
+2026-06-02 23:49:58 [info]: Server is running on port 5002
+2026-06-02 23:58:38 [info]: Server is running on port 5002
+2026-06-02 23:58:54 [info]: Server is running on port 5002
+2026-06-02 23:59:13 [info]: Server is running on port 5002
+2026-06-03 00:02:51 [info]: Server is running on port 5002
+2026-06-03 00:04:17 [info]: Server is running on port 5002
+2026-06-03 00:04:32 [info]: Server is running on port 5002
+2026-06-03 00:05:52 [info]: Server is running on port 5002
+2026-06-03 00:06:10 [info]: Server is running on port 5002
+2026-06-03 18:10:20 [info]: Glimpse API running on port 5002
+2026-06-03 19:23:26 [info]: Glimpse API running on port 5002
+2026-06-03 19:26:20 [info]: Glimpse API running on port 5002
+2026-06-03 19:29:15 [info]: Glimpse API running on port 5002
+2026-06-03 19:29:37 [info]: Glimpse API running on port 5002
+2026-06-03 19:33:18 [info]: Glimpse API running on port 5002
+2026-06-03 19:36:22 [info]: Glimpse API running on port 5002
+2026-06-03 19:36:52 [error]: ReferenceError: googleAuthSchema is not defined
+    at googleSignIn (file:///C:/Archive/Web/glimpse/api/src/controllers/auth.controller.js:12:18)
+    at Layer.handleRequest (C:\Archive\Web\glimpse\api\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Archive\Web\glimpse\api\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Archive\Web\glimpse\api\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Archive\Web\glimpse\api\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Archive\Web\glimpse\api\node_modules\router\lib\layer.js:152:17)
+    at C:\Archive\Web\glimpse\api\node_modules\router\index.js:295:15
+    at processParams (C:\Archive\Web\glimpse\api\node_modules\router\index.js:582:12)
+    at next (C:\Archive\Web\glimpse\api\node_modules\router\index.js:291:5)
+    at Function.handle (C:\Archive\Web\glimpse\api\node_modules\router\index.js:186:3)
+2026-06-03 19:36:52 [info]: POST /api/v1/auth/register 500 10.440 ms
+2026-06-03 19:37:53 [info]: Glimpse API running on port 5002
+2026-06-03 19:38:03 [error]: TypeError: googleAuthSchema.safeParse is not a function
+    at googleSignIn (file:///C:/Archive/Web/glimpse/api/src/controllers/auth.controller.js:13:35)
+    at Layer.handleRequest (C:\Archive\Web\glimpse\api\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Archive\Web\glimpse\api\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Archive\Web\glimpse\api\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Archive\Web\glimpse\api\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Archive\Web\glimpse\api\node_modules\router\lib\layer.js:152:17)
+    at C:\Archive\Web\glimpse\api\node_modules\router\index.js:295:15
+    at processParams (C:\Archive\Web\glimpse\api\node_modules\router\index.js:582:12)
+    at next (C:\Archive\Web\glimpse\api\node_modules\router\index.js:291:5)
+    at Function.handle (C:\Archive\Web\glimpse\api\node_modules\router\index.js:186:3)
+2026-06-03 19:38:03 [info]: POST /api/v1/auth/register 500 10.464 ms
+2026-06-03 19:45:59 [info]: Glimpse API running on port 5002
+2026-06-03 19:46:56 [info]: Glimpse API running on port 5002
+2026-06-03 19:47:32 [info]: Glimpse API running on port 5002
+2026-06-03 19:48:07 [info]: Glimpse API running on port 5002
+2026-06-03 19:48:49 [info]: POST /api/v1/auth/register 400 8.653 ms
+2026-06-03 19:50:18 [info]: POST /api/v1/auth/register 400 1.148 ms
+2026-06-03 19:50:23 [info]: POST /api/v1/auth/register 400 3.531 ms
+2026-06-03 19:51:01 [info]: Glimpse API running on port 5002
+2026-06-03 19:51:15 [error]: registerUser profile error: 
+Invalid `prisma.profile.create()` invocation:
+
+{
+  data: {
+    id: "900babde-9e00-42d4-9e46-e2668583ea63",
++   full_name: String
+  }
+}
+
+Argument `full_name` is missing.
+2026-06-03 19:51:15 [error]: register controller error: 
+Invalid `prisma.profile.create()` invocation:
+
+{
+  data: {
+    id: "900babde-9e00-42d4-9e46-e2668583ea63",
++   full_name: String
+  }
+}
+
+Argument `full_name` is missing.
+2026-06-03 19:51:15 [info]: POST /api/v1/auth/register 500 6241.179 ms
+2026-06-03 19:52:41 [info]: Glimpse API running on port 5002
+2026-06-03 19:53:09 [info]: User registered: meettola@gmail.com
+2026-06-03 19:53:10 [info]: POST /api/v1/auth/register 201 6078.289 ms
+2026-06-03 20:05:59 [info]: Glimpse API running on port 5002
+2026-06-03 20:06:36 [info]: Glimpse API running on port 5002
+2026-06-03 20:19:53 [info]: Glimpse API running on port 5002
+2026-06-03 20:20:19 [info]: Glimpse API running on port 5002
+2026-06-03 20:20:55 [info]: Glimpse API running on port 5002
+2026-06-03 20:21:54 [info]: Glimpse API running on port 5002
+2026-06-03 20:27:41 [info]: Glimpse API running on port 5002
+2026-06-03 20:28:26 [info]: Glimpse API running on port 5002
+2026-06-03 20:29:03 [info]: Glimpse API running on port 5002
+2026-06-03 20:29:28 [info]: Glimpse API running on port 5002
+2026-06-03 20:37:45 [error]: registerUser error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea23ea35e1sm22250187b3.43 - gsmtp
+2026-06-03 20:37:45 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea23ea35e1sm22250187b3.43 - gsmtp
+2026-06-03 20:37:45 [info]: POST /api/v1/auth/register 500 11110.590 ms
+2026-06-03 20:37:57 [info]: Glimpse API running on port 5002
+2026-06-03 20:38:14 [info]: Glimpse API running on port 5002
+2026-06-03 20:38:22 [error]: registerUser error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea24098d1csm22422647b3.46 - gsmtp
+2026-06-03 20:38:22 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea24098d1csm22422647b3.46 - gsmtp
+2026-06-03 20:38:23 [info]: POST /api/v1/auth/register 500 6461.462 ms
+2026-06-03 20:41:10 [info]: Glimpse API running on port 5002
+2026-06-03 20:42:28 [error]: registerUser error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea23b91689sm21914857b3.40 - gsmtp
+2026-06-03 20:42:28 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea23b91689sm21914857b3.40 - gsmtp
+2026-06-03 20:42:28 [info]: POST /api/v1/auth/register 500 7553.104 ms
+2026-06-03 20:44:39 [info]: Glimpse API running on port 5002
+2026-06-03 20:45:23 [info]: Glimpse API running on port 5002
+2026-06-03 20:46:01 [error]: registerUser error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea23ea35e1sm22374177b3.43 - gsmtp
+2026-06-03 20:46:01 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea23ea35e1sm22374177b3.43 - gsmtp
+2026-06-03 20:46:01 [info]: POST /api/v1/auth/register 500 7040.276 ms
+2026-06-03 20:49:20 [info]: Glimpse API running on port 5002
+2026-06-03 20:49:47 [info]: Glimpse API running on port 5002
+2026-06-03 20:49:52 [info]: Glimpse API running on port 5002
+2026-06-03 20:50:06 [error]: registerUser error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea21a621c3sm22230267b3.22 - gsmtp
+2026-06-03 20:50:06 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 00721157ae682-7ea21a621c3sm22230267b3.22 - gsmtp
+2026-06-03 20:50:06 [info]: POST /api/v1/auth/register 500 8315.276 ms
+2026-06-03 20:52:55 [info]: Glimpse API running on port 5002
+2026-06-03 20:53:16 [error]: registerUser error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-490bc413adbsm14350035e9.15 - gsmtp
+2026-06-03 20:53:16 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-490bc413adbsm14350035e9.15 - gsmtp
+2026-06-03 20:53:16 [info]: POST /api/v1/auth/register 500 11385.909 ms
+2026-06-03 21:22:23 [info]: Glimpse API running on port 5002
+2026-06-03 21:22:34 [info]: Glimpse API running on port 5002
+2026-06-03 21:22:45 [info]: User registered: meettola@gmail.com
+2026-06-03 21:22:45 [info]: POST /api/v1/auth/register 201 8259.723 ms
+2026-06-03 21:24:29 [info]: Glimpse API running on port 5002
+2026-06-03 21:38:03 [info]: Glimpse API running on port 5002
+2026-06-03 21:42:10 [info]: Glimpse API running on port 5002
+2026-06-03 21:43:17 [info]: Glimpse API running on port 5002
+2026-06-03 21:44:28 [info]: POST /api/v1/auth/register 201 11882.938 ms
+2026-06-03 21:45:35 [info]: GET /api/v1/auth/verify-email 404 1.646 ms
+2026-06-03 21:45:42 [info]: POST /api/v1/auth/verify-email 400 0.936 ms
+2026-06-03 21:46:08 [info]: Email verified: meettola@gmail.com
+2026-06-03 21:46:08 [info]: POST /api/v1/auth/verify-email 200 1956.962 ms
+2026-06-03 21:49:39 [info]: User logged in: meettola@gmail.com
+2026-06-03 21:49:39 [info]: POST /api/v1/auth/login 200 5025.395 ms
+2026-06-03 22:04:19 [info]: Glimpse API running on port 5002
+2026-06-03 22:05:26 [info]: Glimpse API running on port 5002
+2026-06-03 22:05:51 [info]: Glimpse API running on port 5002
+2026-06-03 22:08:33 [info]: Glimpse API running on port 5002
