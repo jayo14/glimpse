@@ -1,12 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mobile/main.dart';
-import 'package:mobile/shared/splash_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:glimpse_mobile/main.dart';
 
 void main() {
-  testWidgets('App starts with SplashScreen', (WidgetTester tester) async {
-    await tester.runAsync(() async {
-       await tester.pumpWidget(const GlimpseApp());
-       expect(find.byType(SplashScreen), findsOneWidget);
-    });
+  testWidgets('App should load splash screen', (WidgetTester tester) async {
+    await tester.pumpWidget(const ProviderScope(child: GlimpseApp()));
+    expect(find.text('Glimpse'), findsOneWidget);
   });
 }

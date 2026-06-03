@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:io' show Platform;
-import 'shared/theme.dart';
-import 'shared/splash_screen.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'core/navigation/router.dart';
+import 'core/theme/theme.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(const GlimpseApp());
+  runApp(const ProviderScope(child: GlimpseApp()));
 }
 
 class GlimpseApp extends StatelessWidget {
@@ -14,23 +12,17 @@ class GlimpseApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool isIOS = false;
-    try { isIOS = Platform.isIOS; } catch (_) {}
-
-    if (isIOS) {
-      return CupertinoApp(
-        title: 'Glimpse',
-        debugShowCheckedModeBanner: false,
-        theme: GlimpseTheme.cupertinoTheme,
-        home: const SplashScreen(),
-      );
-    } else {
-      return MaterialApp(
-        title: 'Glimpse',
-        debugShowCheckedModeBanner: false,
-        theme: GlimpseTheme.darkTheme,
-        home: const SplashScreen(),
-      );
-    }
+    return MaterialApp.router(
+      title: 'Glimpse',
+      theme: GlimpseTheme.light.copyWith(
+        textTheme: GlimpseTheme.light.textTheme.apply(fontFamily: 'Geist')
+      ),
+      darkTheme: GlimpseTheme.dark.copyWith(
+        textTheme: GlimpseTheme.dark.textTheme.apply(fontFamily: 'Geist')
+      ),
+      themeMode: ThemeMode.dark,
+      routerConfig: router,
+      debugShowCheckedModeBanner: false,
+    );
   }
 }
