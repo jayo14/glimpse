@@ -9,6 +9,7 @@ import errorHandler from "./middleware/error-handler.js";
 
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
+import eventRoutes from "./routes/event.routes.js";
 
 dotenv.config();
 
@@ -22,16 +23,19 @@ app.use(
   cors({
     origin: process.env.FRONTEND_URL || "http://localhost:3000",
     credentials: true, // Required for httpOnly cookie to be sent cross-origin
-  })
+  }),
 );
 app.use(reqMiddleware);
 
-// Routes 
+// Routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/event", eventRoutes);
 
 // Health check
-app.get("/health", (req, res) => res.json({ status: "ok", service: "glimpse-api" }));
+app.get("/health", (req, res) =>
+  res.json({ status: "ok", service: "glimpse-api" }),
+);
 
 // Error handling
 app.use(errorHandler);
