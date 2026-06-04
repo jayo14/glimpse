@@ -3,7 +3,7 @@ import '../../core/theme/colors.dart';
 import '../../core/utils/responsive.dart';
 import '../../core/widgets/glimpse_button.dart';
 import '../../core/widgets/glimpse_input.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
+import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:go_router/go_router.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
@@ -90,7 +90,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
         keyboardType: TextInputType.emailAddress,
         suffix: Padding(
           padding: EdgeInsets.only(right: 8.w(context)),
-          child: Icon(PhosphorIcons.envelope(), color: Colors.white.withValues(alpha: 0.25), size: 22),
+          child: Icon(LucideIcons.mail, color: Colors.white.withValues(alpha: 0.25), size: 22),
         ),
       ),
       SizedBox(height: 16.h(context)),

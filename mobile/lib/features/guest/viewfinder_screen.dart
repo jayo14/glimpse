@@ -1,3 +1,5 @@
+import 'package:camera/camera.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter/material.dart';
 import '../../core/utils/responsive.dart';
 import 'package:go_router/go_router.dart';
@@ -12,8 +14,47 @@ class ViewfinderScreen extends StatefulWidget {
 }
 
 class _ViewfinderScreenState extends State<ViewfinderScreen> {
+
+  CameraController? _controller;
+  bool _isInitialized = false;
   int _shotCount = 12;
   bool _shutterFlash = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeCamera();
+  }
+
+  Future<void> _initializeCamera() async {
+    final status = await Permission.camera.request();
+    if (status.isGranted) {
+      final cameras = await availableCameras();
+      if (cameras.isEmpty) return;
+
+      _controller = CameraController(
+        cameras[0],
+        ResolutionPreset.high,
+        enableAudio: false,
+      );
+
+      try {
+        await _controller!.initialize();
+        if (mounted) {
+          setState(() => _isInitialized = true);
+        }
+      } catch (e) {
+        debugPrint('Camera error: $e');
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
+  }
+
 
   void _handleShutter() {
     setState(() {
@@ -32,14 +73,28 @@ class _ViewfinderScreenState extends State<ViewfinderScreen> {
       body: Stack(
         children: [
           // Full-bleed camera feed simulation
+
           Positioned.fill(
-            child: Image.network(
-              'https://images.unsplash.com/photo-1661006117166-6227bfc9c8b0?w=1080',
-              fit: BoxFit.cover,
-              color: Colors.black.withValues(alpha: 0.45),
-              colorBlendMode: BlendMode.multiply,
-            ),
+            child: _isInitialized && _controller != null
+                ? CameraPreview(_controller!)
+                : Container(
+                    color: Colors.black,
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(Icons.camera_alt_outlined, color: Colors.white.withValues(alpha: 0.2), size: 48),
+                          SizedBox(height: 16),
+                          Text(
+                            _isInitialized ? 'Initializing camera...' : 'Awaiting camera permission...',
+                            style: TextStyle(color: Colors.white.withValues(alpha: 0.4), fontSize: 13),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
           ),
+
 
           // Film grain & Vignette
           Positioned.fill(
