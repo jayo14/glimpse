@@ -24,6 +24,16 @@ type UpdateProfileInput = {
     avatar_url?: string;
 };
 
+type ForgotPasswordInput = {
+    email: string;
+};
+
+type ResetPasswordInput = {
+    access_token: string;
+    password?: string; 
+    confirm_password?: string;
+};
+
 export const AuthService = {
     async signup(data: SignupInput): Promise<AuthResponse> {
         const response = await api.post<AuthResponse>('/auth/register', data);
@@ -46,8 +56,38 @@ export const AuthService = {
         return response.data;
     },
 
+    async resendVerificationEmail(): Promise<{ success: boolean; message: string }> {
+        const response = await api.post<{ success: boolean; message: string }>(
+            '/auth/resend-verification'
+        );
+        return response.data;
+    },
+
     async login(data: LoginInput): Promise<AuthResponse> {
         const response = await api.post<AuthResponse>('/auth/login', data);
+        if (response.data.access_token) {
+            setAccessToken(response.data.access_token);
+        }
+        return response.data;
+    },
+
+    // Request Password Reset Link
+    async forgotPassword(data: ForgotPasswordInput): Promise<{ success: boolean; message: string }> {
+        const response = await api.post<{ success: boolean; message: string }>(
+            '/auth/forgot-password', 
+            data
+        );
+        return response.data;
+    },
+
+    // Submit New Password via Email Security Reset Token
+    async resetPassword(data: ResetPasswordInput): Promise<AuthResponse> {
+        const response = await api.post<AuthResponse>(
+            '/auth/reset-password', 
+            data
+        );
+        
+        // Logs them in instantly if your API securely issues a session payload post-reset
         if (response.data.access_token) {
             setAccessToken(response.data.access_token);
         }
@@ -58,7 +98,6 @@ export const AuthService = {
         try {
             await api.post('/auth/logout');
         } finally {
-            // This now correctly removes 'access_token' from localStorage
             setAccessToken(null);
         }
     },

@@ -1,8 +1,4 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
+"use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Lock, Mail, User, ShieldCheck, CheckCircle2 } from "lucide-react";

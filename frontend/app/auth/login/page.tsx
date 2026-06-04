@@ -1,80 +1,49 @@
-import React from "react";
-import { useRouter } from "next/navigation";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema, LoginInput } from "@/validators/auth";
-import { AuthService } from "@/api/auth";
-import { useApiStatus } from "@/hooks/useApiStatus";
+"use client";
+
+import LoginForm from "@/components/auth/LoginForm";
+import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function LoginPage() {
-  const router = useRouter();
-  const { error, success, setError, setSuccess, clear } = useApiStatus();
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<LoginInput>({
-    resolver: zodResolver(loginSchema),
-  });
-
-  const onSubmit = async (data: LoginInput) => {
-    clear();
-
-    try {
-      const res = await AuthService.login(data);
-
-      setSuccess(res.message);
-      
-      const { role, full_name } = res.profile;
-
-      if (!role || !full_name?.trim()) {
-        router.push("/role-selection");
-        return;
-      }
-
-      router.push(role === "HOST" ? "/host-dashboard" : "/guest-hub");
-    } catch (err) {
-      setError(err, "Login failed. Try again.");
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-      {error && <div className="text-red-500 text-sm">{error}</div>}
-
-      {success && <div className="text-green-500 text-sm">{success}</div>}
-      <div>
-        <label>Email</label>
-        <input
-          {...register("email")}
-          type="email"
-          className="border p-2 w-full"
-        />
-        {errors.email && (
-          <p className="text-red-500 text-xs">{errors.email.message}</p>
-        )}
-      </div>
-
-      <div>
-        <label>Password</label>
-        <input
-          {...register("password")}
-          type="password"
-          className="border p-2 w-full"
-        />
-        {errors.password && (
-          <p className="text-red-500 text-xs">{errors.password.message}</p>
-        )}
-      </div>
-
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="bg-black text-white p-2 w-full"
+    <div className="min-h-screen flex items-center justify-center flex-col gap-1 p-6 bg-background">
+      {/* HEADER */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="flex flex-col justify-center items-center mb-3 text-center max-w-sm w-full"
       >
-        {isSubmitting ? "Signing In..." : "Sign In"}
-      </button>
-    </form>
+        <motion.div
+          className="mb-4"
+          initial={{ scale: 0.85, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{
+            duration: 0.6,
+            ease: "easeOut",
+          }}
+        >
+          <Image
+            src="/images/auth-image.png"
+            alt="Logo"
+            width={200}
+            height={200}
+            priority
+          />
+        </motion.div>
+
+        <h2 className="text-2xl sm:text-3xl text-foreground font-serif">
+          Welcome to Glimpse
+        </h2>
+
+        <p className="text-gray text-sm sm:text-base mt-1">
+          Log in to manage your events, sync professional galleries, or review
+          live guest candids.
+        </p>
+      </motion.div>
+
+      {/* Login Form */}
+      <LoginForm />
+    </div>
   );
 }
