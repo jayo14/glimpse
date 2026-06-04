@@ -1,4 +1,4 @@
-# glimpse_mobile
+# glimpse
 
 A new Flutter project.
 

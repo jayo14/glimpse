@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:glimpse_mobile/main.dart';
+import 'package:glimpse/main.dart';
 
 void main() {
   testWidgets('App should load splash screen', (WidgetTester tester) async {

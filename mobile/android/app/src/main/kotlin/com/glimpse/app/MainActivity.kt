@@ -1,4 +1,4 @@
-package com.example.glimpse_mobile
+package com.glimpse.app
 
 import io.flutter.embedding.android.FlutterActivity
 

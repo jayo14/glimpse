@@ -89,7 +89,7 @@ class AlbumArchiveScreen extends StatelessWidget {
         children: [
           AspectRatio(
             aspectRatio: 16 / 9,
-            child: Image.network(imageUrl, fit: BoxFit.cover),
+            child: Image.network(imageUrl, fit: BoxFit.cover, errorBuilder: (c,e,s) => Container(color: Colors.black26, child: const Center(child: Icon(Icons.image_outlined, color: Colors.white10)))),
           ),
           Padding(
             padding: const EdgeInsets.all(20),
