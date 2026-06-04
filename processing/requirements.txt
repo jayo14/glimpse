@@ -41,3 +41,10 @@ uvicorn==0.48.0
 uvloop==0.22.1
 watchfiles==1.2.0
 websockets==16.0
+psycopg2-binary==2.9.9
+boto3==1.34.144
+arq==0.25.0
+redis==5.0.7
+insightface==0.7.3
+opencv-python-headless==4.10.0.84
+pillow==10.3.0
