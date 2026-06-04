@@ -1,4 +1,4 @@
-# Design System Inspired by Cluely
+# Design System Inspired by Cluely; applied
 
 ## 1. Visual Theme & Atmosphere
 
