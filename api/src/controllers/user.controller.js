@@ -40,7 +40,7 @@ export const getMe = async (req, res) => {
   }
 
   try {
-    const { user, profile } = await AuthService.getCurrentUser(accessToken);
+    const { user, profile } = await UserService.getCurrentUser(accessToken);
 
     return res.status(200).json({
       success: true,

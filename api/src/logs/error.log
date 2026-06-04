@@ -73,3 +73,5 @@ Argument `full_name` is missing.
     at next (C:\Archive\Web\glimpse\api\node_modules\router\lib\route.js:157:13)
     at requireAuth (file:///C:/Archive/Web/glimpse/api/src/middleware/auth.middleware.js:30:5)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-06-04 20:22:34 [error]: getMe controller error: AuthService is not defined
+2026-06-04 20:22:35 [error]: getMe controller error: AuthService is not defined

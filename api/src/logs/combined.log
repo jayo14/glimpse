@@ -187,3 +187,88 @@ Argument `full_name` is missing.
 2026-06-04 01:33:48 [info]: Profile updated for user f247f8df-0aa1-4838-9d04-c701c3639cf2
 2026-06-04 01:33:48 [info]: POST /api/v1/user/profile-update 200 8284.754 ms
 2026-06-04 01:35:02 [info]: Glimpse API running on port 5002
+2026-06-04 20:02:42 [info]: Glimpse API running on port 5002
+2026-06-04 20:03:52 [info]: GET /api-docs 301 8.478 ms
+2026-06-04 20:03:52 [info]: GET /api-docs/ 200 5.560 ms
+2026-06-04 20:03:53 [info]: GET /api-docs/swagger-ui-init.js 200 0.521 ms
+2026-06-04 20:03:53 [info]: GET /api-docs/swagger-ui.css 200 10.485 ms
+2026-06-04 20:03:53 [info]: GET /api-docs/swagger-ui-standalone-preset.js 200 14.784 ms
+2026-06-04 20:03:53 [info]: GET /api-docs/swagger-ui-bundle.js 200 16.110 ms
+2026-06-04 20:03:53 [info]: GET /api-docs/favicon-32x32.png 200 8.708 ms
+2026-06-04 20:05:34 [info]: POST /auth/register 404 2.058 ms
+2026-06-04 20:10:06 [info]: GET /api-docs/ 304 2.758 ms
+2026-06-04 20:10:06 [info]: GET /api-docs/swagger-ui.css 304 1.961 ms
+2026-06-04 20:10:06 [info]: GET /api-docs/swagger-ui-bundle.js 304 3.826 ms
+2026-06-04 20:10:06 [info]: GET /api-docs/swagger-ui-standalone-preset.js 304 4.276 ms
+2026-06-04 20:10:06 [info]: GET /api-docs/swagger-ui-init.js 304 0.473 ms
+2026-06-04 20:10:52 [info]: POST /auth/register 404 10.021 ms
+2026-06-04 20:14:25 [info]: Glimpse API running on port 5002
+2026-06-04 20:15:24 [info]: GET /api-docs/ 304 17.190 ms
+2026-06-04 20:15:24 [info]: GET /api-docs/swagger-ui-init.js 304 1.424 ms
+2026-06-04 20:15:24 [info]: GET /api-docs/swagger-ui.css 304 39.368 ms
+2026-06-04 20:15:24 [info]: GET /api-docs/swagger-ui-standalone-preset.js 304 7.582 ms
+2026-06-04 20:15:24 [info]: GET /api-docs/swagger-ui-bundle.js 304 9.298 ms
+2026-06-04 20:15:25 [info]: GET /api-docs/favicon-32x32.png 304 0.959 ms
+2026-06-04 20:15:34 [info]: POST /auth/register 404 3.331 ms
+2026-06-04 20:20:07 [info]: Glimpse API running on port 5002
+2026-06-04 20:20:11 [info]: GET /api-docs/ 304 16.107 ms
+2026-06-04 20:20:11 [info]: GET /api-docs/swagger-ui.css 304 12.703 ms
+2026-06-04 20:20:11 [info]: GET /api-docs/swagger-ui-bundle.js 304 3.632 ms
+2026-06-04 20:20:11 [info]: GET /api-docs/swagger-ui-init.js 200 6.089 ms
+2026-06-04 20:20:11 [info]: GET /api-docs/swagger-ui-standalone-preset.js 304 67.365 ms
+2026-06-04 20:20:11 [info]: GET /api-docs/favicon-32x32.png 304 0.816 ms
+2026-06-04 20:20:18 [info]: GET /api-docs/ 304 4.721 ms
+2026-06-04 20:20:18 [info]: GET /api-docs/swagger-ui.css 304 0.969 ms
+2026-06-04 20:20:18 [info]: GET /api-docs/swagger-ui-init.js 304 0.539 ms
+2026-06-04 20:20:18 [info]: GET /api-docs/swagger-ui-bundle.js 304 45.522 ms
+2026-06-04 20:20:18 [info]: GET /api-docs/swagger-ui-standalone-preset.js 304 54.078 ms
+2026-06-04 20:21:04 [info]: POST /api/v1/auth/register 201 12524.658 ms
+2026-06-04 20:22:08 [info]: POST /api/v1/auth/register 201 6503.852 ms
+2026-06-04 20:22:30 [info]: Email verified: wasiusikiru7@gmail.com
+2026-06-04 20:22:30 [info]: POST /api/v1/auth/verify-email 200 1755.848 ms
+2026-06-04 20:22:34 [error]: getMe controller error: AuthService is not defined
+2026-06-04 20:22:34 [info]: GET /api/v1/user/me 500 575.522 ms
+2026-06-04 20:22:35 [error]: getMe controller error: AuthService is not defined
+2026-06-04 20:22:35 [info]: GET /api/v1/user/me 500 198.629 ms
+2026-06-04 20:24:25 [info]: Glimpse API running on port 5002
+2026-06-04 20:28:00 [info]: GET /api-docs/ 304 13.569 ms
+2026-06-04 20:28:00 [info]: GET /api-docs/swagger-ui.css 304 11.772 ms
+2026-06-04 20:28:00 [info]: GET /api-docs/swagger-ui-bundle.js 304 13.263 ms
+2026-06-04 20:28:00 [info]: GET /api-docs/swagger-ui-init.js 304 0.693 ms
+2026-06-04 20:28:00 [info]: GET /api-docs/swagger-ui-standalone-preset.js 304 11.534 ms
+2026-06-04 20:28:00 [info]: GET /api-docs/favicon-32x32.png 304 1.820 ms
+2026-06-04 20:28:12 [info]: GET /api-docs/ 304 0.914 ms
+2026-06-04 20:28:12 [info]: GET /api-docs/swagger-ui.css 304 4.785 ms
+2026-06-04 20:28:12 [info]: GET /api-docs/swagger-ui-bundle.js 304 4.051 ms
+2026-06-04 20:28:12 [info]: GET /api-docs/swagger-ui-standalone-preset.js 304 6.465 ms
+2026-06-04 20:28:12 [info]: GET /api-docs/swagger-ui-init.js 304 0.425 ms
+2026-06-04 20:28:44 [info]: Glimpse API running on port 5002
+2026-06-04 20:28:46 [info]: GET /api-docs/ 304 31.175 ms
+2026-06-04 20:28:46 [info]: GET /api-docs/swagger-ui.css 304 4.783 ms
+2026-06-04 20:28:46 [info]: GET /api-docs/swagger-ui-bundle.js 304 4.119 ms
+2026-06-04 20:28:46 [info]: GET /api-docs/swagger-ui-init.js 200 1.407 ms
+2026-06-04 20:28:46 [info]: GET /api-docs/swagger-ui-standalone-preset.js 304 9.017 ms
+2026-06-04 20:28:46 [info]: GET /api-docs/favicon-32x32.png 304 2.140 ms
+2026-06-04 20:39:07 [info]: Glimpse API running on port 5002
+2026-06-04 20:39:44 [info]: Glimpse API running on port 5002
+2026-06-04 20:40:26 [info]: Glimpse API running on port 5002
+2026-06-04 20:41:38 [info]: Glimpse API running on port 5002
+2026-06-04 20:49:04 [info]: Glimpse API running on port 5002
+2026-06-04 20:53:19 [info]: Glimpse API running on port 5002
+2026-06-04 21:01:03 [info]: Glimpse API running on port 5002
+2026-06-04 21:09:01 [info]: POST /api/v1/auth/register 201 12987.626 ms
+2026-06-04 21:10:56 [info]: Email verified: wasiusikiru7@gmail.com
+2026-06-04 21:10:56 [info]: POST /api/v1/auth/verify-email 200 1689.491 ms
+2026-06-04 21:11:01 [info]: GET /api/v1/user/me 200 1706.512 ms
+2026-06-04 21:11:02 [info]: GET /api/v1/user/me 304 1452.899 ms
+2026-06-04 21:11:45 [info]: GET /api-docs/ 304 19.864 ms
+2026-06-04 21:11:45 [info]: GET /api-docs/swagger-ui-init.js 200 3.169 ms
+2026-06-04 21:11:45 [info]: GET /api-docs/swagger-ui.css 304 15.137 ms
+2026-06-04 21:11:45 [info]: GET /api-docs/swagger-ui-bundle.js 304 16.935 ms
+2026-06-04 21:11:45 [info]: GET /api-docs/swagger-ui-standalone-preset.js 304 19.634 ms
+2026-06-04 21:13:27 [info]: GET /api/v1/user/me 304 2093.294 ms
+2026-06-04 21:13:29 [info]: GET /api/v1/user/me 304 1610.673 ms
+2026-06-04 21:13:31 [info]: GET /api/v1/user/me 304 2098.162 ms
+2026-06-04 21:13:33 [info]: GET /api/v1/user/me 304 1784.812 ms
+2026-06-04 21:15:47 [info]: GET /api/v1/user/me 304 3631.487 ms
+2026-06-04 21:15:48 [info]: GET /api/v1/user/me 304 1304.699 ms

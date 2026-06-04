@@ -11,6 +11,8 @@ import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import eventRoutes from "./routes/event.routes.js";
 
+import { setupSwagger } from "./docs/swagger.js";
+
 dotenv.config();
 
 const app = express();
@@ -26,6 +28,9 @@ app.use(
   }),
 );
 app.use(reqMiddleware);
+
+// Setup Swagger Docs
+setupSwagger(app);
 
 // Routes
 app.use("/api/v1/auth", authRoutes);

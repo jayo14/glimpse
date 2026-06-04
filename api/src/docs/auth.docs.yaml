@@ -1,0 +1,237 @@
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      description: |
+        Registers a new user account with an email and password. 
+        
+        **Workflow:**
+        1. Once called, an verification email will be automatically sent to the user.
+        2. This email contains a redirect URL containing an **access_token** query parameter.
+        3. The client application must extract that token and send it to the /auth/verify-email endpoint to activate the account.
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  format: password
+      responses:
+        201:
+          description: Account created successfully. Verification email sent.
+        400:
+          description: Validation failed.
+        409:
+          description: Email already in use.
+        500:
+          description: Registration failed.
+
+  /auth/verify-email:
+    post:
+      summary: Verify user email using access token
+      description: |
+        Consumes the token sent via the registration email to finalize verification and activate the user.
+        
+        **Note:** The **access_token** should be extracted from the landing URL sent to the user's mailbox. Passing a valid token here logs the user in automatically, sets the secure glimpse_refresh cookie, and returns a working session access token.
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - access_token
+              properties:
+                access_token:
+                  type: string
+                  description: The access token extracted from the email verification link.
+      responses:
+        200:
+          description: Email verified successfully. Session initialized.
+        400:
+          description: Invalid or expired token.
+
+  /auth/resend-verification:
+    post:
+      summary: Resend email verification token
+      description: |
+        Regenerates and resends a verification link to a user who hasn't verified their email yet.
+        
+        **Workflow:**
+        1. Generates a new signup action link using Supabase Admin.
+        2. Dispatches the updated link to the user's email address via your local mail service.
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        200:
+          description: Verification email resent successfully.
+        400:
+          description: User already verified or invalid request.
+        404:
+          description: User not found.
+
+  /auth/forgot-password:
+    post:
+      summary: Initiate password reset (Forgot Password)
+      description: |
+        Triggers a password reset request for a given email address.
+        
+        **Workflow:**
+        1. Generates a recovery link using Supabase.
+        2. Sends a custom recovery email containing an access token.
+        3. The user clicks the link, and the client application must extract the `access_token` to authenticate the user temporarily before calling `/auth/reset-password`.
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        200:
+          description: Password reset email sent successfully.
+        404:
+          description: User not found.
+  
+  /auth/reset-password:
+    post:
+      summary: Confirm and update password
+      description: |
+        Updates the user's password. 
+        
+        **Crucial Authorization Context:**
+        * This endpoint requires an active authenticated session context. 
+        * The user must either be logged in normally, or the client application must place the `access_token` extracted from the password reset email inside the `Authorization: Bearer <token>` header of this request.
+      tags:
+        - Auth
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - password
+              properties:
+                password:
+                  type: string
+                  format: password
+                  description: The new password to replace the old one.
+      responses:
+        200:
+          description: Password updated successfully.
+        400:
+          description: Validation failed.
+        401:
+          description: Unauthorized (Invalid or missing password-reset access token).
+
+  /auth/google-sign-in:
+    post:
+      summary: Authenticate via Google OAuth
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id_token
+              properties:
+                id_token:
+                  type: string
+      responses:
+        200:
+          description: OAuth Authentication Successful.
+        401:
+          description: Invalid provider token.
+
+  /auth/login:
+    post:
+      summary: Log in with email and password
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+      responses:
+        200:
+          description: Login successful.
+        401:
+          description: Invalid credentials.
+
+  /auth/refresh:
+    post:
+      summary: Refresh session access token
+      tags:
+        - Auth
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refresh_token:
+                  type: string
+      responses:
+        200:
+          description: Token rotated successfully.
+
+  /auth/logout:
+    post:
+      summary: Log out current user
+      tags:
+        - Auth
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: Logged out successfully.
+  
+  

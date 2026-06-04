@@ -228,3 +228,78 @@ export const refresh = async (req, res) => {
       .json({ message: "Invalid or expired refresh token" });
   }
 };
+
+export const resendVerification = async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Email is required" });
+  }
+
+  try {
+    await AuthService.resendVerificationToken(email);
+    return res.status(200).json({
+      success: true,
+      message: "A fresh email verification link has been sent.",
+    });
+  } catch (error) {
+    logger.error(`resendVerification controller error: ${error.message}`);
+    if (error.message === "User not found") {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    return res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+export const forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  if (!email) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Email is required" });
+  }
+
+  try {
+    await AuthService.initiatePasswordReset(email);
+    return res.status(200).json({
+      success: true,
+      message: "Password reset instructions have been sent to your email.",
+    });
+  } catch (error) {
+    logger.error(`forgotPassword controller error: ${error.message}`);
+    if (error.message === "User not found") {
+      return res.status(404).json({ success: false, message: error.message });
+    }
+    return res
+      .status(500)
+      .json({ success: false, message: "Failed to send recovery email" });
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  const { access_token, password } = req.body;
+
+  const accessToken = access_token || req.headers.authorization?.split(" ")[1];
+
+  if (!password) {
+    return res
+      .status(400)
+      .json({ success: false, message: "New password is required" });
+  }
+
+  try {
+    await AuthService.finalizePasswordReset(accessToken, password);
+    return res.status(200).json({
+      success: true,
+      message:
+        "Password updated successfully. You can now log in with your new password.",
+    });
+  } catch (error) {
+    logger.error(`resetPassword controller error: ${error.message}`);
+    return res.status(400).json({
+      success: false,
+      message: error.message || "Failed to update password.",
+    });
+  }
+};

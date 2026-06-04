@@ -6,7 +6,7 @@ import {
 import logger from "../utils/logger.js";
 
 import prisma from "../utils/prisma.js";
-import { sendVerificationEmail } from "./mail.service.js";
+import { sendVerificationEmail, sendPasswordResetEmail } from "./mail.service.js";
 
 /**
  * Handle Google Native Sign-In / Web Sign-In OAuth Tokens via Supabase Auth
@@ -196,4 +196,78 @@ export const refreshSession = async (refreshToken) => {
   }
 
   return data.session;
+};
+
+export const resendVerificationToken = async (email) => {
+  // Fetch user to verify status using Admin SDK
+  const { data: { users }, error: listError } = await supabaseAdmin.auth.admin.listUsers();
+  if (listError) throw listError;
+
+  const user = users.find((u) => u.email === email);
+  if (!user) {
+    throw new Error("User not found");
+  }
+
+  if (user.email_confirmed_at) {
+    throw new Error("Email is already verified");
+  }
+
+  const { data: linkData, error: linkError } = await supabaseAdmin.auth.admin.generateLink({
+    type: "signup",
+    email,
+    options: {
+      redirectTo: `${process.env.FRONTEND_URL}/auth/verify-email`,
+    },
+  });
+
+  if (linkError) throw linkError;
+
+  // Email the fresh token link
+  await sendVerificationEmail({
+    email,
+    verificationLink: linkData.properties.action_link,
+  });
+
+  return { success: true };
+};
+
+export const initiatePasswordReset = async (email) => {
+  // Generate a password reset link using Supabase Admin
+  const { data: linkData, error: linkError } = await supabaseAdmin.auth.admin.generateLink({
+    type: "recovery",
+    email,
+    options: {
+      redirectTo: `${process.env.FRONTEND_URL}/auth/reset-password`,
+    },
+  });
+
+  if (linkError) {
+    if (linkError.message.includes("User not found")) {
+      throw new Error("User not found");
+    }
+    throw linkError;
+  }
+
+  await sendPasswordResetEmail({
+    email,
+    resetLink: linkData.properties.action_link,
+  });
+
+  return { success: true };
+};
+
+export const finalizePasswordReset = async (accessToken, newPassword) => {
+  const client = supabaseWithAuth(accessToken);
+
+  const { error } = await client.auth.updateUser({
+    password: newPassword,
+  });
+
+  if (error) {
+    logger.error(`finalizePasswordReset error: ${error.message}`);
+    throw error;
+  }
+
+  logger.info("Password updated successfully.");
+  return { success: true };
 };

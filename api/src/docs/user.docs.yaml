@@ -1,0 +1,42 @@
+paths:
+  /user/profile-update:
+    post:
+      summary: Update profile and set user role
+      tags:
+        - User
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - role
+              properties:
+                full_name:
+                  type: string
+                avatar_url:
+                  type: string
+                role:
+                  type: string
+                  example: USER
+      responses:
+        200:
+          description: Profile updated successfully.
+        401:
+          description: Unauthorized.
+
+  /user/me:
+    get:
+      summary: Retrieve active user context and profile
+      tags:
+        - User
+      security:
+        - BearerAuth: []
+      responses:
+        200:
+          description: User profile payload fetched successfully.
+        401:
+          description: Token expired or missing.
