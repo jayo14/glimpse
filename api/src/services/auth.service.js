@@ -75,7 +75,7 @@ export const registerUser = async ({ email, password }) => {
         email,
         password,
         options: {
-          redirectTo: `${process.env.FRONTEND_URL}/verify-email`,
+          redirectTo: `${process.env.FRONTEND_URL}/auth/verify-email`,
         },
       });
 

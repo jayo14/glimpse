@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", sans-serif;
+  --font-serif: "EB Garamond", Georgia, serif;
+  --font-display: "EB Garamond", Georgia, serif;
+  --font-mono: "Geist Mono", monospace;
+
+  --color-deep-slate: #263043;
+  --color-night: #18171C;
+  --color-rose-mist: #F4C9C8;
+  --color-sage-green: #A7C3A8;
+  --color-deep-rose: #481F1E;
+  --color-forest: #2D492E;
+  --color-steel-gray: #8C929D;
+  --color-charcoal: #000000;
+  --color-coal: #040406;
+  --color-platinum: #FFFFFF;
+  --color-light-gray: #EDEEF2;
+  --color-off-white: #F5F5F5;
+  --color-silver: #E4E4E7;
+  --color-stone: #B2B3BA;
+  --color-ash: #898B91;
+  --color-gray: #9B9B9B;
+
+  --radius-xl: 24px;
+  --radius-lg: 12px;
+  --radius-md: 6px;
+  --radius-sm: 4px;
+}
+
+@layer base {
+  html,
+  body {
+    @apply font-sans bg-off-white text-night overflow-x-hidden scroll-smooth;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-light-gray;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-stone rounded-sm border-2 border-light-gray;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-ash;
+  }
+}
+
+@layer utilities {
+  .glassmorphism {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    @apply border border-silver shadow-sm;
+  }
+
+  .shadow-neo-blue {
+    box-shadow: 0 4px 12px rgba(38, 48, 67, 0.08);
+  }
+
+  .shadow-neo-yellow {
+    box-shadow: 0 4px 12px rgba(167, 195, 168, 0.2);
+  }
+
+  .shadow-cluely-large {
+    box-shadow: rgba(148, 172, 243, 0.4) 10px 12px 20px 0px, rgba(191, 229, 251, 0.4) -3px -3px 4px 0px inset, rgba(19, 26, 228, 0.1) 4px 4px 4px 0px inset;
+  }
+
+  .btn-cluely-primary {
+    @apply font-sans text-base font-medium text-white bg-deep-slate px-5 py-2.5 rounded-lg transition-all duration-300 ease-out inline-flex items-center justify-center gap-2 cursor-pointer;
+    box-shadow: rgba(148, 172, 243, 0.4) 10px 12px 20px 0px, rgba(191, 229, 251, 0.4) -2px -2px 3px 0px inset, rgba(19, 26, 228, 0.1) 3px 3px 3px 0px inset;
+  }
+
+  .btn-cluely-primary:hover {
+    @apply -translate-y-0.5;
+    box-shadow: rgba(148, 172, 243, 0.55) 12px 14px 24px 0px, rgba(191, 229, 251, 0.6) -3px -3px 4px 0px inset, rgba(19, 26, 228, 0.15) 4px 4px 4px 0px inset;
+  }
+
+  .btn-cluely-pill {
+    @apply font-sans text-xs font-medium text-night bg-transparent px-4 py-2 rounded-full border border-silver transition-all duration-200 inline-flex items-center justify-center gap-1.5 cursor-pointer;
+    box-shadow: rgb(175, 179, 196) 0px 0.7px 0px 0px inset;
+  }
+
+  .btn-cluely-pill:hover {
+    @apply bg-off-white;
+    box-shadow: rgb(125, 129, 146) 0px 0.7px 0px 0px inset;
+  }
+
+  .card-cluely-standard {
+    @apply bg-white border border-silver rounded-xl p-5.5 transition-all duration-300 ease-out;
+  }
+
+  .card-cluely-standard:hover {
+    box-shadow: rgba(0, 0, 0, 0.02) 0px 10px 30px -10px, rgba(38, 48, 67, 0.03) 0px 1px 3px;
+    @apply -translate-y-0.5;
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.25s ease-out both;
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}

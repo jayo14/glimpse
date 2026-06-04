@@ -1,0 +1,5 @@
+{
+  "name": "Glimpse",
+  "description": "Interactive event photo aggregation platform that transforms guests into event photographers to capture moments from every angle with zero-friction QR code scan uploads.",
+  "requestFramePermissions": ["camera"]
+}

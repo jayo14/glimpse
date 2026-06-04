@@ -1,16 +1,9 @@
 import * as UserService from "../services/user.service.js";
-import { updateProfileSchema } from "../validators/auth.validators.js";
 import logger from "../utils/logger.js";
 
 // update Profile
 export const updateProfile = async (req, res) => {
-  const parsed = updateProfileSchema.safeParse(req.body);
-  if (!parsed.success) {
-    return res.status(400).json({
-      message: "Validation failed",
-      errors: parsed.error.flatten().fieldErrors,
-    });
-  }
+  const { full_name, avatar_url, role } = req.body;
 
   // req.user is set by the auth middleware
   const userId = req.user?.id;
@@ -19,11 +12,15 @@ export const updateProfile = async (req, res) => {
   }
 
   try {
-    const profile = await AuthService.updateProfile(userId, parsed.data.role);
+    const profile = await UserService.updateProfile(userId, {
+      full_name,
+      avatar_url,
+      role,
+    });
 
     return res.status(200).json({
       success: true,
-      message: `Role set to ${parsed.data.role}`,
+      message: `Profile updated successfully and role set to ${role}`,
       profile,
     });
   } catch (error) {

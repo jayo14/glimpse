@@ -166,3 +166,24 @@ Argument `full_name` is missing.
 2026-06-03 22:28:37 [info]: Glimpse API running on port 5002
 2026-06-03 22:29:43 [info]: Glimpse API running on port 5002
 2026-06-03 22:31:29 [info]: Glimpse API running on port 5002
+2026-06-03 22:35:12 [info]: Glimpse API running on port 5002
+2026-06-03 22:42:08 [info]: Glimpse API running on port 5002
+2026-06-04 01:04:05 [info]: Glimpse API running on port 5002
+2026-06-04 01:04:13 [info]: User logged in: meettola@gmail.com
+2026-06-04 01:04:13 [info]: POST /api/v1/auth/login 200 6464.706 ms
+2026-06-04 01:23:29 [info]: POST /api/v1/auth/register 201 12229.621 ms
+2026-06-04 01:29:05 [info]: Email verified: meettola@gmail.com
+2026-06-04 01:29:05 [info]: POST /api/v1/auth/verify-email 200 3750.247 ms
+2026-06-04 01:30:03 [info]: Glimpse API running on port 5002
+2026-06-04 01:30:47 [error]: TypeError: Cannot destructure property 'full_name' of 'undefined' as it is undefined.
+    at Module.updateProfile (file:///C:/Archive/Web/glimpse/api/src/services/user.service.js:46:5)
+    at updateProfile (file:///C:/Archive/Web/glimpse/api/src/controllers/user.controller.js:12:37)
+    at Layer.handleRequest (C:\Archive\Web\glimpse\api\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Archive\Web\glimpse\api\node_modules\router\lib\route.js:157:13)
+    at requireAuth (file:///C:/Archive/Web/glimpse/api/src/middleware/auth.middleware.js:30:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-06-04 01:30:47 [info]: POST /api/v1/user/profile-update 500 715.529 ms
+2026-06-04 01:33:09 [info]: Glimpse API running on port 5002
+2026-06-04 01:33:48 [info]: Profile updated for user f247f8df-0aa1-4838-9d04-c701c3639cf2
+2026-06-04 01:33:48 [info]: POST /api/v1/user/profile-update 200 8284.754 ms
+2026-06-04 01:35:02 [info]: Glimpse API running on port 5002

@@ -1,6 +1,4 @@
-import {
-  supabaseWithAuth,
-} from "../utils/supabase.js";
+import { supabaseWithAuth } from "../utils/supabase.js";
 import logger from "../utils/logger.js";
 
 import prisma from "../utils/prisma.js";
@@ -11,7 +9,6 @@ import prisma from "../utils/prisma.js";
 export const getCurrentUser = async (accessToken) => {
   const client = supabaseWithAuth(accessToken);
 
-  // Verify the JWT is still valid
   const {
     data: { user },
     error: userError,
@@ -43,16 +40,28 @@ export const getCurrentUser = async (accessToken) => {
 /**
  * Set or update a user's info and role after registration.
  */
-export const updateProfile = async (userId, { full_name, role }) => {
+export const updateProfile = async (
+  userId,
+  { full_name, avatar_url, role },
+) => {
   try {
+    const data = {
+      role: role.toUpperCase(),
+    };
+
+    if (full_name !== undefined) {
+      data.full_name = full_name;
+    }
+
+    if (avatar_url !== undefined) {
+      data.avatar_url = avatar_url;
+    }
+
     const profile = await prisma.profile.update({
       where: {
         id: userId,
       },
-      data: {
-        full_name,
-        role: role.toUpperCase(),
-      },
+      data,
     });
 
     logger.info(`Profile updated for user ${userId}`);

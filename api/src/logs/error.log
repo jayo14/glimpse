@@ -66,3 +66,10 @@ Argument `full_name` is missing.
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-490bc413adbsm14350035e9.15 - gsmtp
 2026-06-03 20:53:16 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-490bc413adbsm14350035e9.15 - gsmtp
+2026-06-04 01:30:47 [error]: TypeError: Cannot destructure property 'full_name' of 'undefined' as it is undefined.
+    at Module.updateProfile (file:///C:/Archive/Web/glimpse/api/src/services/user.service.js:46:5)
+    at updateProfile (file:///C:/Archive/Web/glimpse/api/src/controllers/user.controller.js:12:37)
+    at Layer.handleRequest (C:\Archive\Web\glimpse\api\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Archive\Web\glimpse\api\node_modules\router\lib\route.js:157:13)
+    at requireAuth (file:///C:/Archive/Web/glimpse/api/src/middleware/auth.middleware.js:30:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
