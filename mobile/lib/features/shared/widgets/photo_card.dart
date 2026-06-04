@@ -22,10 +22,34 @@ class PhotoCard extends StatelessWidget {
         height: 320.h(context),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(24.h(context)),
+          color: const Color(0xFF1A1A1C),
           image: DecorationImage(
             image: NetworkImage(src),
             fit: BoxFit.cover,
+            onError: (exception, stackTrace) {
+              // Silently handle error, container background will show
+            },
           ),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withValues(alpha: 0.3),
+              blurRadius: 12,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Stack(
+          children: [
+            // If image fails, show placeholder icon
+            Center(
+              child: Opacity(
+                opacity: 0.05,
+                child: Icon(Icons.image_outlined, size: 48.sp(context), color: Colors.white),
+              ),
+            ),
+            // The image itself is handled by DecorationImage
+          ],
         ),
       ),
     );

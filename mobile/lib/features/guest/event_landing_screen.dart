@@ -16,7 +16,7 @@ class EventLandingScreen extends StatelessWidget {
           Positioned.fill(
             child: Image.network(
               'https://images.unsplash.com/photo-1519741497674-611481863552?w=800',
-              fit: BoxFit.cover,
+              fit: BoxFit.cover, errorBuilder: (c,e,s) => Container(color: Colors.black, child: const Center(child: Icon(Icons.image_outlined, color: Colors.white10, size: 64))),
             ),
           ),
           // Dark Gradient Overlay

@@ -3,6 +3,8 @@ import 'package:go_router/go_router.dart';
 import '../../core/theme/colors.dart';
 import '../../core/utils/responsive.dart';
 import 'dart:math' as math;
+import 'package:gal/gal.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ShareScreen extends StatefulWidget {
   const ShareScreen({super.key});
@@ -16,11 +18,11 @@ class _ShareScreenState extends State<ShareScreen> {
   bool _copied = false;
 
   final List<Map<String, dynamic>> _shareOptions = [
-    {'label': 'X / Twitter', 'icon': Icons.close, 'color': Color(0x0AFFFFFF), 'border': Color(0x1EFFFFFF)},
-    {'label': 'Instagram', 'icon': Icons.camera_alt, 'color': Color(0x1FE1306C), 'border': Color(0x48E1306C)},
-    {'label': 'Save to Photos', 'icon': Icons.download, 'color': Color(0x1A34C759), 'border': Color(0x4034C759)},
-    {'label': 'Copy Link', 'icon': Icons.link, 'color': Color(0x0AFFFFFF), 'border': Color(0x1EFFFFFF)},
-    {'label': 'AirDrop', 'icon': Icons.wifi, 'color': Color(0x1F0A84FF), 'border': Color(0x480A84FF)},
+    {'label': 'X / Twitter', 'icon': Icons.close, 'color': const Color(0x0AFFFFFF), 'border': const Color(0x1EFFFFFF)},
+    {'label': 'Instagram', 'icon': Icons.camera_alt, 'color': const Color(0x1FE1306C), 'border': const Color(0x48E1306C)},
+    {'label': 'Save to Photos', 'icon': Icons.download, 'color': const Color(0x1A34C759), 'border': const Color(0x4034C759)},
+    {'label': 'Copy Link', 'icon': Icons.link, 'color': const Color(0x0AFFFFFF), 'border': const Color(0x1EFFFFFF)},
+    {'label': 'AirDrop', 'icon': Icons.wifi, 'color': const Color(0x1F0A84FF), 'border': const Color(0x480A84FF)},
   ];
 
   void _handleOption(int i) {
@@ -34,6 +36,26 @@ class _ShareScreenState extends State<ShareScreen> {
     Future.delayed(const Duration(milliseconds: 400), () {
       if (mounted) setState(() => _selectedIdx = null);
     });
+  }
+
+  Future<void> _downloadAll() async {
+    final hasAccess = await Gal.hasAccess();
+    if (!hasAccess) {
+      await Gal.requestAccess();
+    }
+
+    if (mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Downloading 12 photos to gallery...'))
+      );
+    }
+  }
+
+  Future<void> _shareGallery() async {
+    await Share.share(
+      'Check out my Glimpse gallery from Paris Tech Gala 2026! https://glimpse.app/g/paris-tech-2026',
+      subject: 'My Glimpse Gallery',
+    );
   }
 
   @override
@@ -181,7 +203,13 @@ class _ShareScreenState extends State<ShareScreen> {
           final opt = _shareOptions[i];
           final isSel = _selectedIdx == i;
           return GestureDetector(
-            onTap: () => _handleOption(i),
+            onTap: () {
+              if (i == 0) {
+                _shareGallery();
+              } else {
+                _handleOption(i);
+              }
+            },
             child: AnimatedScale(
               scale: isSel ? 0.93 : 1.0,
               duration: const Duration(milliseconds: 100),
@@ -214,32 +242,35 @@ class _ShareScreenState extends State<ShareScreen> {
   Widget _buildDownloadStrip(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 20.w(context)),
-      child: Container(
-        padding: const EdgeInsets.all(18),
-        decoration: BoxDecoration(
-          color: Colors.white.withValues(alpha: 0.04),
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: Colors.white.withValues(alpha: 0.07)),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 34.w(context), height: 34.w(context),
-              decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(10)),
-              child: const Icon(Icons.download, color: Colors.white, size: 16),
-            ),
-            SizedBox(width: 12.w(context)),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Download All (HD)', style: TextStyle(color: Colors.white, fontSize: 13.sp(context), fontWeight: FontWeight.w500)),
-                  Text('12 photos · ~84 MB', style: TextStyle(color: GlimpseColors.coolGray, fontSize: 11.sp(context))),
-                ],
+      child: GestureDetector(
+        onTap: _downloadAll,
+        child: Container(
+          padding: const EdgeInsets.all(18),
+          decoration: BoxDecoration(
+            color: Colors.white.withValues(alpha: 0.04),
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: Colors.white.withValues(alpha: 0.07)),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 34.w(context), height: 34.w(context),
+                decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.08), borderRadius: BorderRadius.circular(10)),
+                child: const Icon(Icons.download, color: Colors.white, size: 16),
               ),
-            ),
-            Icon(Icons.chevron_right, color: Colors.white.withValues(alpha: 0.35), size: 14),
-          ],
+              SizedBox(width: 12.w(context)),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Download All (HD)', style: TextStyle(color: Colors.white, fontSize: 13.sp(context), fontWeight: FontWeight.w500)),
+                    Text('12 photos · ~84 MB', style: TextStyle(color: GlimpseColors.coolGray, fontSize: 11.sp(context))),
+                  ],
+                ),
+              ),
+              Icon(Icons.chevron_right, color: Colors.white.withValues(alpha: 0.35), size: 14),
+            ],
+          ),
         ),
       ),
     );

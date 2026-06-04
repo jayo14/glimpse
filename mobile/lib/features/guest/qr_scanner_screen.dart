@@ -1,3 +1,4 @@
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:flutter/material.dart';
 import '../../core/utils/responsive.dart';
 import 'package:go_router/go_router.dart';
@@ -42,7 +43,18 @@ class _QRScannerScreenState extends State<QRScannerScreen> with SingleTickerProv
       backgroundColor: Colors.black,
       body: Stack(
         children: [
-          Positioned.fill(child: Image.network('https://images.unsplash.com/photo-1661006117166-6227bfc9c8b0?w=1080', fit: BoxFit.cover, color: Colors.black.withValues(alpha: 0.45), colorBlendMode: BlendMode.multiply)),
+          Positioned.fill(child: MobileScanner(
+            onDetect: (capture) {
+              final List<Barcode> barcodes = capture.barcodes;
+              if (barcodes.isNotEmpty) {
+                final String? code = barcodes.first.rawValue;
+                if (code != null) {
+                   debugPrint('Barcode found! $code');
+                   context.go('/guest-name');
+                }
+              }
+            },
+          )),
           Positioned.fill(child: Container(decoration: BoxDecoration(gradient: RadialGradient(center: Alignment.center, radius: 1.0, colors: [Colors.transparent, Colors.black.withValues(alpha: 0.7)], stops: const [0.4, 1.0])))),
           Positioned(
             top: 0, left: 0, right: 0,
