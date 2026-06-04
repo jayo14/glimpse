@@ -240,6 +240,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.3.0"
+  lucide_flutter:
+    dependency: "direct main"
+    description:
+      name: lucide_flutter
+      sha256: "3b111fa6978130ab3290ed525085d74cb82db422511b9dce4e871be50da21fca"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.17.0"
   matcher:
     dependency: transitive
     description:
@@ -296,15 +304,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
-  phosphor_flutter:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: main
-      resolved-ref: "290a73304d62a5b74af3dbb38121121b92b2dcc5"
-      url: "https://github.com/phosphor-icons/flutter.git"
-    source: git
-    version: "2.1.0"
   pool:
     dependency: transitive
     description:

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:phosphor_flutter/phosphor_flutter.dart';
 
 class GlimpseIcon extends StatelessWidget {
-  final PhosphorIconData icon;
+  final IconData icon;
   final double? size;
   final Color? color;
 
@@ -11,12 +10,10 @@ class GlimpseIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveColor = color ?? Theme.of(context).iconTheme.color ?? Colors.white;
-    return PhosphorIcon(
+    return Icon(
       icon,
       size: size,
       color: effectiveColor,
-      duotoneSecondaryColor: effectiveColor.withValues(alpha: 0.2),
-      duotoneSecondaryOpacity: 1.0,
     );
   }
 }
