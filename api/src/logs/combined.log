@@ -300,3 +300,15 @@ Please make sure your database server is running at `aws-0-eu-west-1.pooler.supa
 2026-06-05 09:48:54 [info]: POST /api/v1/auth/register 500 16256.659 ms
 2026-06-05 09:49:07 [error]: forgotPassword controller error: User with this email not found
 2026-06-05 09:49:07 [info]: POST /api/v1/auth/forgot-password 500 5204.857 ms
+2026-06-05 10:31:05 [info]: Glimpse API running on port 5002
+2026-06-05 10:31:13 [info]: GET /health 304 12.010 ms
+2026-06-05 10:31:13 [info]: GET /favicon.ico 404 7.696 ms
+2026-06-05 10:31:19 [info]: GET /api-docs 301 5.302 ms
+2026-06-05 10:31:19 [info]: GET /api-docs/ 200 5.942 ms
+2026-06-05 10:31:19 [info]: GET /api-docs/swagger-ui-init.js 200 0.850 ms
+2026-06-05 10:31:19 [info]: GET /api-docs/swagger-ui.css 200 16.507 ms
+2026-06-05 10:31:19 [info]: GET /api-docs/swagger-ui-standalone-preset.js 200 23.665 ms
+2026-06-05 10:31:19 [info]: GET /api-docs/swagger-ui-bundle.js 200 17.161 ms
+2026-06-05 10:31:20 [info]: GET /api-docs/favicon-32x32.png 200 3.968 ms
+2026-06-05 10:32:27 [info]: Glimpse API running on port 5002
+2026-06-05 10:32:38 [info]: Glimpse API running on port 5002

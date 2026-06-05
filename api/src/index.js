@@ -32,6 +32,11 @@ app.use(reqMiddleware);
 // Setup Swagger Docs
 setupSwagger(app);
 
+// Redirect root to Swagger UI
+app.get("/", (req, res) => {
+  res.redirect("/api-docs");
+});
+
 // Routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);

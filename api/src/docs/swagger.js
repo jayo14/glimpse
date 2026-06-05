@@ -1,8 +1,13 @@
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
 dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const options = {
   definition: {
@@ -29,8 +34,7 @@ const options = {
       },
     },
   },
-  // Point swagger-jsdoc to your external YAML files instead of routes
-  apis: ["./src/docs/*.yaml", "./docs/*.yaml"], 
+  apis: [path.join(__dirname, "*.yaml")], 
 };
 
 const swaggerSpec = swaggerJSDoc(options);
