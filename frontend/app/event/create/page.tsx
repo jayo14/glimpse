@@ -1,21 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm, FormProvider } from "react-hook-form";
 import { AnimatePresence } from "framer-motion";
-import { Loader2, ArrowRight } from "lucide-react";
+import { Loader2, ArrowRight, ShieldAlert } from "lucide-react";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { EventService } from "@/api/event";
+import { AuthService } from "@/api/auth"; 
 
 import DetailsStep from "@/components/event/DetailsStep";
 import InvitesStep from "@/components/event/InvitesStep";
 import SuccessStep from "@/components/event/SuccessStep";
 import MetricsStep from "@/components/event/MetricsStep";
-
 
 interface PhotographerInput {
   email: string;
@@ -27,7 +27,7 @@ interface EventFormInputs {
   location?: string;
   guest_photo_limit?: number;
   attendees?: number;
-  event_start?: string | Date | undefined; 
+  event_start?: string | Date | undefined;
   event_end?: string | Date | undefined;
   photographers?: PhotographerInput[];
 }
@@ -40,6 +40,8 @@ type CreationSteps =
 
 export default function CreateEventPage() {
   const router = useRouter();
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [isCheckingRole, setIsCheckingRole] = useState<boolean>(true);
 
   const [step, setStep] = useState<CreationSteps>("PRIMARY_METRICS");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -54,7 +56,7 @@ export default function CreateEventPage() {
       location: "",
       guest_photo_limit: 0,
       attendees: 0,
-      event_start: undefined, 
+      event_start: undefined,
       event_end: undefined,
       photographers: [],
     },
@@ -63,6 +65,23 @@ export default function CreateEventPage() {
   // eslint-disable-next-line react-hooks/incompatible-library
   const eventTitle = methods.watch("title") || "";
   const photographerFields = methods.watch("photographers") || [];
+
+  // Fetch and check profile role on mount
+  useEffect(() => {
+    async function checkUserAccess() {
+      try {
+        const profile = await AuthService.getMe();
+        setUserRole(profile?.profile?.role || "");
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (error) {
+        toast.error("Failed to authenticate user session.");
+        router.push("/host-dashboard");
+      } finally {
+        setIsCheckingRole(false);
+      }
+    }
+    checkUserAccess();
+  }, [router]);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -123,7 +142,7 @@ export default function CreateEventPage() {
           for (const p of data.photographers) {
             try {
               await EventService.addCollaborator(structuralId, p.email);
-            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+              // eslint-disable-next-line @typescript-eslint/no-unused-vars
             } catch (error: any) {
               toast.error(`Failed to send invitation to ${p.email}`);
             }
@@ -143,6 +162,53 @@ export default function CreateEventPage() {
     }
   };
 
+  // 1. Loading State while checking role
+  if (isCheckingRole) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-background text-foreground">
+        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+      </div>
+    );
+  }
+
+  // 2. Access Restriction UI State
+  if (userRole !== "HOST" && userRole !== "PHOTOGRAPHER") {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-6 bg-background text-foreground select-none">
+        <div className="w-full max-w-md p-6 rounded-2xl border border-border bg-card text-center shadow-sm flex flex-col items-center gap-4">
+          <div className="p-3 bg-destructive/10 rounded-full text-destructive">
+            <ShieldAlert className="h-8 w-8" />
+          </div>
+          <div className="space-y-2">
+            <h2 className="text-xl font-semibold tracking-tight">
+              Access Restricted
+            </h2>
+            <p className="text-sm text-muted-foreground">
+              You need a <strong>Host</strong> or <strong>Photographer</strong>{" "}
+              profile to build and orchestrate events.
+            </p>
+          </div>
+          <div className="flex flex-col gap-2 w-full mt-2">
+            <Button
+              onClick={() => router.push("/host-dashboard")}
+              className="w-full rounded-full"
+            >
+              Go to Dashboard
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() => router.push("/settings/profile")} // Adjust this path to where users switch roles
+              className="w-full rounded-full"
+            >
+              Switch Profile Role
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 3. Allowed Form Screen State
   const activeDotIndex =
     step === "PRIMARY_METRICS" ? 0 : step === "ADDITIONAL_DETAILS" ? 1 : 2;
   const isFooterVisible = step !== "LIVE_SUCCESS";
@@ -166,18 +232,16 @@ export default function CreateEventPage() {
                 <SuccessStep
                   key="success"
                   title={eventTitle}
-                  eventDate={
-                    (() => {
-                      const startTime = methods.getValues("event_start");
-                      return startTime
-                        ? new Date(startTime).toLocaleDateString("en-US", {
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric",
-                          })
-                        : "";
-                    })()
-                  }
+                  eventDate={(() => {
+                    const startTime = methods.getValues("event_start");
+                    return startTime
+                      ? new Date(startTime).toLocaleDateString("en-US", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })
+                      : "";
+                  })()}
                   description={methods.getValues("description")}
                   imagePreview={imagePreview}
                   eventId={liveEventId}

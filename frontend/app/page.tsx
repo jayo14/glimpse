@@ -17,15 +17,15 @@ import {
 import { motion } from "framer-motion";
 
 import { PRELOADED_THEMES, FAQS, Photo } from "@/lib/types";
-import IphoneMockupShowcase from "@/components/IphoneMockupShowcase";
-import PricingCalculator from "@/components/PricingCalculator";
-import TvSlideshow from "@/components/TvSlideshow";
-import PhoneMockup from "@/components/PhoneMockup";
+import IphoneMockupShowcase from "@/components/landing-page/IphoneMockupShowcase";
+import PricingCalculator from "@/components/landing-page/PricingCalculator";
+import TvSlideshow from "@/components/landing-page/TvSlideshow";
+import PhoneMockup from "@/components/landing-page/PhoneMockup";
 
 // New high fidelity pages and custom navigation elements
-import BlogPage from "@/components/BlogPage";
-import CaseStudies from "@/components/CaseStudies";
-import AuthPages from "@/components/AuthPages";
+import BlogPage from "@/components/landing-page/BlogPage";
+import CaseStudies from "@/components/landing-page/CaseStudies";
+import AuthPages from "@/components/landing-page/AuthPages";
 import {
   Menubar,
   MenubarContent,
