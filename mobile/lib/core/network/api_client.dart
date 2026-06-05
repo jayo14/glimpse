@@ -23,7 +23,43 @@ class ApiClient {
         return handler.next(options);
       },
       onError: (DioException e, handler) async {
-        // Handle token refresh logic here if needed, or global error handling
+        if (e.response?.statusCode == 401 && !e.requestOptions.path.contains('/auth/login') && !e.requestOptions.path.contains('/auth/refresh')) {
+          try {
+            final refreshToken = await SecureStorage.getRefreshToken();
+            if (refreshToken == null) {
+              await SecureStorage.clearTokens();
+              return handler.next(e);
+            }
+
+            // Attempt to refresh the token
+            final refreshResponse = await _dio.post('/auth/refresh', data: {
+              'refresh_token': refreshToken,
+            });
+
+            if (refreshResponse.statusCode == 200) {
+              final newAccessToken = refreshResponse.data['access_token'];
+              await SecureStorage.saveTokens(accessToken: newAccessToken);
+
+              // Retry the original request
+              final opts = Options(
+                method: e.requestOptions.method,
+                headers: e.requestOptions.headers,
+              );
+              opts.headers?['Authorization'] = 'Bearer $newAccessToken';
+              
+              final cloneReq = await _dio.request(
+                e.requestOptions.path,
+                options: opts,
+                data: e.requestOptions.data,
+                queryParameters: e.requestOptions.queryParameters,
+              );
+              return handler.resolve(cloneReq);
+            }
+          } catch (refreshError) {
+            await SecureStorage.clearTokens();
+            // TODO: Navigate to login screen
+          }
+        }
         return handler.next(e);
       },
     ));

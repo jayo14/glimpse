@@ -318,3 +318,12 @@ Please make sure your database server is running at `aws-0-eu-west-1.pooler.supa
 2026-06-05 10:42:20 [info]: GET /api-docs/swagger-ui-bundle.js 304 2.179 ms
 2026-06-05 10:42:20 [info]: GET /api-docs/swagger-ui-standalone-preset.js 304 1.932 ms
 2026-06-05 10:42:20 [info]: GET /api-docs/swagger-ui-init.js 304 3.146 ms
+2026-06-05 10:47:22 [info]: Glimpse API running on port 5002
+2026-06-05 10:47:24 [info]: GET / 302 10.444 ms
+2026-06-05 10:47:24 [info]: GET /api-docs 301 2.744 ms
+2026-06-05 10:47:24 [info]: GET /api-docs/ 200 4.909 ms
+2026-06-05 10:47:24 [info]: GET /api-docs/swagger-ui.css 304 3.603 ms
+2026-06-05 10:47:24 [info]: GET /api-docs/swagger-ui-bundle.js 304 2.338 ms
+2026-06-05 10:47:24 [info]: GET /api-docs/swagger-ui-standalone-preset.js 304 1.766 ms
+2026-06-05 10:47:24 [info]: GET /api-docs/swagger-ui-init.js 304 2.699 ms
+2026-06-05 10:47:25 [info]: GET /api-docs/favicon-32x32.png 304 1.299 ms

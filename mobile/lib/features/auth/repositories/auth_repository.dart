@@ -48,6 +48,47 @@ class AuthRepository {
     }
   }
 
+  Future<AuthResponse> verifyEmail(String token) async {
+    try {
+      final response = await _dio.post('/auth/verify-email', data: {
+        'access_token': token,
+      });
+      return AuthResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      if (e.response != null && e.response?.data != null) {
+        throw Exception(e.response?.data['message'] ?? 'Failed to verify email');
+      }
+      throw Exception('Network error or server unavailable');
+    }
+  }
+
+  Future<void> resendVerification(String email) async {
+    try {
+      await _dio.post('/auth/resend-verification', data: {
+        'email': email,
+      });
+    } on DioException catch (e) {
+      if (e.response != null && e.response?.data != null) {
+        throw Exception(e.response?.data['message'] ?? 'Failed to resend verification email');
+      }
+      throw Exception('Network error or server unavailable');
+    }
+  }
+
+  Future<void> resetPassword(String token, String newPassword) async {
+    try {
+      await _dio.post('/auth/reset-password', data: {
+        'access_token': token,
+        'password': newPassword,
+      });
+    } on DioException catch (e) {
+      if (e.response != null && e.response?.data != null) {
+        throw Exception(e.response?.data['message'] ?? 'Failed to reset password');
+      }
+      throw Exception('Network error or server unavailable');
+    }
+  }
+
   Future<void> logout() async {
     try {
       await _dio.post('/auth/logout');

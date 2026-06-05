@@ -5,6 +5,8 @@ import '../../features/shared/share_screen.dart';
 import '../../features/auth/auth_screen.dart';
 import '../../features/auth/signup_screen.dart';
 import '../../features/auth/forgot_password_screen.dart';
+import '../../features/auth/verify_email_screen.dart';
+import '../../features/auth/reset_password_screen.dart';
 import '../../features/guest/guest_setup_screen.dart';
 import '../../features/guest/guest_entry_screen.dart';
 import '../../features/guest/qr_scanner_screen.dart';
@@ -33,6 +35,14 @@ final router = GoRouter(
     GoRoute(path: '/auth', builder: (context, state) => const AuthScreen()),
     GoRoute(path: '/signup', builder: (context, state) => const SignupScreen()),
     GoRoute(path: '/forgot-password', builder: (context, state) => const ForgotPasswordScreen()),
+    GoRoute(
+      path: '/verify-email', 
+      builder: (context, state) => VerifyEmailScreen(token: state.uri.queryParameters['token'] ?? ''),
+    ),
+    GoRoute(
+      path: '/reset-password', 
+      builder: (context, state) => ResetPasswordScreen(token: state.uri.queryParameters['token'] ?? ''),
+    ),
     GoRoute(path: '/role-selection', builder: (context, state) => const RoleSelectionScreen()),
     GoRoute(path: '/guest-entry', builder: (context, state) => const GuestEntryScreen()),
     GoRoute(path: '/qr-scanner', builder: (context, state) => const QRScannerScreen()),
