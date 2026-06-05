@@ -103,18 +103,18 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] text-[#18171C] selection:bg-[#F4C9C8]/40 selection:text-[#481F1E] font-sans overflow-x-hidden antialiased">
+    <div className="min-h-screen bg-[#F5F5F5] text-[night] selection:bg-[rose-mist]/40 selection:text-[deep-rose] font-sans overflow-x-hidden antialiased">
       {/* TOAST SYSTEM */}
       {toastMessage && (
-        <div className="fixed bottom-8 right-8 z-50 max-w-sm rounded-[16px] bg-white border border-[#E4E4E7] p-4 shadow-cluely-premium flex items-start space-x-3.5 text-sm text-[#18171C] animate-fade-in">
-          <div className="h-6 w-6 mt-0.5 rounded-full bg-[#18171C] flex items-center justify-center text-white shrink-0 text-xs text-center font-bold">
+        <div className="fixed bottom-8 right-8 z-50 max-w-sm rounded-[16px] bg-white border border-[silver] p-4 shadow-cluely-premium flex items-start space-x-3.5 text-sm text-[night] animate-fade-in">
+          <div className="h-6 w-6 mt-0.5 rounded-full bg-[night] flex items-center justify-center text-white shrink-0 text-xs text-center font-bold">
             ✓
           </div>
           <div className="font-sans">
-            <p className="text-[10px] text-[#263043] font-sans font-semibold uppercase tracking-wider">
+            <p className="text-[10px] text-[deep-slate] font-sans font-semibold uppercase tracking-wider">
               Update
             </p>
-            <p className="text-[12px] text-[#898B91] font-light leading-normal mt-0.5">
+            <p className="text-[12px] text-[ash] font-light leading-normal mt-0.5">
               {toastMessage}
             </p>
           </div>
@@ -132,7 +132,7 @@ export default function App() {
       )}
 
       {/* MINIMAL NAVBAR */}
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-[#E4E4E7]/60 select-none">
+      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-[silver]/60 select-none">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between font-sans">
           <div
             className="flex items-center space-x-2.5 cursor-pointer font-serif"
@@ -141,7 +141,7 @@ export default function App() {
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            <div className="h-2 w-2 rounded-full bg-[#263043]"></div>
+            <div className="h-2 w-2 rounded-full bg-[deep-slate]"></div>
             <span className="font-medium text-lg tracking-tight">glimpse.</span>
           </div>
 
@@ -154,17 +154,17 @@ export default function App() {
                     setCurrentView("home");
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
-                  className="text-[10px] uppercase font-semibold text-[#898B91] tracking-widest hover:text-[#263043] transition-all cursor-pointer px-3 py-1.5 rounded-lg hover:bg-stone-100"
+                  className="text-[10px] uppercase font-semibold text-[ash] tracking-widest hover:text-[deep-slate] transition-all cursor-pointer px-3 py-1.5 rounded-lg hover:bg-stone-100"
                 >
                   Overview
                 </button>
               </MenubarMenu>
 
               <MenubarMenu>
-                <MenubarTrigger className="text-[10px] uppercase font-semibold text-[#898B91] tracking-widest hover:text-[#263043] transition-all cursor-pointer px-3 py-1.5 rounded-lg hover:bg-stone-100 aria-expanded:bg-stone-200">
+                <MenubarTrigger className="text-[10px] uppercase font-semibold text-[ash] tracking-widest hover:text-[deep-slate] transition-all cursor-pointer px-3 py-1.5 rounded-lg hover:bg-stone-100 aria-expanded:bg-stone-200">
                   Case Studies
                 </MenubarTrigger>
-                <MenubarContent className="bg-white border border-[#E4E4E7]/60 p-1 rounded-xl shadow-lg min-w-[200px] z-50">
+                <MenubarContent className="bg-white border border-[silver]/60 p-1 rounded-xl shadow-lg min-w-[200px] z-50">
                   <MenubarItem
                     onClick={() => {
                       setActiveCaseId("wedding");
@@ -174,7 +174,7 @@ export default function App() {
                     className="flex items-center justify-between px-3 py-2 text-[11px] hover:bg-[#F5F5F5] rounded-lg cursor-pointer"
                   >
                     <span className="font-serif">Wedding Case Study</span>
-                    <span className="text-[9px] font-mono text-[#898B91] uppercase">
+                    <span className="text-[9px] font-mono text-[ash] uppercase">
                       Sarah & James
                     </span>
                   </MenubarItem>
@@ -234,7 +234,7 @@ export default function App() {
                     className="flex items-center justify-between px-3 py-2 text-[11px] hover:bg-off-white rounded-lg cursor-pointer"
                   >
                     <span>Host Login Console</span>
-                    <BookOpen className="h-3.5 w-3.5 text-[#263043]" />
+                    <BookOpen className="h-3.5 w-3.5 text-[deep-slate]" />
                   </MenubarItem>
                   <MenubarSeparator className="h-px bg-stone-100 my-1" />
                   <MenubarItem
@@ -245,7 +245,7 @@ export default function App() {
                     className="flex items-center justify-between px-3 py-2 text-[11px] hover:bg-[#F5F5F5] rounded-lg cursor-pointer"
                   >
                     <span>Register Dashboard</span>
-                    <User className="h-3.5 w-3.5 text-[#263043]" />
+                    <User className="h-3.5 w-3.5 text-[deep-slate]" />
                   </MenubarItem>
                   <MenubarSeparator className="h-px bg-stone-100 my-1" />
                   <MenubarItem
@@ -256,7 +256,7 @@ export default function App() {
                     className="flex items-center justify-between px-3 py-2 text-[11px] hover:bg-[#F5F5F5] rounded-lg cursor-pointer"
                   >
                     <span>Restore Password</span>
-                    <Lock className="h-3.5 w-3.5 text-[#898B91]" />
+                    <Lock className="h-3.5 w-3.5 text-[ash]" />
                   </MenubarItem>
                   <MenubarSeparator className="h-px bg-stone-100 my-1" />
                   <MenubarItem
@@ -289,7 +289,7 @@ export default function App() {
                   target?.scrollIntoView({ behavior: "smooth" });
                 }
               }}
-              className="px-5 py-2.5 rounded-xl bg-[#263043] hover:bg-black text-[11px] font-semibold text-white tracking-widest uppercase transition-all shadow-cluely-large hover:-translate-y-0.5 cursor-pointer"
+              className="px-5 py-2.5 rounded-xl bg-[deep-slate] hover:bg-black text-[11px] font-semibold text-white tracking-widest uppercase transition-all shadow-cluely-large hover:-translate-y-0.5 cursor-pointer"
             >
               Start Event
             </button>
@@ -323,21 +323,21 @@ export default function App() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <div className="text-[11px] font-mono uppercase tracking-widest text-[#898B91] flex items-center space-x-2">
-                    <span className="text-[#263043] font-bold">/ /</span>
+                  <div className="text-[11px] font-mono uppercase tracking-widest text-[ash] flex items-center space-x-2">
+                    <span className="text-[deep-slate] font-bold">/ /</span>
                     <span>Uncomplicated Crowdsourcing Portal</span>
                   </div>
 
-                  <h1 className="font-serif font-light text-[42px] sm:text-5xl md:text-6xl lg:text-7xl text-[#18171C] tracking-tight leading-[1.02] sm:leading-[0.95]">
+                  <h1 className="font-serif font-light text-[42px] sm:text-5xl md:text-6xl lg:text-7xl text-[night] tracking-tight leading-[1.02] sm:leading-[0.95]">
                     Stop asking guests to download an app.
                   </h1>
 
-                  <p className="text-[#898B91] text-sm md:text-base leading-relaxed font-sans font-light max-w-xl">
+                  <p className="text-[ash] text-sm md:text-base leading-relaxed font-sans font-light max-w-xl">
                     Asking guests to download an app kills the vibe. Blurry
                     photos, forgotten cameras, and login screens do the rest.
                   </p>
 
-                  <p className="text-[#18171C] text-sm md:text-base leading-relaxed font-sans font-medium max-w-xl">
+                  <p className="text-[night] text-sm md:text-base leading-relaxed font-sans font-medium max-w-xl">
                     <strong>
                       Guests just scan a QR code with their regular camera. No
                       app. No password. No typing.
@@ -352,7 +352,7 @@ export default function App() {
                         const target = document.getElementById("cost-analysis");
                         target?.scrollIntoView({ behavior: "smooth" });
                       }}
-                      className="px-6 py-3.5 rounded-xl bg-[#263043] hover:bg-black text-[11px] font-sans font-semibold text-white tracking-widest uppercase transition-all shadow-cluely-large hover:-translate-y-0.5 cursor-pointer"
+                      className="px-6 py-3.5 rounded-xl bg-[deep-slate] hover:bg-black text-[11px] font-sans font-semibold text-white tracking-widest uppercase transition-all shadow-cluely-large hover:-translate-y-0.5 cursor-pointer"
                     >
                       Start a free test
                     </button>
@@ -363,22 +363,22 @@ export default function App() {
                           document.getElementById("visual-showcase");
                         target?.scrollIntoView({ behavior: "smooth" });
                       }}
-                      className="inline-flex items-center gap-2 group text-xs font-semibold text-[#263043] hover:text-[#898B91] uppercase tracking-widest transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-2 group text-xs font-semibold text-[deep-slate] hover:text-[ash] uppercase tracking-widest transition-colors cursor-pointer"
                     >
                       See it live
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </button>
                   </div>
 
-                  <div className="border-t border-[#E4E4E7]/60 pt-8 grid grid-cols-2 sm:grid-cols-4 gap-6 text-[10px] uppercase tracking-widest text-[#898B91]">
+                  <div className="border-t border-[silver]/60 pt-8 grid grid-cols-2 sm:grid-cols-4 gap-6 text-[10px] uppercase tracking-widest text-[ash]">
                     <div>
-                      <p className="font-serif text-lg text-[#18171C] mb-0.5 font-light">
+                      <p className="font-serif text-lg text-[night] mb-0.5 font-light">
                         0s Sign-up
                       </p>
                       <p className="font-sans font-light">No app needed</p>
                     </div>
                     <div>
-                      <p className="font-serif text-lg text-[#18171C] mb-0.5 font-light">
+                      <p className="font-serif text-lg text-[night] mb-0.5 font-light">
                         100% Web
                       </p>
                       <p className="font-sans font-light font-normal">
@@ -386,7 +386,7 @@ export default function App() {
                       </p>
                     </div>
                     <div>
-                      <p className="font-serif text-lg text-[#18171C] mb-0.5 font-light">
+                      <p className="font-serif text-lg text-[night] mb-0.5 font-light">
                         Unlimited
                       </p>
                       <p className="font-sans font-light">
@@ -394,7 +394,7 @@ export default function App() {
                       </p>
                     </div>
                     <div>
-                      <p className="font-serif text-lg text-[#18171C] mb-0.5 font-light">
+                      <p className="font-serif text-lg text-[night] mb-0.5 font-light">
                         Live Sync
                       </p>
                       <p className="font-sans font-light font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded shadow-sm inline-block">
@@ -416,18 +416,18 @@ export default function App() {
                   }}
                 >
                   {/* Floating aesthetic labels */}
-                  <div className="absolute -top-6 left-2 sm:-left-6 bg-white border border-[#E4E4E7]/60 shadow-cluely-premium p-3 rounded-2xl flex items-center gap-2.5 z-20">
+                  <div className="absolute -top-6 left-2 sm:-left-6 bg-white border border-[silver]/60 shadow-cluely-premium p-3 rounded-2xl flex items-center gap-2.5 z-20">
                     <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></div>
-                    <span className="text-[9.5px] font-sans font-semibold text-[#263043] uppercase tracking-wide">
+                    <span className="text-[9.5px] font-sans font-semibold text-[deep-slate] uppercase tracking-wide">
                       Live Camera Uplink
                     </span>
                   </div>
 
-                  <div className="absolute -bottom-4 right-2 sm:-right-4 bg-white border border-[#E4E4E7]/60 shadow-cluely-premium p-3.5 rounded-2xl z-20 font-sans max-w-[150px] hidden sm:block">
-                    <p className="text-[8.5px] uppercase text-[#898B91] font-semibold tracking-wider">
+                  <div className="absolute -bottom-4 right-2 sm:-right-4 bg-white border border-[silver]/60 shadow-cluely-premium p-3.5 rounded-2xl z-20 font-sans max-w-[150px] hidden sm:block">
+                    <p className="text-[8.5px] uppercase text-[ash] font-semibold tracking-wider">
                       Try Sandbox
                     </p>
-                    <p className="text-[10px] text-[#263043] font-light mt-0.5 leading-snug">
+                    <p className="text-[10px] text-[deep-slate] font-light mt-0.5 leading-snug">
                       Click any quick-preset on the phone to draft live streams
                       below!
                     </p>
@@ -455,26 +455,26 @@ export default function App() {
           {/* HOW IT WORKS: SYSTEM FRAMEWORK */}
           <section
             id="minimal-framework"
-            className="relative py-28 bg-[#FFFFFF] border-y border-[#E4E4E7]/60 px-6"
+            className="relative py-28 bg-[white] border-y border-[silver]/60 px-6"
           >
             <div className="max-w-5xl mx-auto space-y-24">
               <motion.div
-                className="flex flex-col md:flex-row md:items-end justify-between border-b border-[#E4E4E7]/60 pb-8 gap-4"
+                className="flex flex-col md:flex-row md:items-end justify-between border-b border-[silver]/60 pb-8 gap-4"
                 variants={fadeUpVariant}
                 initial="initial"
                 whileInView="whileInView"
                 viewport={{ once: true, margin: "-100px" }}
               >
                 <div className="space-y-4 text-left">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[#898B91]">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-[ash]">
                     How it works
                   </span>
-                  <h2 className="font-serif text-3xl md:text-5xl text-[#18171C] font-light tracking-tight">
+                  <h2 className="font-serif text-3xl md:text-5xl text-[night] font-light tracking-tight">
                     Scan. Upload. Done.
                   </h2>
                 </div>
-                <p className="text-xs text-[#898B91] font-sans max-w-sm font-light text-left">
-                  <strong className="text-[#18171C] font-semibold">
+                <p className="text-xs text-[ash] font-sans max-w-sm font-light text-left">
+                  <strong className="text-[night] font-semibold">
                     Guests just scan a QR code with their regular camera. No
                     app. No password. No typing.
                   </strong>{" "}
@@ -491,13 +491,13 @@ export default function App() {
               >
                 {/* Step 1 */}
                 <motion.div className="space-y-6" variants={fadeUpVariant}>
-                  <span className="font-serif text-3xl font-light text-[#E4E4E7] block">
+                  <span className="font-serif text-3xl font-light text-[silver] block">
                     01 /
                   </span>
-                  <h3 className="font-medium text-sm text-[#18171C] uppercase tracking-wider">
+                  <h3 className="font-medium text-sm text-[night] uppercase tracking-wider">
                     Put the QR code out
                   </h3>
-                  <p className="text-xs text-[#898B91] leading-relaxed font-light">
+                  <p className="text-xs text-[ash] leading-relaxed font-light">
                     Put it on tables, at the bar, or on a screen. Guests already
                     know what to do when they see a camera prompt.
                   </p>
@@ -505,13 +505,13 @@ export default function App() {
 
                 {/* Step 2 */}
                 <motion.div className="space-y-6" variants={fadeUpVariant}>
-                  <span className="font-serif text-3xl font-light text-[#E4E4E7] block">
+                  <span className="font-serif text-3xl font-light text-[silver] block">
                     02 /
                   </span>
-                  <h3 className="font-medium text-sm text-[#18171C] uppercase tracking-wider">
+                  <h3 className="font-medium text-sm text-[night] uppercase tracking-wider">
                     They upload in one tap
                   </h3>
-                  <p className="text-xs text-[#898B91] leading-relaxed font-light">
+                  <p className="text-xs text-[ash] leading-relaxed font-light">
                     They pick a photo, add a note if they want, and hit send.
                     The whole thing feels as fast as texting.
                   </p>
@@ -519,13 +519,13 @@ export default function App() {
 
                 {/* Step 3 */}
                 <motion.div className="space-y-6" variants={fadeUpVariant}>
-                  <span className="font-serif text-3xl font-light text-[#E4E4E7] block">
+                  <span className="font-serif text-3xl font-light text-[silver] block">
                     03 /
                   </span>
-                  <h3 className="font-medium text-sm text-[#18171C] uppercase tracking-wider">
+                  <h3 className="font-medium text-sm text-[night] uppercase tracking-wider">
                     The room sees it immediately
                   </h3>
-                  <p className="text-xs text-[#898B91] leading-relaxed font-light">
+                  <p className="text-xs text-[ash] leading-relaxed font-light">
                     Photos appear on the big screen before your guest even puts
                     their phone back in their pocket.
                   </p>
@@ -537,13 +537,13 @@ export default function App() {
           {/* NEW MOCKUPS VISUAL SHOWCASE */}
           <section
             id="visual-showcase"
-            className="py-28 px-6 bg-zinc-50 border-b border-[#E4E4E7]/60"
+            className="py-28 px-6 bg-zinc-50 border-b border-[silver]/60"
           >
             <IphoneMockupShowcase />
           </section>
 
           {/* LIVE PROJECTOR EXPERIENCE ENHANCER */}
-          <section className="py-24 px-6 bg-white relative overflow-hidden flex flex-col items-center border-y border-[#E4E4E7]/60">
+          <section className="py-24 px-6 bg-white relative overflow-hidden flex flex-col items-center border-y border-[silver]/60">
             <motion.div
               className="max-w-4xl text-center space-y-8 relative z-10"
               variants={fadeUpVariant}
@@ -551,14 +551,14 @@ export default function App() {
               whileInView="whileInView"
               viewport={{ once: true }}
             >
-              <div className="mx-auto h-12 w-12 rounded-full bg-[#263043]/5 border border-[#263043]/10 flex items-center justify-center text-[#263043] shadow-cluely-lifted mb-4">
-                <Tv className="h-5 w-5 text-[#263043]" />
+              <div className="mx-auto h-12 w-12 rounded-full bg-[deep-slate]/5 border border-[deep-slate]/10 flex items-center justify-center text-[deep-slate] shadow-cluely-lifted mb-4">
+                <Tv className="h-5 w-5 text-[deep-slate]" />
               </div>
-              <h3 className="font-serif text-3xl md:text-5xl font-light tracking-tight text-[#18171C]">
+              <h3 className="font-serif text-3xl md:text-5xl font-light tracking-tight text-[night]">
                 Experience the{" "}
                 <span className="italic">Live Projection Cast</span>.
               </h3>
-              <p className="text-xs md:text-sm text-[#898B91] leading-relaxed max-w-xl mx-auto font-sans font-light">
+              <p className="text-xs md:text-sm text-[ash] leading-relaxed max-w-xl mx-auto font-sans font-light">
                 Toggle our premium fullscreen projector screen. Typically
                 deployed on ballroom smart TVs or stage walls, this view serves
                 gorgeous cross-fades of guest uploads in real time.
@@ -570,9 +570,9 @@ export default function App() {
                     setIsTvActive(true);
                     showToast("Simulated Fullscreen TV Cast View activated.");
                   }}
-                  className="px-8 py-4 bg-[#263043] hover:bg-black text-[12px] text-white font-sans font-semibold uppercase tracking-widest transition-all hover:-translate-y-0.5 rounded-xl flex items-center gap-2.5 shadow-cluely-large cursor-pointer"
+                  className="px-8 py-4 bg-[deep-slate] hover:bg-black text-[12px] text-white font-sans font-semibold uppercase tracking-widest transition-all hover:-translate-y-0.5 rounded-xl flex items-center gap-2.5 shadow-cluely-large cursor-pointer"
                 >
-                  <Tv className="h-4 w-4 text-[#F4C9C8]" />
+                  <Tv className="h-4 w-4 text-[rose-mist]" />
                   Launch Projector Display
                 </button>
               </div>
@@ -581,14 +581,14 @@ export default function App() {
             {/* Subtle decorative grid/ring layout representing cast range */}
             <div className="absolute inset-0 top-1/2 flex items-center justify-center -translate-y-12 opacity-5 pointer-events-none mb-12">
               <div className="h-[400px] w-[400px] rounded-full border border-black animate-pulse-slow"></div>
-              <div className="absolute h-[600px] w-[600px] rounded-full border border-[#263043]"></div>
+              <div className="absolute h-[600px] w-[600px] rounded-full border border-[deep-slate]"></div>
             </div>
           </section>
 
           {/* COST VS VALUE ANALYSIS REDESIGN */}
           <section
             id="cost-analysis"
-            className="py-28 bg-[#FFFFFF] border-y border-[#E4E4E7]/60 px-6"
+            className="py-28 bg-[white] border-y border-[silver]/60 px-6"
           >
             <div className="max-w-5xl mx-auto space-y-16">
               <motion.div
@@ -598,14 +598,14 @@ export default function App() {
                 whileInView="whileInView"
                 viewport={{ once: true }}
               >
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[#898B91]">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[ash]">
                   Why waste money on disposable cameras?
                 </span>
-                <h2 className="font-serif text-3xl md:text-5xl text-[#18171C] font-light tracking-tight">
+                <h2 className="font-serif text-3xl md:text-5xl text-[night] font-light tracking-tight">
                   For two cocktails per person, keep the memories forever.
                 </h2>
-                <p className="text-xs text-[#898B91] max-w-lg font-light leading-relaxed">
-                  <strong className="text-[#18171C] font-semibold">
+                <p className="text-xs text-[ash] max-w-lg font-light leading-relaxed">
+                  <strong className="text-[night] font-semibold">
                     For the price of 2 cocktails per guest, you get a lifetime
                     of memories.
                   </strong>{" "}
@@ -628,14 +628,14 @@ export default function App() {
                 whileInView="whileInView"
                 viewport={{ once: true }}
               >
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[#898B91]">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-[ash]">
                   Common questions
                 </span>
-                <h2 className="font-serif text-3xl md:text-5xl text-[#18171C] font-light tracking-tight">
+                <h2 className="font-serif text-3xl md:text-5xl text-[night] font-light tracking-tight">
                   The questions hosts actually ask.
                 </h2>
-                <p className="text-xs text-[#898B91] max-w-lg font-light leading-relaxed">
-                  <strong className="text-[#18171C] font-semibold">
+                <p className="text-xs text-[ash] max-w-lg font-light leading-relaxed">
+                  <strong className="text-[night] font-semibold">
                     If your guests can use a camera, they can use Glimpse.
                   </strong>{" "}
                   That is the short answer to almost every FAQ below.
@@ -643,7 +643,7 @@ export default function App() {
               </motion.div>
 
               {/* Accordion list stack */}
-              <div className="border-t border-[#E4E4E7]/60 divide-y divide-[#E4E4E7]/60 text-left">
+              <div className="border-t border-[silver]/60 divide-y divide-[silver]/60 text-left">
                 {FAQS.map((faq, index) => {
                   const isOpen = activeFaq === index;
                   return (
@@ -651,13 +651,13 @@ export default function App() {
                       <button
                         id={`faq-toggle-${index}`}
                         onClick={() => setActiveFaq(isOpen ? null : index)}
-                        className="w-full flex items-center justify-between text-left focus:outline-none hover:text-[#898B91] transition-colors cursor-pointer"
+                        className="w-full flex items-center justify-between text-left focus:outline-none hover:text-[ash] transition-colors cursor-pointer"
                       >
-                        <span className="font-serif font-light text-[#18171C] text-base md:text-lg pr-4">
+                        <span className="font-serif font-light text-[night] text-base md:text-lg pr-4">
                           {faq.question}
                         </span>
                         <ChevronDown
-                          className={`h-4 w-4 text-[#898B91] transition-transform duration-300 transform ${isOpen ? "rotate-180" : ""}`}
+                          className={`h-4 w-4 text-[ash] transition-transform duration-300 transform ${isOpen ? "rotate-180" : ""}`}
                         />
                       </button>
 
@@ -670,7 +670,7 @@ export default function App() {
                         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden"
                       >
-                        <div className="pt-4 text-xs md:text-sm text-[#898B91] leading-relaxed font-light font-sans max-w-2xl">
+                        <div className="pt-4 text-xs md:text-sm text-[ash] leading-relaxed font-light font-sans max-w-2xl">
                           {faq.answer}
                         </div>
                       </motion.div>
@@ -687,8 +687,8 @@ export default function App() {
                 whileInView="whileInView"
                 viewport={{ once: true }}
               >
-                <span className="inline-block h-px w-12 bg-[#B2B3BA] mb-2"></span>
-                <h3 className="font-serif text-xl md:text-2xl text-[#18171C] font-light">
+                <span className="inline-block h-px w-12 bg-[stone] mb-2"></span>
+                <h3 className="font-serif text-xl md:text-2xl text-[night] font-light">
                   Stop begging for photos. Start collecting joy. Pick your plan
                   below.
                 </h3>
@@ -699,7 +699,7 @@ export default function App() {
                       const target = document.getElementById("cost-analysis");
                       target?.scrollIntoView({ behavior: "smooth" });
                     }}
-                    className="btn-cluely-primary px-8 py-3.5 bg-[#263043] text-white text-[11px] font-sans font-semibold uppercase tracking-widest hover:-translate-y-0.5 rounded-xl transition-all cursor-pointer shadow-cluely-large"
+                    className="btn-cluely-primary px-8 py-3.5 bg-[deep-slate] text-white text-[11px] font-sans font-semibold uppercase tracking-widest hover:-translate-y-0.5 rounded-xl transition-all cursor-pointer shadow-cluely-large"
                   >
                     Pick a plan
                   </button>
@@ -709,18 +709,18 @@ export default function App() {
               {/* DYNAMIC COMPANION DOWNLOAD SECTION */}
               <section
                 id="download-app"
-                className="py-24 border-t border-[#E4E4E7]/60 bg-[#F9F9FB]/80 px-6 relative overflow-hidden"
+                className="py-24 border-t border-[silver]/60 bg-[off-white]/80 px-6 relative overflow-hidden"
               >
                 <div className="max-w-5xl mx-auto relative z-10">
                   <div className="text-center max-w-2xl mx-auto space-y-4 mb-16">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#898B91] flex items-center justify-center gap-2">
-                      <Smartphone className="h-3 w-3 text-[#263043]" />{" "}
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-[ash] flex items-center justify-center gap-2">
+                      <Smartphone className="h-3 w-3 text-[deep-slate]" />{" "}
                       Standalone Client Utility
                     </span>
-                    <h2 className="font-serif text-3xl md:text-5xl text-[#18171C] font-light tracking-tight">
+                    <h2 className="font-serif text-3xl md:text-5xl text-[night] font-light tracking-tight">
                       Gather Glimpses anywhere.
                     </h2>
-                    <p className="text-xs text-[#898B91] font-sans font-light leading-relaxed">
+                    <p className="text-xs text-[ash] font-sans font-light leading-relaxed">
                       For professional event planners, wedding registrars, and
                       projection staff: access offline queues, interactive
                       casting streams, and remote moderation nodes.
@@ -730,7 +730,7 @@ export default function App() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* iOS BADGE COMPANION BLOCK */}
                     <motion.div
-                      className="bg-white border border-[#E4E4E7]/60 p-8 rounded-2xl md:rounded-3xl shadow-sm text-left flex flex-col justify-between hover:shadow-md transition-shadow"
+                      className="bg-white border border-[silver]/60 p-8 rounded-2xl md:rounded-3xl shadow-sm text-left flex flex-col justify-between hover:shadow-md transition-shadow"
                       variants={fadeUpVariant}
                       initial="initial"
                       whileInView="whileInView"
@@ -740,7 +740,7 @@ export default function App() {
                     >
                       <div className="space-y-6">
                         <div className="flex items-center justify-between">
-                          <div className="h-10 w-10 bg-[#18171C]/5 rounded-xl flex items-center justify-center text-[#18171C]">
+                          <div className="h-10 w-10 bg-[night]/5 rounded-xl flex items-center justify-center text-[night]">
                             <Apple className="h-5 w-5" />
                           </div>
                           <span className="text-[9px] font-mono tracking-widest text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full uppercase font-semibold">
@@ -749,27 +749,27 @@ export default function App() {
                         </div>
 
                         <div className="space-y-2">
-                          <h3 className="font-serif text-xl font-light text-[#18171C]">
+                          <h3 className="font-serif text-xl font-light text-[night]">
                             Glimpse for iOS
                           </h3>
-                          <p className="text-xs text-[#898B91] leading-relaxed font-light">
+                          <p className="text-xs text-[ash] leading-relaxed font-light">
                             Integrated directly with Apple Photos API, AirPlay
                             casting, dynamic lockscreen widgets, and native push
                             alerts for immediate guest event alerts.
                           </p>
                         </div>
 
-                        <ul className="space-y-2.5 pt-2 text-[10.5px] text-[#263043] font-light font-sans">
+                        <ul className="space-y-2.5 pt-2 text-[10.5px] text-[deep-slate] font-light font-sans">
                           <li className="flex items-center gap-2">
-                            <span className="h-1 w-1 bg-[#263043] rounded-full"></span>{" "}
+                            <span className="h-1 w-1 bg-[deep-slate] rounded-full"></span>{" "}
                             Secure Sandbox isolated framework
                           </li>
                           <li className="flex items-center gap-2">
-                            <span className="h-1 w-1 bg-[#263043] rounded-full"></span>{" "}
+                            <span className="h-1 w-1 bg-[deep-slate] rounded-full"></span>{" "}
                             Ultra-high resolution RAW & HEIC compatibility
                           </li>
                           <li className="flex items-center gap-2">
-                            <span className="h-1 w-1 bg-[#263043] rounded-full"></span>{" "}
+                            <span className="h-1 w-1 bg-[deep-slate] rounded-full"></span>{" "}
                             Simultaneous dual-camera capture module
                           </li>
                         </ul>
@@ -781,7 +781,7 @@ export default function App() {
                             "Establishing App Store handshake... Glimpse Pro for iOS (v2.8.4) ready to transmit!",
                           );
                         }}
-                        className="mt-8 w-full group flex items-center justify-center gap-2.5 h-12 bg-[#18171C] hover:bg-black text-white text-xs font-semibold rounded-xl transition-all tracking-wider uppercase cursor-pointer"
+                        className="mt-8 w-full group flex items-center justify-center gap-2.5 h-12 bg-[night] hover:bg-black text-white text-xs font-semibold rounded-xl transition-all tracking-wider uppercase cursor-pointer"
                       >
                         <Apple className="h-4 w-4 fill-current" /> Download for
                         App Store
@@ -790,7 +790,7 @@ export default function App() {
 
                     {/* ANDROID BADGE COMPANION BLOCK */}
                     <motion.div
-                      className="bg-white border border-[#E4E4E7]/60 p-8 rounded-2xl md:rounded-3xl shadow-sm text-left flex flex-col justify-between hover:shadow-md transition-shadow"
+                      className="bg-white border border-[silver]/60 p-8 rounded-2xl md:rounded-3xl shadow-sm text-left flex flex-col justify-between hover:shadow-md transition-shadow"
                       variants={fadeUpVariant}
                       initial="initial"
                       whileInView="whileInView"
@@ -800,25 +800,25 @@ export default function App() {
                     >
                       <div className="space-y-6">
                         <div className="flex items-center justify-between">
-                          <div className="h-10 w-10 bg-[#18171C]/5 rounded-xl flex items-center justify-center text-[#263043]">
+                          <div className="h-10 w-10 bg-[night]/5 rounded-xl flex items-center justify-center text-[deep-slate]">
                             {/* High Fidelity Android Icon Vector */}
                             <svg
-                              className="h-5 w-5 fill-current text-[#263043]"
+                              className="h-5 w-5 fill-current text-[deep-slate]"
                               viewBox="0 0 24 24"
                             >
                               <path d="M17.523 15.3l1.816 3.146a.82.82 0 01-.301 1.122.828.828 0 01-1.125-.301L16.08 16.09A9.123 9.123 0 0112 17a9.123 9.123 0 01-4.08-.91l-1.83 3.177a.825.825 0 01-1.426-.822l1.816-3.146A8.995 8.995 0 013 9.308c0-2.41 1.083-4.576 2.784-6.071L4.694 1.583a.825.825 0 111.426-.822l1.107 1.921c1.398-.67 2.964-1.05 4.623-1.05 1.66 0 3.225.38 4.623 1.05l1.107-1.921a.825.825 0 111.426.822l-1.09 1.904A8.91 8.91 0 0121 9.308a8.995 8.995 0 01-3.477 5.992zM7 9a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
                             </svg>
                           </div>
-                          <span className="text-[9px] font-mono tracking-widest text-[#263043] bg-stone-100 px-2.5 py-1 rounded-full uppercase font-semibold">
+                          <span className="text-[9px] font-mono tracking-widest text-[deep-slate] bg-stone-100 px-2.5 py-1 rounded-full uppercase font-semibold">
                             Native SDK AOT
                           </span>
                         </div>
 
                         <div className="space-y-2">
-                          <h3 className="font-serif text-xl font-light text-[#18171C]">
+                          <h3 className="font-serif text-xl font-light text-[night]">
                             Glimpse for Android
                           </h3>
-                          <p className="text-xs text-[#898B91] leading-relaxed font-light">
+                          <p className="text-xs text-[ash] leading-relaxed font-light">
                             Engineered around Material You adaptive parameters.
                             Built-in local offline background image queues, high
                             density network recovery protocols, and legacy cast
@@ -826,17 +826,17 @@ export default function App() {
                           </p>
                         </div>
 
-                        <ul className="space-y-2.5 pt-2 text-[10.5px] text-[#263043] font-light font-sans">
+                        <ul className="space-y-2.5 pt-2 text-[10.5px] text-[deep-slate] font-light font-sans">
                           <li className="flex items-center gap-2">
-                            <span className="h-1 w-1 bg-[#263043] rounded-full"></span>{" "}
+                            <span className="h-1 w-1 bg-[deep-slate] rounded-full"></span>{" "}
                             Native C++ background transport layer
                           </li>
                           <li className="flex items-center gap-2">
-                            <span className="h-1 w-1 bg-[#263043] rounded-full"></span>{" "}
+                            <span className="h-1 w-1 bg-[deep-slate] rounded-full"></span>{" "}
                             Fast local local storage dump options
                           </li>
                           <li className="flex items-center gap-2">
-                            <span className="h-1 w-1 bg-[#263043] rounded-full"></span>{" "}
+                            <span className="h-1 w-1 bg-[deep-slate] rounded-full"></span>{" "}
                             Chromecast and DLNA projection streams
                           </li>
                         </ul>
@@ -848,10 +848,10 @@ export default function App() {
                             "Accessing Google Play Hub... Safe transfer handshake verified on Android client.",
                           );
                         }}
-                        className="mt-8 w-full group flex items-center justify-center gap-2.5 h-12 bg-white hover:bg-stone-50 text-[#18171C] border border-[#E4E4E7]/80 text-xs font-semibold rounded-xl transition-all tracking-wider uppercase cursor-pointer"
+                        className="mt-8 w-full group flex items-center justify-center gap-2.5 h-12 bg-white hover:bg-stone-50 text-[night] border border-[silver]/80 text-xs font-semibold rounded-xl transition-all tracking-wider uppercase cursor-pointer"
                       >
                         <svg
-                          className="h-4 w-4 fill-current text-[#18171C]"
+                          className="h-4 w-4 fill-current text-[night]"
                           viewBox="0 0 24 24"
                         >
                           <path d="M17.523 15.3l1.816 3.146a.82.82 0 01-.301 1.122.828.828 0 01-1.125-.301L16.08 16.09A9.123 9.123 0 0112 17a9.123 9.123 0 01-4.08-.91l-1.83 3.177a.825.825 0 01-1.426-.822l1.816-3.146A8.995 8.995 0 013 9.308c0-2.41 1.083-4.576 2.784-6.071L4.694 1.583a.825.825 0 111.426-.822l1.107 1.921c1.398-.67 2.964-1.05 4.623-1.05 1.66 0 3.225.38 4.623 1.05l1.107-1.921a.825.825 0 111.426.822l-1.09 1.904A8.91 8.91 0 0121 9.308a8.995 8.995 0 01-3.477 5.992zM7 9a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
@@ -868,7 +868,7 @@ export default function App() {
       )}
 
       {/* NEW HIGH-FIDELITY FOOTER WITH TYPOGRAPHIC STAMP ANCHOR */}
-      <footer className="bg-[#FFFFFF] border-t border-[#E4E4E7]/60 pt-24 pb-12 px-6 font-sans relative overflow-hidden">
+      <footer className="bg-[white] border-t border-[silver]/60 pt-24 pb-12 px-6 font-sans relative overflow-hidden">
         <div className="max-w-6xl mx-auto relative z-10">
           {/* Main Footer Column Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-8 pb-16 text-left">
@@ -881,10 +881,10 @@ export default function App() {
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
               >
-                <div className="h-2 w-2 rounded-full bg-[#263043]"></div>
+                <div className="h-2 w-2 rounded-full bg-[deep-slate]"></div>
                 <span>glimpse.</span>
               </div>
-              <p className="text-xs text-[#898B91] font-sans font-light leading-relaxed max-w-sm">
+              <p className="text-xs text-[ash] font-sans font-light leading-relaxed max-w-sm">
                 The absolute standard for guest-sourced visual assets. High
                 resolution storage vaults, encrypted transit locks, and
                 real-time interactive projection grids.
@@ -898,7 +898,7 @@ export default function App() {
                     e.preventDefault();
                     showToast("Connected to verified secure archive feed.");
                   }}
-                  className="h-8 w-8 rounded-full border border-stone-100 hover:border-[#18171C] flex items-center justify-center text-[#898B91] hover:text-[#18171C] transition-all hover:-translate-y-0.5"
+                  className="h-8 w-8 rounded-full border border-stone-100 hover:border-[night] flex items-center justify-center text-[ash] hover:text-[night] transition-all hover:-translate-y-0.5"
                 >
                   <Camera className="h-4 w-4" />
                 </a>
@@ -910,7 +910,7 @@ export default function App() {
                       "Establishing professional networks handshake...",
                     );
                   }}
-                  className="h-8 w-8 rounded-full border border-stone-100 hover:border-[#18171C] flex items-center justify-center text-[#898B91] hover:text-[#18171C] transition-all hover:-translate-y-0.5"
+                  className="h-8 w-8 rounded-full border border-stone-100 hover:border-[night] flex items-center justify-center text-[ash] hover:text-[night] transition-all hover:-translate-y-0.5"
                 >
                   <Briefcase className="h-4 w-4" />
                 </a>
@@ -920,7 +920,7 @@ export default function App() {
                     e.preventDefault();
                     showToast("Routing microblogging transmission client...");
                   }}
-                  className="h-8 w-8 rounded-full border border-stone-100 hover:border-[#18171C] flex items-center justify-center text-[#898B91] hover:text-[#18171C] transition-all hover:-translate-y-0.5"
+                  className="h-8 w-8 rounded-full border border-stone-100 hover:border-[night] flex items-center justify-center text-[ash] hover:text-[night] transition-all hover:-translate-y-0.5"
                 >
                   {/* Twitter Custom Premium Mini SVG */}
                   <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
@@ -932,10 +932,10 @@ export default function App() {
 
             {/* Column 2: System Solutions */}
             <div className="lg:col-span-2 space-y-4">
-              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[#18171C] font-semibold">
+              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[night] font-semibold">
                 Architecture
               </h4>
-              <ul className="space-y-2.5 text-xs font-light text-[#898B91]">
+              <ul className="space-y-2.5 text-xs font-light text-[ash]">
                 <li>
                   <button
                     onClick={() => {
@@ -946,7 +946,7 @@ export default function App() {
                         target?.scrollIntoView({ behavior: "smooth" });
                       }, 100);
                     }}
-                    className="hover:text-[#263043] transition-colors cursor-pointer"
+                    className="hover:text-[deep-slate] transition-colors cursor-pointer"
                   >
                     Framework System
                   </button>
@@ -961,7 +961,7 @@ export default function App() {
                         target?.scrollIntoView({ behavior: "smooth" });
                       }, 100);
                     }}
-                    className="hover:text-[#263043] transition-colors cursor-pointer"
+                    className="hover:text-[deep-slate] transition-colors cursor-pointer"
                   >
                     Visual Live Showcase
                   </button>
@@ -975,7 +975,7 @@ export default function App() {
                         target?.scrollIntoView({ behavior: "smooth" });
                       }, 100);
                     }}
-                    className="hover:text-[#263043] transition-colors cursor-pointer"
+                    className="hover:text-[deep-slate] transition-colors cursor-pointer"
                   >
                     Pricing Index
                   </button>
@@ -989,7 +989,7 @@ export default function App() {
                         target?.scrollIntoView({ behavior: "smooth" });
                       }, 100);
                     }}
-                    className="hover:text-[#263043] font-semibold text-[#263043] transition-colors cursor-pointer flex items-center gap-1.5"
+                    className="hover:text-[deep-slate] font-semibold text-[deep-slate] transition-colors cursor-pointer flex items-center gap-1.5"
                   >
                     Mobile Clients{" "}
                     <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -1000,10 +1000,10 @@ export default function App() {
 
             {/* Column 3: Case Chronics */}
             <div className="lg:col-span-2 space-y-4">
-              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[#18171C] font-semibold">
+              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[night] font-semibold">
                 Live Case Studies
               </h4>
-              <ul className="space-y-2.5 text-xs font-light text-[#898B91]">
+              <ul className="space-y-2.5 text-xs font-light text-[ash]">
                 <li>
                   <button
                     onClick={() => {
@@ -1011,7 +1011,7 @@ export default function App() {
                       setCurrentView("case-study");
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="hover:text-[#263043] transition-colors cursor-pointer text-left"
+                    className="hover:text-[deep-slate] transition-colors cursor-pointer text-left"
                   >
                     Byron & Sarah Wedding
                   </button>
@@ -1023,7 +1023,7 @@ export default function App() {
                       setCurrentView("case-study");
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="hover:text-[#263043] transition-colors cursor-pointer text-left"
+                    className="hover:text-[deep-slate] transition-colors cursor-pointer text-left"
                   >
                     Nexus Cyber Club Night
                   </button>
@@ -1035,7 +1035,7 @@ export default function App() {
                       setCurrentView("case-study");
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="hover:text-[#263043] transition-colors cursor-pointer text-left"
+                    className="hover:text-[deep-slate] transition-colors cursor-pointer text-left"
                   >
                     Global SaaS Tech Summit
                   </button>
@@ -1045,17 +1045,17 @@ export default function App() {
 
             {/* Column 4: Host Vault */}
             <div className="lg:col-span-3 space-y-4">
-              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[#18171C] font-semibold">
+              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[night] font-semibold">
                 Access Portal
               </h4>
-              <ul className="space-y-2.5 text-xs font-light text-[#898B91]">
+              <ul className="space-y-2.5 text-xs font-light text-[ash]">
                 <li>
                   <button
                     onClick={() => {
                       setAuthMode("login");
                       setCurrentView("auth");
                     }}
-                    className="hover:text-[#263043] transition-colors cursor-pointer text-left"
+                    className="hover:text-[deep-slate] transition-colors cursor-pointer text-left"
                   >
                     Curator Admin Console
                   </button>
@@ -1066,7 +1066,7 @@ export default function App() {
                       setAuthMode("signup");
                       setCurrentView("auth");
                     }}
-                    className="hover:text-[#263043] transition-colors cursor-pointer text-left"
+                    className="hover:text-[deep-slate] transition-colors cursor-pointer text-left"
                   >
                     Register Unified Dashboard
                   </button>
@@ -1077,7 +1077,7 @@ export default function App() {
                       setAuthMode("forgot");
                       setCurrentView("auth");
                     }}
-                    className="hover:text-[#263043] transition-colors cursor-pointer text-left"
+                    className="hover:text-[deep-slate] transition-colors cursor-pointer text-left"
                   >
                     Password Restoration
                   </button>
@@ -1088,7 +1088,7 @@ export default function App() {
                       setCurrentView("blog");
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="hover:text-[#263043] font-semibold text-[#a75551] transition-colors cursor-pointer text-left"
+                    className="hover:text-[deep-slate] font-semibold text-[deep-rose] transition-colors cursor-pointer text-left"
                   >
                     Read Chronicle Blog
                   </button>
@@ -1098,18 +1098,18 @@ export default function App() {
           </div>
 
           {/* Separation Guard */}
-          <div className="border-t border-[#E4E4E7]/60 pt-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-left">
-            <div className="text-[10px] text-[#898B91] space-y-1.5 font-mono tracking-wider">
+          <div className="border-t border-[silver]/60 pt-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-left">
+            <div className="text-[10px] text-[ash] space-y-1.5 font-mono tracking-wider">
               <p>
                 © {new Date().getFullYear()} glimpse. Spacecraft and Control,
                 Inc. All rights reserved.
               </p>
-              <p className="flex items-center gap-1.5 select-none text-[9px] text-[#A7C3A8]/90 font-medium">
+              <p className="flex items-center gap-1.5 select-none text-[9px] text-[sage-green]/90 font-medium">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>{" "}
                 PORT 3000 DIRECT ROUTE • PRIVACY VAULT ONLINE
               </p>
             </div>
-            <div className="text-[10px] text-[#898B91] font-mono tracking-wide uppercase flex items-center gap-4">
+            <div className="text-[10px] text-[ash] font-mono tracking-wide uppercase flex items-center gap-4">
               <a
                 href="#rules"
                 onClick={(e) => {
@@ -1118,7 +1118,7 @@ export default function App() {
                     "Security parameters enforce no persistent cookie tracking.",
                   );
                 }}
-                className="hover:text-[#18171C]"
+                className="hover:text-[night]"
               >
                 Privacy Code
               </a>
@@ -1129,7 +1129,7 @@ export default function App() {
                   e.preventDefault();
                   showToast("Displaying statutory event legal provisions.");
                 }}
-                className="hover:text-[#18171C]"
+                className="hover:text-[night]"
               >
                 Provision Terms
               </a>
@@ -1137,7 +1137,7 @@ export default function App() {
           </div>
 
           {/* ULTRA-BOLD MASSIVE ANCHOR STAMP */}
-          <div className="text-[11vw] sm:text-[13vw] font-black tracking-widest text-[#18171C]/5 select-none text-center block leading-none pt-12 md:pt-16 uppercase transition-all font-sans font-extrabold pointer-events-none">
+          <div className="text-[11vw] sm:text-[13vw] font-black tracking-widest text-[night]/5 select-none text-center block leading-none pt-12 md:pt-16 uppercase transition-all font-sans font-extrabold pointer-events-none">
             glimpse
           </div>
         </div>
