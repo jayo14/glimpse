@@ -15,5 +15,19 @@ services:
     ports:
       - "6379:6379"
 
+  ml-worker:
+    build:
+      context: ./processing
+      dockerfile: Dockerfile
+    command: ["sh", "-c", "python check_env.py && arq app.worker.WorkerSettings"]
+    env_file:
+      - ./processing/.env
+    depends_on:
+      - redis
+      - db
+    volumes:
+      - ./processing:/app
+      - ./processing/models:/app/models
+
 volumes:
   postgres_data:

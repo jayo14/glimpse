@@ -16,6 +16,10 @@ logging.basicConfig(
 )
 logger = logging.getLogger("glimpse-processing")
 
+from arq import create_pool
+from arq.connections import RedisSettings
+import urllib.parse
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
@@ -39,10 +43,24 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.error(f"Critical error during Database initialization: {e}")
 
+    # Initialize ARQ Redis Pool
+    try:
+        redis_url = urllib.parse.urlparse(settings.REDIS_URL)
+        app.state.redis = await create_pool(RedisSettings(
+            host=redis_url.hostname or 'localhost',
+            port=redis_url.port or 6379,
+            password=redis_url.password,
+        ))
+        logger.info("ARQ Redis pool initialized.")
+    except Exception as e:
+        logger.error(f"Failed to initialize ARQ Redis pool: {e}")
+
     yield
 
     # Shutdown tasks
     logger.info("Application shutting down...")
+    if hasattr(app.state, 'redis'):
+        await app.state.redis.close()
     db_service.close_pool()
 
 app = FastAPI(
@@ -160,3 +178,31 @@ async def process_selfie(
     except Exception as e:
         logger.error(f"Unexpected error in process_selfie: {e}", exc_info=True)
         raise HTTPException(status_code=500, detail="Internal server error")
+
+from pydantic import BaseModel
+class WebhookPayload(BaseModel):
+    photo_id: str
+    event_id: str
+    storage_path: str
+
+@app.post("/api/v1/process/webhook")
+async def process_webhook(payload: WebhookPayload) -> dict:
+    """
+    Webhook endpoint triggered by Supabase Storage on photo upload.
+    Enqueues an async job in Redis via ARQ to extract and match faces.
+    """
+    if not hasattr(app.state, 'redis'):
+        raise HTTPException(status_code=500, detail="Redis connection not initialized.")
+
+    try:
+        logger.info(f"Received webhook for photo_id: {payload.photo_id}, enqueueing job...")
+        await app.state.redis.enqueue_job(
+            'process_photo_job',
+            payload.photo_id,
+            payload.event_id,
+            payload.storage_path
+        )
+        return {"status": "enqueued", "photo_id": payload.photo_id}
+    except Exception as e:
+        logger.error(f"Failed to enqueue job for {payload.photo_id}: {e}", exc_info=True)
+        raise HTTPException(status_code=500, detail="Failed to enqueue background job.")

@@ -174,6 +174,23 @@ class DatabaseService:
             cursor.execute(query, (profile_id, event_id, selfie_path))
             logger.info(f"Created registration for guest {profile_id} at event {event_id}")
 
+    def cleanup_old_faces(self, days: int = 30) -> int:
+        """
+        Deletes rows from detected_faces where matched_profile_id IS NULL 
+        and created_at is older than the specified number of days.
+        Returns the number of deleted rows.
+        """
+        query = """
+            DELETE FROM public.detected_faces
+            WHERE matched_profile_id IS NULL
+              AND created_at < NOW() - INTERVAL '%s days'
+        """
+        with self.get_cursor() as cursor:
+            cursor.execute(query, (days,))
+            deleted_count = cursor.rowcount
+            logger.info(f"Cleaned up {deleted_count} old unresolved faces (older than {days} days).")
+            return deleted_count
+
     def close_pool(self):
         """
         Closes all connections in the pool.

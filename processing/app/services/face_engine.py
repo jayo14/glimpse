@@ -61,6 +61,9 @@ class FaceEngine:
             self.prepare_engine()
 
         try:
+            import time
+            start_time = time.perf_counter()
+
             # Convert raw bytes to numpy array for OpenCV without disk writes
             nparr = np.frombuffer(img_bytes, np.uint8)
             img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
@@ -71,6 +74,10 @@ class FaceEngine:
 
             # Perform inference
             faces = self.app.get(img)
+
+            end_time = time.perf_counter()
+            inference_time_ms = (end_time - start_time) * 1000
+            logger.info(f"Inference completed in {inference_time_ms:.2f}ms. Faces detected: {len(faces)}")
 
             results = []
             for face in faces:
