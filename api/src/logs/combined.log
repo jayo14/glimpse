@@ -327,3 +327,4 @@ Please make sure your database server is running at `aws-0-eu-west-1.pooler.supa
 2026-06-05 10:47:24 [info]: GET /api-docs/swagger-ui-standalone-preset.js 304 1.766 ms
 2026-06-05 10:47:24 [info]: GET /api-docs/swagger-ui-init.js 304 2.699 ms
 2026-06-05 10:47:25 [info]: GET /api-docs/favicon-32x32.png 304 1.299 ms
+2026-06-05 23:51:09 [info]: Glimpse API running on port 5002
