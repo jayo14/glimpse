@@ -3,21 +3,59 @@ import '../../core/theme/colors.dart';
 import '../../core/utils/responsive.dart';
 import '../../core/widgets/glimpse_button.dart';
 import '../../core/widgets/glimpse_input.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:math' as math;
+import 'providers/auth_provider.dart';
 
-class AuthScreen extends StatefulWidget {
+class AuthScreen extends ConsumerStatefulWidget {
   const AuthScreen({super.key});
 
   @override
-  State<AuthScreen> createState() => _AuthScreenState();
+  ConsumerState<AuthScreen> createState() => _AuthScreenState();
 }
 
-class _AuthScreenState extends State<AuthScreen> {
+class _AuthScreenState extends ConsumerState<AuthScreen> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   bool _showPassword = false;
 
   @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  void _handleLogin() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter both email and password.')),
+      );
+      return;
+    }
+
+    try {
+      await ref.read(authProvider.notifier).login(email, password);
+      if (mounted && ref.read(authProvider).hasValue && ref.read(authProvider).value != null) {
+        context.go('/guest-setup');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString().replaceAll('Exception: ', ''))),
+        );
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authProvider);
+
     return Scaffold(
       backgroundColor: GlimpseColors.deepCharcoal,
       body: SingleChildScrollView(
@@ -31,10 +69,15 @@ class _AuthScreenState extends State<AuthScreen> {
               SizedBox(height: 28.h(context)),
               const AuthHeading(),
               SizedBox(height: 24.h(context)),
-              const GlimpseInput(hint: 'Enter your email address'),
+              GlimpseInput(
+                hint: 'Enter your email address',
+                controller: _emailController,
+                keyboardType: TextInputType.emailAddress,
+              ),
               SizedBox(height: 12.h(context)),
               GlimpseInput(
                 hint: 'Enter your password',
+                controller: _passwordController,
                 isPassword: !_showPassword,
                 suffix: GestureDetector(
                   onTap: () => setState(() => _showPassword = !_showPassword),
@@ -59,8 +102,8 @@ class _AuthScreenState extends State<AuthScreen> {
               ),
               SizedBox(height: 12.h(context)),
               GlimpseButton(
-                label: 'Continue',
-                onPressed: () => context.go('/guest-setup'),
+                label: authState.isLoading ? 'Logging in...' : 'Continue',
+                onPressed: authState.isLoading ? () {} : _handleLogin,
                 isPrimary: true,
               ),
               SizedBox(height: 12.h(context)),

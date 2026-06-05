@@ -3,19 +3,51 @@ import '../../core/theme/colors.dart';
 import '../../core/utils/responsive.dart';
 import '../../core/widgets/glimpse_button.dart';
 import '../../core/widgets/glimpse_input.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lucide_flutter/lucide_flutter.dart';
 import 'package:go_router/go_router.dart';
+import 'providers/auth_provider.dart';
 
-class ForgotPasswordScreen extends StatefulWidget {
+class ForgotPasswordScreen extends ConsumerStatefulWidget {
   const ForgotPasswordScreen({super.key});
 
   @override
-  State<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
+  ConsumerState<ForgotPasswordScreen> createState() => _ForgotPasswordScreenState();
 }
 
-class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+class _ForgotPasswordScreenState extends ConsumerState<ForgotPasswordScreen> {
   final TextEditingController _emailController = TextEditingController();
   bool _isSent = false;
+  bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  void _handleSendResetLink() async {
+    final email = _emailController.text.trim();
+    if (email.isEmpty) return;
+
+    setState(() => _isLoading = true);
+    try {
+      await ref.read(authProvider.notifier).forgotPassword(email);
+      if (mounted) {
+        setState(() => _isSent = true);
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString().replaceAll('Exception: ', ''))),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() => _isLoading = false);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,13 +127,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
       SizedBox(height: 16.h(context)),
       GlimpseButton(
-        label: 'Send Reset Link',
-        onPressed: () {
-          if (_emailController.text.trim().isNotEmpty) {
-            setState(() => _isSent = true);
-          }
-        },
-        isDisabled: _emailController.text.trim().isEmpty,
+        label: _isLoading ? 'Sending...' : 'Send Reset Link',
+        onPressed: _isLoading ? () {} : _handleSendResetLink,
+        isDisabled: _emailController.text.trim().isEmpty || _isLoading,
       ),
       SizedBox(height: 24.h(context)),
       Center(

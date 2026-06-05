@@ -1,24 +1,81 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/colors.dart';
 import '../../core/utils/responsive.dart';
 import '../../core/widgets/glimpse_button.dart';
 import '../../core/widgets/glimpse_input.dart';
 import 'dart:math' as math;
+import 'providers/auth_provider.dart';
 
-class SignupScreen extends StatefulWidget {
+class SignupScreen extends ConsumerStatefulWidget {
   const SignupScreen({super.key});
 
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  ConsumerState<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _SignupScreenState extends ConsumerState<SignupScreen> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _confirmController = TextEditingController();
+
   bool _showPwd = false;
   bool _showConfirm = false;
 
   @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmController.dispose();
+    super.dispose();
+  }
+
+  void _handleRegister() async {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+    final confirm = _confirmController.text;
+
+    if (email.isEmpty || password.isEmpty || confirm.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please fill all fields.')),
+      );
+      return;
+    }
+
+    if (password != confirm) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Passwords do not match.')),
+      );
+      return;
+    }
+
+    try {
+      final emailConfirmationRequired = await ref.read(authProvider.notifier).register(email, password);
+      if (mounted) {
+        if (emailConfirmationRequired) {
+           ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Registration successful. Please check your email to verify your account.')),
+          );
+          // Navigate to a verification screen or go back to login
+          context.pop();
+        } else {
+          // If no confirmation required, they might be logged in automatically or need to login
+          context.go('/guest-setup');
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.toString().replaceAll('Exception: ', ''))),
+        );
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final authState = ref.watch(authProvider);
+
     return Scaffold(
       backgroundColor: GlimpseColors.deepCharcoal,
       body: SingleChildScrollView(
@@ -77,10 +134,15 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(height: 24.h(context)),
 
                   // Fields
-                  GlimpseInput(hint: 'Email address'),
+                  GlimpseInput(
+                    hint: 'Email address',
+                    controller: _emailController,
+                    keyboardType: TextInputType.emailAddress,
+                  ),
                   SizedBox(height: 12.h(context)),
                   GlimpseInput(
                     hint: 'Password',
+                    controller: _passwordController,
                     isPassword: !_showPwd,
                     suffix: GestureDetector(
                       onTap: () => setState(() => _showPwd = !_showPwd),
@@ -93,6 +155,7 @@ class _SignupScreenState extends State<SignupScreen> {
                   SizedBox(height: 12.h(context)),
                   GlimpseInput(
                     hint: 'Confirm password',
+                    controller: _confirmController,
                     isPassword: !_showConfirm,
                     suffix: GestureDetector(
                       onTap: () => setState(() => _showConfirm = !_showConfirm),
@@ -125,8 +188,8 @@ class _SignupScreenState extends State<SignupScreen> {
 
                   // Primary CTA
                   GlimpseButton(
-                    label: 'Create account',
-                    onPressed: () => context.go('/guest-setup'),
+                    label: authState.isLoading ? 'Creating account...' : 'Create account',
+                    onPressed: authState.isLoading ? () {} : _handleRegister,
                     isPrimary: true,
                   ),
                   SizedBox(height: 16.h(context)),
