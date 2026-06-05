@@ -272,3 +272,31 @@ Argument `full_name` is missing.
 2026-06-04 21:13:33 [info]: GET /api/v1/user/me 304 1784.812 ms
 2026-06-04 21:15:47 [info]: GET /api/v1/user/me 304 3631.487 ms
 2026-06-04 21:15:48 [info]: GET /api/v1/user/me 304 1304.699 ms
+2026-06-05 09:30:43 [info]: Glimpse API running on port 5002
+2026-06-05 09:31:14 [info]: GET / 404 180.364 ms
+2026-06-05 09:32:04 [info]: GET /api/ 404 11.110 ms
+2026-06-05 09:32:07 [info]: GET /docs 404 1.322 ms
+2026-06-05 09:32:11 [info]: GET /api/swagger 404 1.488 ms
+2026-06-05 09:32:49 [info]: Glimpse API running on port 5002
+2026-06-05 09:32:52 [info]: GET /health 200 7.600 ms
+2026-06-05 09:32:52 [info]: GET /favicon.ico 404 5.530 ms
+2026-06-05 09:37:23 [info]: GET /docs/swagger 404 9.458 ms
+2026-06-05 09:44:02 [info]: Glimpse API running on port 5002
+2026-06-05 09:48:18 [error]: register controller error: 
+Invalid `prisma.profile.findUnique()` invocation:
+
+
+Can't reach database server at `aws-0-eu-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-eu-west-1.pooler.supabase.com:6543`.
+2026-06-05 09:48:18 [info]: POST /api/v1/auth/register 500 20956.394 ms
+2026-06-05 09:48:54 [error]: register controller error: 
+Invalid `prisma.profile.findUnique()` invocation:
+
+
+Can't reach database server at `aws-0-eu-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-eu-west-1.pooler.supabase.com:6543`.
+2026-06-05 09:48:54 [info]: POST /api/v1/auth/register 500 16256.659 ms
+2026-06-05 09:49:07 [error]: forgotPassword controller error: User with this email not found
+2026-06-05 09:49:07 [info]: POST /api/v1/auth/forgot-password 500 5204.857 ms
