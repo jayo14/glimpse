@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { useForm, Controller } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
-import { Loader2, User, Calendar, Camera, CheckCircle2 } from "lucide-react";
+import { Loader2, User, Calendar, Camera, Plus, Clock, QrCode } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import LoaderTwo from "@/components/ui/loader-two";
@@ -20,7 +20,12 @@ type ProfileSetupInput = {
   role: "HOST" | "PHOTOGRAPHER" | "GUEST";
 };
 
-type Steps = "NAME_INPUT" | "ROLE_SELECT" | "SAVING_CINEMATIC" | "SUCCESS";
+type Steps = 
+  | "NAME_INPUT" 
+  | "ROLE_SELECT" 
+  | "SAVING_CINEMATIC" 
+  | "SUCCESS_HOST" 
+  | "SUCCESS_PHOTOGRAPHER";
 
 const ROLE_CARDS = [
   {
@@ -82,7 +87,6 @@ export default function RoleSelectionPage() {
   }
 
   const handleNextStep = async () => {
-    // Only proceed to roles if full_name passes client-side validation
     const isValidName = await trigger("full_name");
     if (isValidName) {
       clear();
@@ -95,61 +99,57 @@ export default function RoleSelectionPage() {
     setStep("SAVING_CINEMATIC");
 
     try {
-      const res = await AuthService.updateProfile({
+      await AuthService.updateProfile({
         full_name: data.full_name,
         role: data.role,
       });
 
-      // Show the customized success layout for 2 seconds
-      setStep("SUCCESS");
-
       setTimeout(() => {
-        if (res.profile?.role === "HOST") {
-          router.push("/host-dashboard");
+        // Evaluate role to determine next viewport layout configuration
+        if (data.role === "GUEST") {
+          router.push("/events/join");
+        } else if (data.role === "PHOTOGRAPHER") {
+          setStep("SUCCESS_PHOTOGRAPHER");
         } else {
-          router.push("/guest-hub");
+          setStep("SUCCESS_HOST");
         }
-      }, 2200);
+      }, 1500);
     } catch (err) {
       setError(err, "Failed to complete setup configuration.");
-      setStep("ROLE_SELECT"); // Fallback to retry if api errors out
+      setStep("ROLE_SELECT");
     }
   };
 
-  // Step Indicator Array configuration
-  const currentStepIndex =
-    step === "NAME_INPUT" ? 0 : step === "ROLE_SELECT" ? 1 : 2;
+  const currentStepIndex = step === "NAME_INPUT" ? 0 : step === "ROLE_SELECT" ? 1 : 2;
+
+  const renderProgressBar = () => (
+    <div className="flex items-center gap-1.5">
+      {[0, 1].map((idx) => {
+        const isActive = idx === currentStepIndex;
+        return (
+          <motion.div
+            key={idx}
+            animate={{ width: isActive ? 18 : 6 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className={`h-1 rounded-full ${
+              idx <= currentStepIndex ? "bg-foreground" : "bg-muted-foreground/30"
+            }`}
+          />
+        );
+      })}
+    </div>
+  );
 
   return (
     <div className="min-h-screen flex items-center justify-center flex-col p-4 sm:p-6 bg-background text-foreground overflow-hidden select-none relative">
-      {/* 1. TOP PROGRESS TRACKER LAYER */}
-      {step !== "SAVING_CINEMATIC" && step !== "SUCCESS" && (
-        <div className="absolute top-10 flex items-center gap-2 z-30">
-          {[0, 1, 2].map((idx) => {
-            const isActive = idx === currentStepIndex;
-            return (
-              <motion.div
-                key={idx}
-                animate={{ width: isActive ? 24 : 6 }}
-                transition={{ duration: 0.3, ease: "easeInOut" }}
-                className={`h-1.5 rounded-full transition-colors duration-300 ${
-                  idx <= currentStepIndex
-                    ? "bg-foreground"
-                    : "bg-muted-foreground/30"
-                }`}
-              />
-            );
-          })}
-        </div>
-      )}
-
-      {/* 2. MAIN SYSTEM STEP SHELLS */}
-      <div className="w-full max-w-xl flex flex-col items-center justify-center min-h-[50vh] relative z-20">
+      
+      <div className="w-full max-w-xl flex flex-col items-center justify-center min-h-[60vh] relative z-20">
         <form
           onSubmit={handleSubmit(onSubmit)}
           className="w-full flex flex-col items-center"
         >
           <AnimatePresence mode="wait">
+            
             {/* STEP 1: CAPTURING FULL NAME */}
             {step === "NAME_INPUT" && (
               <motion.div
@@ -160,13 +160,14 @@ export default function RoleSelectionPage() {
                 transition={{ duration: 0.4 }}
                 className="w-full max-w-sm flex flex-col items-center text-center"
               >
-                <div className="mb-4">
+                <div className="mb-6 transform scale-110 sm:scale-125">
                   <Image
                     src="/images/auth-image.png"
                     alt="Intro Illustration"
-                    width={130}
-                    height={130}
+                    width={220}
+                    height={220}
                     priority
+                    className="object-contain"
                   />
                 </div>
 
@@ -184,8 +185,7 @@ export default function RoleSelectionPage() {
                   </div>
                 )}
 
-                {/* FLOATING LABELED INPUT BOX */}
-                <div className="relative w-full mb-4">
+                <div className="relative w-full mb-6">
                   <input
                     {...register("full_name", {
                       required: "Full name is required",
@@ -203,25 +203,28 @@ export default function RoleSelectionPage() {
                     Your Full Name
                   </label>
                   {errors.full_name && (
-                    <p className="mt-2 text-xs text-red-500">
+                    <p className="mt-2 text-xs text-red-500 text-left w-full">
                       {errors.full_name.message}
                     </p>
                   )}
                 </div>
 
-                <Button
-                  type="button"
-                  size="lg"
-                  disabled={!currentFullName.trim()}
-                  onClick={handleNextStep}
-                  className="rounded-full flex items-center justify-center w-full h-11 sm:h-12 bg-foreground text-background hover:opacity-90 transition-opacity cursor-pointer disabled:opacity-40"
-                >
-                  Continue
-                </Button>
+                <div className="w-full flex items-center justify-between mt-2 pt-2 border-t border-border/40">
+                  {renderProgressBar()}
+                  <Button
+                    type="button"
+                    size="default"
+                    disabled={!currentFullName.trim()}
+                    onClick={handleNextStep}
+                    className="rounded-full px-6 h-10 bg-foreground text-background hover:opacity-90 transition-opacity cursor-pointer disabled:opacity-40 font-medium"
+                  >
+                    Continue
+                  </Button>
+                </div>
               </motion.div>
             )}
 
-            {/* STEP 2: MINIMALIST DESIGN ROLE CARDS */}
+            {/* STEP 2: DESIGN ROLE CARDS */}
             {step === "ROLE_SELECT" && (
               <motion.div
                 key="role-step"
@@ -229,9 +232,9 @@ export default function RoleSelectionPage() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.4 }}
-                className="w-full flex flex-col items-center"
+                className="w-full max-w-md flex flex-col items-center"
               >
-                <div className="text-center max-w-md mb-6">
+                <div className="text-center w-full mb-6">
                   <h2 className="text-2xl sm:text-3xl font-serif tracking-tight leading-[1.1] mb-2">
                     Select your purpose
                   </h2>
@@ -247,8 +250,7 @@ export default function RoleSelectionPage() {
                   </div>
                 )}
 
-                {/* CARDS ELEMENT WRAPPER */}
-                <div className="grid grid-cols-1 gap-3 w-full max-w-md mb-6">
+                <div className="grid grid-cols-1 gap-3 w-full mb-6">
                   <Controller
                     name="role"
                     control={control}
@@ -293,27 +295,29 @@ export default function RoleSelectionPage() {
                   />
                 </div>
 
-                {/* NAVIGATION BUTTON ACTIONS */}
-                <div className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
-                  <button
-                    type="button"
-                    onClick={() => setStep("NAME_INPUT")}
-                    className="h-11 sm:h-12 rounded-full border border-border text-xs uppercase tracking-widest font-sans px-6 hover:bg-secondary/40 transition-colors cursor-pointer text-muted-foreground hover:text-foreground"
-                  >
-                    Back
-                  </button>
-                  <Button
-                    type="submit"
-                    size="lg"
-                    className="rounded-full flex-1 h-11 sm:h-12 bg-foreground text-background hover:opacity-90 transition-opacity cursor-pointer"
-                  >
-                    Finalize Setup
-                  </Button>
+                <div className="w-full flex items-center justify-between mt-2 pt-2 border-t border-border/40">
+                  {renderProgressBar()}
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      onClick={() => setStep("NAME_INPUT")}
+                      className="h-10 rounded-full border border-border px-4 text-xs font-medium uppercase tracking-wider hover:bg-secondary/40 transition-colors text-muted-foreground hover:text-foreground"
+                    >
+                      Back
+                    </button>
+                    <Button
+                      type="submit"
+                      size="default"
+                      className="rounded-full h-10 px-5 bg-foreground text-background hover:opacity-90 transition-opacity"
+                    >
+                      Finalize Setup
+                    </Button>
+                  </div>
                 </div>
               </motion.div>
             )}
 
-            {/* STEP 3: CINEMATIC SETUP LOADING BACKGROUND SPIN */}
+            {/* STEP 3: LOADING OVERLAY */}
             {step === "SAVING_CINEMATIC" && (
               <motion.div
                 key="saving-step"
@@ -335,31 +339,112 @@ export default function RoleSelectionPage() {
               </motion.div>
             )}
 
-            {/* STEP 4: SUCCESS RECONCILIATION */}
-            {step === "SUCCESS" && (
+            {/* STEP 4A: SUCCESS HOST ENDPOINT */}
+            {step === "SUCCESS_HOST" && (
               <motion.div
-                key="success-step"
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="flex flex-col items-center justify-center text-center max-w-sm"
+                key="host-success-step"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="w-full max-w-md flex flex-col items-center text-center px-4"
               >
-                <motion.div
-                  initial={{ transform: "scale(0.85)", opacity: 0 }}
-                  animate={{ transform: "scale(1)", opacity: 1 }}
-                  transition={{ delay: 0.15, type: "spring" }}
-                  className="mb-4"
-                >
-                  <CheckCircle2 className="h-16 w-16 text-green-500 stroke-[1.25]" />
-                </motion.div>
-                <h2 className="text-2xl font-serif tracking-tight mb-1">
-                  All set!
-                </h2>
-                <p className="text-muted-foreground text-sm">
-                  Welcome to Glimpse. Routing you straight into your dashboard
-                  configuration...
+                <div className="relative w-full flex justify-center mb-6">
+                  <div className="w-12 h-12 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center backdrop-blur-md shadow-xl">
+                    <Clock className="h-5 w-5 text-white/70 stroke-[1.5]" />
+                  </div>
+                </div>
+
+                <div className="inline-flex items-center justify-center px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] uppercase font-semibold tracking-widest text-white/60 mb-4 shadow-sm">
+                  Event Host
+                </div>
+
+                <h1 className="text-4xl sm:text-5xl font-serif tracking-tight text-white mb-4">
+                  Your stage is ready.
+                </h1>
+                
+                <p className="text-white/60 text-sm max-w-sm leading-relaxed mb-8">
+                  Create an event to invite guests, sync photographer galleries, and capture every candid moment — all in one place.
                 </p>
+
+                <div className="flex flex-col gap-3 w-full max-w-xs">
+                  <Button
+                    type="button"
+                    onClick={() => router.push("/event/create")}
+                    className="w-full h-12 rounded-full bg-white text-black font-semibold shadow-md hover:bg-white/90 transition-all flex items-center justify-center gap-2"
+                  >
+                    <Plus className="h-4 w-4 stroke-[2.5]" />
+                    Create an Event
+                  </Button>
+
+                  <button
+                    type="button"
+                    onClick={() => router.push("/host")}
+                    className="text-xs text-white/40 hover:text-white/70 transition-colors font-medium underline underline-offset-4 pt-2"
+                  >
+                    Skip to dashboard
+                  </button>
+                </div>
               </motion.div>
             )}
+
+            {/* STEP 4B: SUCCESS PHOTOGRAPHER ENDPOINT */}
+            {step === "SUCCESS_PHOTOGRAPHER" && (
+              <motion.div
+                key="photographer-success-step"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="w-full max-w-md flex flex-col items-center text-center px-4"
+              >
+                <div className="relative w-full flex justify-center mb-6">
+                  <div className="w-12 h-12 rounded-2xl border border-white/10 bg-white/5 flex items-center justify-center backdrop-blur-md shadow-xl">
+                    <Camera className="h-5 w-5 text-white/70 stroke-[1.5]" />
+                  </div>
+                </div>
+
+                <div className="inline-flex items-center justify-center px-3 py-1 rounded-full border border-white/10 bg-white/5 text-[10px] uppercase font-semibold tracking-widest text-white/60 mb-4 shadow-sm">
+                  Photographer
+                </div>
+
+                <h1 className="text-4xl sm:text-5xl font-serif tracking-tight text-white mb-4">
+                  Frame every moment.
+                </h1>
+                
+                <p className="text-white/60 text-sm max-w-sm leading-relaxed mb-8">
+                  Launch your own shoot, or join an existing event with a code or QR scan to start delivering matched pro galleries instantly.
+                </p>
+
+                <div className="flex flex-col gap-3 w-full max-w-xs">
+                  <Button
+                    type="button"
+                    onClick={() => router.push("/event/create")}
+                    className="w-full h-12 rounded-full bg-white text-black font-semibold shadow-md hover:bg-white/90 transition-all flex items-center justify-center gap-2"
+                  >
+                    <Plus className="h-4 w-4 stroke-[2.5]" />
+                    Create an Event
+                  </Button>
+
+                  <Button
+                    type="button"
+                    onClick={() => router.push("/events/join")}
+                    variant="outline"
+                    className="w-full h-12 rounded-full border-white/20 bg-transparent text-white hover:bg-white/5 transition-all flex items-center justify-center gap-2"
+                  >
+                    <QrCode className="h-4 w-4 stroke-[1.5]" />
+                    Join via Code or QR
+                  </Button>
+
+                  <button
+                    type="button"
+                    onClick={() => router.push("/host")}
+                    className="text-xs text-white/40 hover:text-white/70 transition-colors font-medium underline underline-offset-4 pt-2"
+                  >
+                    Skip to dashboard
+                  </button>
+                </div>
+              </motion.div>
+            )}
+
           </AnimatePresence>
         </form>
       </div>

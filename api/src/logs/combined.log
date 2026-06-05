@@ -328,3 +328,18 @@ Please make sure your database server is running at `aws-0-eu-west-1.pooler.supa
 2026-06-05 10:47:24 [info]: GET /api-docs/swagger-ui-init.js 304 2.699 ms
 2026-06-05 10:47:25 [info]: GET /api-docs/favicon-32x32.png 304 1.299 ms
 2026-06-05 23:51:09 [info]: Glimpse API running on port 5002
+2026-06-06 00:25:15 [info]: Glimpse API running on port 5002
+2026-06-06 00:28:10 [info]: GET /api/v1/user/me 200 4586.722 ms
+2026-06-06 00:28:36 [info]: GET /api/v1/user/me 304 1761.473 ms
+2026-06-06 00:29:04 [info]: Profile updated for user bd6ae649-efc2-4b4a-ba91-d8b1861da50f
+2026-06-06 00:29:04 [info]: POST /api/v1/user/profile-update 200 1572.649 ms
+2026-06-06 00:37:34 [info]: GET /api/v1/user/me 200 3798.610 ms
+2026-06-06 00:38:05 [info]: GET /api/v1/user/me 200 2611.762 ms
+2026-06-06 00:38:20 [info]: GET /api/v1/user/me 304 2045.937 ms
+2026-06-06 00:39:06 [info]: GET /api/v1/user/me 200 2048.353 ms
+2026-06-06 00:39:09 [info]: GET /api/v1/user/me 304 1526.393 ms
+2026-06-06 00:39:25 [info]: GET /api/v1/user/me 304 2308.885 ms
+2026-06-06 00:41:31 [info]: GET /api/v1/user/me 304 1891.616 ms
+2026-06-06 00:42:26 [info]: GET /api/v1/user/me 200 1867.233 ms
+2026-06-06 00:42:43 [info]: Profile updated for user bd6ae649-efc2-4b4a-ba91-d8b1861da50f
+2026-06-06 00:42:43 [info]: POST /api/v1/user/profile-update 200 3654.220 ms
