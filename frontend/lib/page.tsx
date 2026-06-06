@@ -25,15 +25,15 @@ import {
 import { motion } from "framer-motion";
 
 import { PRELOADED_THEMES, FAQS, Photo } from "@/lib/types";
-import IphoneMockupShowcase from "@/components/IphoneMockupShowcase";
-import PricingCalculator from "@/components/PricingCalculator";
-import TvSlideshow from "@/components/TvSlideshow";
-import PhoneMockup from "@/components/PhoneMockup";
+import IphoneMockupShowcase from "@/components/landing-page/IphoneMockupShowcase";
+import PricingCalculator from "@/components/landing-page/PricingCalculator";
+import TvSlideshow from "@/components/landing-page/TvSlideshow";
+import PhoneMockup from "@/components/landing-page/PhoneMockup";
 
 // New high fidelity pages and custom navigation elements
-import BlogPage from "@/components/BlogPage";
-import CaseStudies from "@/components/CaseStudies";
-import AuthPages from "@/components/AuthPages";
+import BlogPage from "@/components/landing-page/BlogPage";
+import CaseStudies from "@/components/landing-page/CaseStudies";
+import AuthPages from "@/components/landing-page/AuthPages";
 import {
   Menubar,
   MenubarContent,
@@ -799,7 +799,7 @@ export default function App() {
 
             {/* Column 2: System Solutions */}
             <div className="lg:col-span-2 space-y-4">
-              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[#18171C] font-semibold">// Architecture</h4>
+              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[#18171C] font-semibold">{ /* Architecture */ }</h4>
               <ul className="space-y-2.5 text-xs font-light text-[#898B91]">
                 <li>
                   <button
@@ -862,7 +862,7 @@ export default function App() {
 
             {/* Column 3: Case Chronics */}
             <div className="lg:col-span-2 space-y-4">
-              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[#18171C] font-semibold">// Live Case Studies</h4>
+              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[#18171C] font-semibold">{ /* Live Case Studies */ }</h4>
               <ul className="space-y-2.5 text-xs font-light text-[#898B91]">
                 <li>
                   <button
@@ -905,7 +905,7 @@ export default function App() {
 
             {/* Column 4: Host Vault */}
             <div className="lg:col-span-3 space-y-4">
-              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[#18171C] font-semibold">// Access Portal</h4>
+              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[#18171C] font-semibold">{ /* Access Portal */ }</h4>
               <ul className="space-y-2.5 text-xs font-light text-[#898B91]">
                 <li>
                   <button

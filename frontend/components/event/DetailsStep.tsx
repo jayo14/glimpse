@@ -26,7 +26,7 @@ export default function DetailsStep() {
       <div className="grid grid-cols-2 gap-3 mb-4">
         <Controller
           control={control}
-          name="start_time"
+          name="event_start"
           render={({ field }) => (
             <DatePicker
               label="Event Start"
@@ -38,7 +38,7 @@ export default function DetailsStep() {
         />
         <Controller
           control={control}
-          name="end_time"
+          name="event_end"
           render={({ field }) => (
             <DatePicker
               label="Event End"

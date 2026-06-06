@@ -1,0 +1,16 @@
+"use client"
+
+import { useParams } from "next/navigation";
+import React from "react";
+
+export default function EventPage() {
+  const params = useParams();
+  const id = params.id;
+
+  return (
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <h1 className="text-2xl font-bold">Event Details</h1>
+      <p className="text-muted-foreground">Event ID: {id}</p>
+    </div>
+  );
+}

@@ -74,7 +74,7 @@ export default function AuthPages({ initialMode = "login", onBackToHome, onSucce
         <div className="hidden lg:flex lg:col-span-5 bg-[#263043] rounded-3xl p-10 flex-col justify-between text-white relative overflow-hidden self-center h-[560px]">
           
           <div className="space-y-4 text-left z-10">
-            <span className="text-[10px] font-mono uppercase tracking-widest text-[#B2B3BA] block">// Secure Access Console</span>
+            <span className="text-[10px] font-mono uppercase tracking-widest text-[#B2B3BA] block">{ /* Secure Access Console */ }</span>
             <h2 className="font-serif text-3xl font-light leading-snug">
               Streamline the crowd photo stream with <span className="italic font-normal text-[#F4C9C8]">Spotlight Control</span>.
             </h2>
@@ -264,7 +264,7 @@ export default function AuthPages({ initialMode = "login", onBackToHome, onSucce
                 <div className="border-t border-[#E4E4E7]/60 pt-6 text-center text-xs font-sans font-light text-[#898B91] space-y-2">
                   {mode === "login" && (
                     <p>
-                      Don't have an event account?{" "}
+                      Don&apos;t have an event account?{" "}
                       <button
                         onClick={() => setMode("signup")}
                         className="font-semibold text-[#263043] hover:underline cursor-pointer"
