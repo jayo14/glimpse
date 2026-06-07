@@ -1,19 +1,47 @@
 services:
   db:
-    image: ankane/pgvector:latest
+    image: pgvector/pgvector:pg16
     environment:
-      POSTGRES_DB: eventlens
+      POSTGRES_DB: glimpse
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
     ports:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d glimpse"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
 
   redis:
     image: redis:7-alpine
     ports:
       - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  processing-api:
+    build:
+      context: ./processing
+      dockerfile: Dockerfile
+    command: ["sh", "-c", "python check_env.py && uvicorn main:app --host 0.0.0.0 --port 8000 --reload"]
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./processing/.env
+    depends_on:
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./processing:/app
+      - glimpse_models:/app/models
 
   ml-worker:
     build:
@@ -23,11 +51,14 @@ services:
     env_file:
       - ./processing/.env
     depends_on:
-      - redis
-      - db
+      db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     volumes:
       - ./processing:/app
-      - ./processing/models:/app/models
+      - glimpse_models:/app/models
 
 volumes:
   postgres_data:
+  glimpse_models:

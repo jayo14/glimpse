@@ -1,76 +1,74 @@
 import logging
+import urllib.parse
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, Form, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
+from arq import create_pool
+from arq.connections import RedisSettings
 
 from app.core.config import settings
 from app.services.face_engine import face_engine
 from app.services.db_service import db_service
 from app.services.storage_service import storage_service
 
-# Configure basic logging
+# Configure logging
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
 )
-logger = logging.getLogger("glimpse-processing")
-
-from arq import create_pool
-from arq.connections import RedisSettings
-import urllib.parse
+logger = logging.getLogger("glimpse-api")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """
     Lifespan context manager for startup and shutdown events.
     """
-    # Startup tasks
     logger.info("Application starting up...")
 
-    # Initialize and warm up FaceEngine
+    # 1. Warm up FaceEngine
     try:
         face_engine.prepare_engine()
     except Exception as e:
-        logger.error(f"Critical error during FaceEngine warmup: {e}")
-        # In a real production environment, you might want to exit if ML is critical
+        logger.error(f"Failed to warm up FaceEngine: {e}")
 
-    # Database Pool is initialized on first access via singleton,
-    # but we can trigger it here to ensure connectivity on startup.
+    # 2. Touch DB pool
     try:
         _ = db_service.connection_pool
-        logger.info("Database connection pool verified.")
+        logger.info("Database connection pool initialized.")
     except Exception as e:
-        logger.error(f"Critical error during Database initialization: {e}")
+        logger.error(f"Failed to initialize database pool: {e}")
 
-    # Initialize ARQ Redis Pool
+    # 3. Create ARQ Redis pool
     try:
-        redis_url = urllib.parse.urlparse(settings.REDIS_URL)
+        url = urllib.parse.urlparse(settings.REDIS_URL)
         app.state.redis = await create_pool(RedisSettings(
-            host=redis_url.hostname or 'localhost',
-            port=redis_url.port or 6379,
-            password=redis_url.password,
+            host=url.hostname or 'localhost',
+            port=url.port or 6379,
+            password=url.password,
+            database=int(url.path.lstrip('/')) if url.path else 0
         ))
         logger.info("ARQ Redis pool initialized.")
     except Exception as e:
         logger.error(f"Failed to initialize ARQ Redis pool: {e}")
+        app.state.redis = None
 
     yield
 
-    # Shutdown tasks
+    # Shutdown
     logger.info("Application shutting down...")
-    if hasattr(app.state, 'redis'):
+    if app.state.redis:
         await app.state.redis.close()
     db_service.close_pool()
 
 app = FastAPI(
     title="Glimpse Processing Service",
-    description="ML Inference service for face detection and embedding extraction.",
     version="1.0.0",
     lifespan=lifespan
 )
 
-# Setup CORS Middleware
+# Setup CORS
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.CORS_ORIGINS,
@@ -79,123 +77,98 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+class WebhookPayload(BaseModel):
+    photo_id: str
+    event_id: str
+    storage_path: str
+
 @app.get("/health")
 def health_check():
     """
-    Lightweight health endpoint to verify core configurations.
+    Health endpoint to verify system status.
     """
-    health_status = {
-        "status": "healthy",
-        "config_checks": {
-            "DATABASE_URL": bool(settings.DATABASE_URL),
-            "REDIS_URL": bool(settings.REDIS_URL),
-            "SUPABASE_S3_ENDPOINT_URL": bool(settings.SUPABASE_S3_ENDPOINT_URL),
-        }
+    checks = {
+        "database": False,
+        "redis": False,
+        "face_engine_loaded": face_engine._app is not None
     }
 
-    # If any critical config is missing, return degraded status
-    if not all(health_status["config_checks"].values()):
-        health_status["status"] = "degraded"
+    try:
+        with db_service.get_cursor() as cursor:
+            cursor.execute("SELECT 1")
+            checks["database"] = True
+    except Exception:
+        pass
 
-    return health_status
+    if app.state.redis:
+        checks["redis"] = True
 
-@app.get("/")
-def read_root():
-    return {"message": "Glimpse Processing Service is running"}
+    status = "healthy" if all(checks.values()) else "degraded"
+
+    return {
+        "status": status,
+        "checks": checks
+    }
 
 @app.post("/api/v1/process/selfie")
 async def process_selfie(
     profile_id: str = Form(...),
     event_id: str = Form(...),
     file: UploadFile = File(...)
-) -> dict:
+):
     """
-    Synchronous onboarding endpoint for guest selfie registration.
-    Validates face quality, uploads to S3, and updates database records.
+    Synchronous guest selfie onboarding.
     """
-    logger.info(f"Processing selfie for profile_id: {profile_id}, event_id: {event_id}")
+    logger.info(f"Processing selfie for profile_id: {profile_id}")
 
     try:
-        # 1. Read file into memory (stateless)
+        # Read bytes
         file_bytes = await file.read()
 
-        # 2. Process image with FaceEngine
+        # Detect face
         detected_faces = face_engine.process_image(file_bytes)
 
-        # 3. Quality Control Checks
-        if not detected_faces:
-            raise HTTPException(
-                status_code=400,
-                detail={"code": "NO_FACE_DETECTED", "message": "No face found in the submitted selfie."}
-            )
-
+        if len(detected_faces) == 0:
+            raise HTTPException(status_code=400, detail="No face detected in selfie.")
         if len(detected_faces) > 1:
-            raise HTTPException(
-                status_code=400,
-                detail={"code": "MULTIPLE_FACES_DETECTED", "message": "Multiple faces detected. Please upload a clear photo of only yourself."}
-            )
+            raise HTTPException(status_code=400, detail="Multiple faces detected in selfie.")
 
         face_data = detected_faces[0]
         embedding = face_data['embedding']
 
-        # 4. Storage & Database Sequence
+        # Upload to S3
         storage_path = None
         try:
-            # Upload Selfie to S3
             filename = f"{profile_id}.jpg"
             storage_path = storage_service.upload_selfie(file_bytes, filename)
 
-            # Register Embedding in Profile
+            # DB writes
             db_service.register_guest_embedding(profile_id, embedding)
-
-            # Create Registration Record
             db_service.create_registration(profile_id, event_id, storage_path)
 
-            logger.info(f"Successfully onboarded guest {profile_id} for event {event_id}")
-
-            return {
-                "status": "success",
-                "profile_id": profile_id,
-                "event_id": event_id,
-                "message": "Onboarding face profile registered successfully."
-            }
+            return {"status": "success"}
 
         except Exception as e:
-            logger.error(f"Transaction failed for {profile_id}: {e}", exc_info=True)
-
-            # Cleanup: If S3 upload succeeded but DB failed, remove orphaned file
+            logger.error(f"Error during selfie processing: {e}")
             if storage_path:
-                logger.info(f"Cleaning up orphaned S3 object: {storage_path}")
                 storage_service.delete_selfie(storage_path)
-
-            raise HTTPException(
-                status_code=500,
-                detail="An internal error occurred during profile registration."
-            )
+            raise HTTPException(status_code=500, detail="Internal server error during registration.")
 
     except HTTPException:
         raise
     except Exception as e:
-        logger.error(f"Unexpected error in process_selfie: {e}", exc_info=True)
+        logger.error(f"Unexpected error: {e}")
         raise HTTPException(status_code=500, detail="Internal server error")
 
-from pydantic import BaseModel
-class WebhookPayload(BaseModel):
-    photo_id: str
-    event_id: str
-    storage_path: str
-
 @app.post("/api/v1/process/webhook")
-async def process_webhook(payload: WebhookPayload) -> dict:
+async def process_webhook(payload: WebhookPayload):
     """
-    Webhook endpoint triggered by Supabase Storage on photo upload.
-    Enqueues an async job in Redis via ARQ to extract and match faces.
+    Webhook to enqueue photo processing job.
     """
-    if not hasattr(app.state, 'redis'):
-        raise HTTPException(status_code=500, detail="Redis connection not initialized.")
+    if not app.state.redis:
+        raise HTTPException(status_code=503, detail="Redis service unavailable.")
 
     try:
-        logger.info(f"Received webhook for photo_id: {payload.photo_id}, enqueueing job...")
         await app.state.redis.enqueue_job(
             'process_photo_job',
             payload.photo_id,
@@ -204,5 +177,5 @@ async def process_webhook(payload: WebhookPayload) -> dict:
         )
         return {"status": "enqueued", "photo_id": payload.photo_id}
     except Exception as e:
-        logger.error(f"Failed to enqueue job for {payload.photo_id}: {e}", exc_info=True)
+        logger.error(f"Failed to enqueue job: {e}")
         raise HTTPException(status_code=500, detail="Failed to enqueue background job.")
