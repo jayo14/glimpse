@@ -4,12 +4,15 @@ import cv2
 import numpy as np
 from insightface.app import FaceAnalysis
 import os
+import time
+from app.core.config import settings
 
 logger = logging.getLogger(__name__)
 
 class FaceEngine:
     """
     Singleton class for ML inference using InsightFace for face detection and embedding extraction.
+    Implements a lazy initialization pattern.
     """
     _instance = None
     _lock = threading.Lock()
@@ -18,15 +21,17 @@ class FaceEngine:
         with cls._lock:
             if cls._instance is None:
                 cls._instance = super(FaceEngine, cls).__new__(cls)
-                cls._instance._initialized = False
+                cls._instance._app = None
+                cls._instance._init_lock = threading.Lock()
         return cls._instance
 
-    def __init__(self):
-        if self._initialized:
-            return
-
-        self.app = None
-        self._initialized = True
+    @property
+    def app(self):
+        if self._app is None:
+            with self._init_lock:
+                if self._app is None:
+                    self.prepare_engine()
+        return self._app
 
     def prepare_engine(self, ctx_id: int = -1, det_size: tuple = (640, 640)):
         """
@@ -34,17 +39,25 @@ class FaceEngine:
         ctx_id: -1 for CPU, >= 0 for GPU ID.
         """
         try:
+            model_path = os.path.abspath(settings.MODELS_DIR)
+            logger.info(f"Initializing FaceAnalysis with root: {model_path}")
+
             # name='buffalo_l' refers to the model pack containing SCRFD and ArcFace
-            # root='models/' specifies where the models are stored
-            self.app = FaceAnalysis(name='buffalo_l', root='models/', providers=['CPUExecutionProvider'])
+            app = FaceAnalysis(
+                name='buffalo_l',
+                root=model_path,
+                providers=['CPUExecutionProvider']
+            )
 
             # This will download the model if not found in root/models/
-            self.app.prepare(ctx_id=ctx_id, det_size=det_size)
+            app.prepare(ctx_id=ctx_id, det_size=det_size)
 
             # Warm up with a dummy image to trigger internal allocations and reduce latency
             logger.info("Warming up FaceEngine...")
             dummy_img = np.zeros((*det_size, 3), dtype=np.uint8)
-            self.app.get(dummy_img)
+            app.get(dummy_img)
+
+            self._app = app
             logger.info("FaceEngine initialization and warm-up complete.")
 
         except Exception as e:
@@ -56,14 +69,9 @@ class FaceEngine:
         Decodes image bytes, detects faces, and extracts normalized embeddings.
         Returns a list of dicts containing bbox, det_score, and embedding.
         """
-        if self.app is None:
-            logger.warning("FaceEngine not initialized. Calling prepare_engine now.")
-            self.prepare_engine()
+        start_time = time.perf_counter()
 
         try:
-            import time
-            start_time = time.perf_counter()
-
             # Convert raw bytes to numpy array for OpenCV without disk writes
             nparr = np.frombuffer(img_bytes, np.uint8)
             img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
@@ -75,14 +83,10 @@ class FaceEngine:
             # Perform inference
             faces = self.app.get(img)
 
-            end_time = time.perf_counter()
-            inference_time_ms = (end_time - start_time) * 1000
-            logger.info(f"Inference completed in {inference_time_ms:.2f}ms. Faces detected: {len(faces)}")
-
             results = []
             for face in faces:
                 # Filter by detection confidence (det_score)
-                if face.det_score < 0.85:
+                if face.det_score < settings.FACE_DETECTION_THRESHOLD:
                     continue
 
                 # Convert bounding box to native Python integers
@@ -99,6 +103,18 @@ class FaceEngine:
                     "det_score": float(face.det_score),
                     "embedding": embedding
                 })
+
+            end_time = time.perf_counter()
+            inference_ms = (end_time - start_time) * 1000
+
+            logger.info(
+                f"Inference completed in {inference_ms:.1f}ms — "
+                f"{len(faces)} face(s) detected, {len(results)} passed quality filter."
+            )
+
+            # Add inference time to each result if needed, or just log it
+            for res in results:
+                res["inference_ms"] = inference_ms
 
             return results
 
