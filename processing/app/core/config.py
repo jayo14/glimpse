@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Union
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -19,8 +19,8 @@ class Settings(BaseSettings):
     REDIS_URL: str = "redis://localhost:6379/0"
 
     # Supabase Configuration
-    SUPABASE_URL: str
-    SUPABASE_SERVICE_ROLE_KEY: str
+    SUPABASE_URL: str = ""
+    SUPABASE_SERVICE_ROLE_KEY: str = ""
 
     # Supabase S3 / Storage Configuration
     SUPABASE_S3_ENDPOINT_URL: str
@@ -30,13 +30,15 @@ class Settings(BaseSettings):
 
     # ML Inference Settings
     FACE_SIMILARITY_THRESHOLD: float = 0.35
+    FACE_DETECTION_THRESHOLD: float = 0.85
+    MODELS_DIR: str = "models"
 
     # CORS Configuration
     CORS_ORIGINS: List[str] = ["*"]
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod
-    def assemble_cors_origins(cls, v: str | List[str]) -> List[str]:
+    def assemble_cors_origins(cls, v: Union[str, List[str]]) -> List[str]:
         if isinstance(v, str) and not v.startswith("["):
             return [i.strip() for i in v.split(",")]
         elif isinstance(v, (list, str)):
