@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// src/app/role-selection/page.tsx
 "use client";
 
 import React, { useState } from "react";
@@ -107,7 +106,7 @@ export default function RoleSelectionPage() {
       setTimeout(() => {
         // Evaluate role to determine next viewport layout configuration
         if (data.role === "GUEST") {
-          router.push("/events/join");
+          router.push("/event/join");
         } else if (data.role === "PHOTOGRAPHER") {
           setStep("SUCCESS_PHOTOGRAPHER");
         } else {

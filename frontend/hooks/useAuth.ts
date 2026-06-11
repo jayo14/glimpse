@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+// src/hooks/useAuth.ts
 "use client";
 
 import { useEffect, useState } from "react";
@@ -6,76 +8,91 @@ import { AuthService } from "@/api/auth";
 import { getAccessToken, setAccessToken } from "@/lib/axios";
 
 type GuardOptions = {
-    requireAuth?: boolean;
-    requireCompletedProfile?: boolean;
+  requireAuth?: boolean;
+  requireCompletedProfile?: boolean;
+  allowedRoles?: ("HOST" | "GUEST" | "PHOTOGRAPHER")[];
 };
 
 export const useAuth = ({
-    requireAuth = false,
-    requireCompletedProfile = false,
+  requireAuth = false,
+  requireCompletedProfile = false,
+  allowedRoles = [],
 }: GuardOptions = {}) => {
-    const router = useRouter();
-    const pathname = usePathname();
+  const router = useRouter();
+  const pathname = usePathname();
 
-    const [loading, setLoading] = useState(true);
-    const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [userProfile, setUserProfile] = useState<any>(null);
 
-    useEffect(() => {
-        let mounted = true;
+  useEffect(() => {
+    let mounted = true;
 
-        const checkAuth = async () => {
-            try {
-                const token = getAccessToken();
-                if (!token) {
-                    if (requireAuth) router.replace("/auth/login");
-                    if (mounted) {
-                        setAuthenticated(false);
-                        setLoading(false);
-                    }
-                    return;
-                }
+    const checkAuth = async () => {
+      try {
+        const token = getAccessToken();
+        if (!token) {
+          if (requireAuth) router.replace("/auth/login");
+          if (mounted) {
+            setAuthenticated(false);
+            setLoading(false);
+          }
+          return;
+        }
 
-                const res = await AuthService.getMe();
-                const { role, full_name } = res.profile;
-                const profileComplete = !!role && !!full_name?.trim();
+        const res = await AuthService.getMe();
+        const { role, full_name } = res.profile || {};
+        const profileComplete = !!role && !!full_name?.trim();
 
-                if (mounted) setAuthenticated(true);
+        if (mounted) {
+          setAuthenticated(true);
+          setUserProfile(res.profile);
+        }
 
-                // Auth redirects logic...
-                if (!requireAuth) {
-                    if (pathname.includes("/auth/login") || pathname.includes("/auth/signup")) {
-                        router.replace(
-                            !profileComplete
-                                ? "/role-selection"
-                                : role === "HOST"
-                                    ? "/host-dashboard"
-                                    : "/guest-hub"
-                        );
-                    }
-                } else if (requireCompletedProfile && !profileComplete) {
-                    router.replace("/role-selection");
-                } else if (pathname === "/role-selection" && profileComplete) {
-                    router.replace(role === "HOST" ? "/host-dashboard" : "/guest-hub");
-                }
+        if (!requireAuth) {
+          if (pathname.includes("/auth/login") || pathname.includes("/auth/signup")) {
+            router.replace(
+              !profileComplete
+                ? "/role-selection"
+                : role === "HOST"
+                ? "/host-dashboard"
+                : "/guest-hub"
+            );
+          }
+        } 
+        else if (requireCompletedProfile && !profileComplete) {
+          router.replace("/role-selection");
+          return;
+        } 
+        else if (pathname === "/role-selection" && profileComplete) {
+          router.replace(role === "HOST" ? "/host-dashboard" : "/guest-hub");
+          return;
+        }
 
-                if (mounted) setLoading(false);
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-            } catch (err) {
-                setAccessToken(null);
-                if (requireAuth) router.replace("/auth/login");
-                if (mounted) {
-                    setAuthenticated(false);
-                    setLoading(false);
-                }
-            }
-        };
+        if (profileComplete && allowedRoles.length > 0 && !allowedRoles.includes(role)) {
+          console.warn(`Access Denied: Role "${role}" is not authorized for this view.`);
+          router.replace(role === "HOST" ? "/host-dashboard" : "/guest-hub");
+          return;
+        }
 
-        checkAuth();
+        if (mounted) setLoading(false);
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (err) {
+        setAccessToken(null);
+        if (requireAuth) router.replace("/auth/login");
+        if (mounted) {
+          setAuthenticated(false);
+          setLoading(false);
+        }
+      }
+    };
 
-        return () => {
-            mounted = false;
-        };
-    }, [router, pathname, requireAuth, requireCompletedProfile]);
+    checkAuth();
 
-    return { loading, authenticated };
+    return () => {
+      mounted = false;
+    };
+  }, [router, pathname, requireAuth, requireCompletedProfile, allowedRoles]);
+
+  return { loading, authenticated, user: userProfile };
 };

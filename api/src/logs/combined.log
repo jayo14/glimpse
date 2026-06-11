@@ -343,3 +343,366 @@ Please make sure your database server is running at `aws-0-eu-west-1.pooler.supa
 2026-06-06 00:42:26 [info]: GET /api/v1/user/me 200 1867.233 ms
 2026-06-06 00:42:43 [info]: Profile updated for user bd6ae649-efc2-4b4a-ba91-d8b1861da50f
 2026-06-06 00:42:43 [info]: POST /api/v1/user/profile-update 200 3654.220 ms
+2026-06-11 15:40:45 [info]: Glimpse API running on port 5002
+2026-06-11 15:43:16 [info]: GET /api/v1/user/me 401 10182.408 ms
+2026-06-11 15:43:17 [info]: POST /api/v1/auth/refresh 401 1.306 ms
+2026-06-11 15:44:07 [error]: loginUser error: fetch failed
+2026-06-11 15:44:07 [error]: login controller error: fetch failed
+2026-06-11 15:44:07 [info]: POST /api/v1/auth/login 500 10056.102 ms
+2026-06-11 15:44:46 [error]: loginUser error: fetch failed
+2026-06-11 15:44:46 [error]: login controller error: fetch failed
+2026-06-11 15:44:46 [info]: POST /api/v1/auth/login 500 10030.053 ms
+2026-06-11 15:51:43 [info]: Glimpse API running on port 5002
+2026-06-11 15:51:58 [error]: loginUser error: fetch failed
+2026-06-11 15:51:58 [error]: login controller error: fetch failed
+2026-06-11 15:51:58 [info]: POST /api/v1/auth/login 500 10817.494 ms
+2026-06-11 15:56:25 [info]: Glimpse API running on port 5002
+2026-06-11 15:56:41 [error]: loginUser error: Invalid login credentials
+2026-06-11 15:56:41 [info]: POST /api/v1/auth/login 401 2687.658 ms
+2026-06-11 15:56:41 [info]: POST /api/v1/auth/refresh 401 1.015 ms
+2026-06-11 15:56:57 [error]: loginUser error: Invalid login credentials
+2026-06-11 15:56:57 [info]: POST /api/v1/auth/login 401 1285.105 ms
+2026-06-11 15:56:57 [info]: POST /api/v1/auth/refresh 401 2.638 ms
+2026-06-11 15:57:26 [error]: loginUser error: Invalid login credentials
+2026-06-11 15:57:26 [info]: POST /api/v1/auth/login 401 882.636 ms
+2026-06-11 15:57:26 [info]: POST /api/v1/auth/refresh 401 0.975 ms
+2026-06-11 15:57:51 [error]: loginUser error: Invalid login credentials
+2026-06-11 15:57:51 [info]: POST /api/v1/auth/login 401 1595.298 ms
+2026-06-11 15:57:51 [info]: POST /api/v1/auth/refresh 401 0.500 ms
+2026-06-11 16:04:24 [error]: loginUser error: Invalid login credentials
+2026-06-11 16:04:24 [info]: POST /api/v1/auth/login 401 2949.321 ms
+2026-06-11 16:05:00 [error]: forgotPassword controller error: invalid_grant: Token has been expired or revoked.
+2026-06-11 16:05:00 [info]: POST /api/v1/auth/forgot-password 500 3681.895 ms
+2026-06-11 16:14:04 [info]: Glimpse API running on port 5002
+2026-06-11 16:15:02 [info]: Glimpse API running on port 5002
+2026-06-11 16:15:11 [error]: forgotPassword controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-4601f2ec711sm79078155f8f.12 - gsmtp
+2026-06-11 16:15:11 [info]: POST /api/v1/auth/forgot-password 500 4144.096 ms
+2026-06-11 16:18:04 [error]: loginUser error: Invalid login credentials
+2026-06-11 16:18:04 [info]: POST /api/v1/auth/login 401 1450.801 ms
+2026-06-11 16:18:37 [error]: register controller error: 
+Invalid `prisma.profile.create()` invocation:
+
+{
+  data: {
+    id: "9a556396-921c-4002-80b9-d88992a97348",
++   full_name: String
+  }
+}
+
+Argument `full_name` is missing.
+2026-06-11 16:18:37 [info]: POST /api/v1/auth/register 500 9103.193 ms
+2026-06-11 16:22:57 [info]: Glimpse API running on port 5002
+2026-06-11 16:23:20 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-4601f2ed944sm84405696f8f.13 - gsmtp
+2026-06-11 16:23:20 [info]: POST /api/v1/auth/register 500 20127.206 ms
+2026-06-11 16:26:26 [info]: Glimpse API running on port 5002
+2026-06-11 16:26:45 [error]: forgotPassword controller error: Unexpected socket close
+2026-06-11 16:26:45 [info]: POST /api/v1/auth/forgot-password 500 13132.939 ms
+2026-06-11 16:27:16 [error]: register controller error: Unexpected socket close
+2026-06-11 16:27:16 [info]: POST /api/v1/auth/register 500 20678.242 ms
+2026-06-11 16:31:51 [info]: Glimpse API running on port 5002
+2026-06-11 16:32:05 [info]: Glimpse API running on port 5002
+2026-06-11 16:32:40 [info]: Glimpse API running on port 5002
+2026-06-11 16:32:51 [error]: Nodemailer configuration invalid: Connection closed
+2026-06-11 16:35:32 [info]: Glimpse API running on port 5002
+2026-06-11 16:35:33 [error]: Nodemailer configuration invalid: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-490e2c907ddsm72832125e9.6 - gsmtp
+2026-06-11 16:38:04 [info]: Glimpse API running on port 5002
+2026-06-11 16:38:06 [error]: Nodemailer configuration invalid: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-4601f2dc412sm84378721f8f.4 - gsmtp
+2026-06-11 16:41:33 [info]: Glimpse API running on port 5002
+2026-06-11 16:41:36 [info]: Nodemailer connected successfully.
+2026-06-11 16:43:39 [info]: Glimpse API running on port 5002
+2026-06-11 16:43:40 [error]: Nodemailer configuration invalid: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-490e52a553csm63911745e9.2 - gsmtp
+2026-06-11 16:45:34 [info]: Glimpse API running on port 5002
+2026-06-11 16:45:38 [info]: Nodemailer connected successfully.
+2026-06-11 16:46:24 [info]: POST /api/v1/auth/forgot-password 200 3938.251 ms
+2026-06-11 16:54:47 [info]: Glimpse API running on port 5002
+2026-06-11 16:54:50 [info]: Nodemailer connected successfully.
+2026-06-11 16:58:42 [info]: POST /api/v1/auth/register 201 13217.947 ms
+2026-06-11 17:02:25 [info]: User logged in: yourlogodesigner28@gmail.com
+2026-06-11 17:02:25 [info]: POST /api/v1/auth/login 200 3602.169 ms
+2026-06-11 17:02:30 [info]: GET /api/v1/user/me 200 2758.463 ms
+2026-06-11 17:02:33 [info]: GET /api/v1/user/me 304 2325.678 ms
+2026-06-11 17:03:42 [info]: Profile updated for user 03132130-13b2-4e9c-80ac-6e8d8b5fe701
+2026-06-11 17:03:42 [info]: POST /api/v1/user/profile-update 200 5826.417 ms
+2026-06-11 17:05:03 [error]: register controller error: connect ENETUNREACH 2a00:1450:4009:c0f::6c:465
+2026-06-11 17:05:03 [info]: POST /api/v1/auth/register 500 30188.807 ms
+2026-06-11 17:06:05 [info]: POST /api/v1/auth/register 201 11108.905 ms
+2026-06-11 17:06:48 [info]: User logged in: wasiusikiru7@gmail.com
+2026-06-11 17:06:49 [info]: POST /api/v1/auth/login 200 2998.018 ms
+2026-06-11 17:06:51 [info]: GET /api/v1/user/me 200 2036.775 ms
+2026-06-11 17:06:54 [info]: GET /api/v1/user/me 304 2969.105 ms
+2026-06-11 17:07:40 [info]: Profile updated for user d415e41c-89a8-4d94-82f7-b6cfd842a0fd
+2026-06-11 17:07:40 [info]: POST /api/v1/user/profile-update 200 3958.192 ms
+2026-06-11 17:09:28 [info]: GET /api/v1/user/me 200 6061.222 ms
+2026-06-11 17:09:31 [info]: GET /api/v1/user/me 304 3164.514 ms
+2026-06-11 17:09:38 [info]: GET /api/v1/user/me 304 3032.314 ms
+2026-06-11 17:09:39 [info]: GET /api/v1/user/me - - ms
+2026-06-11 17:09:47 [info]: GET /api/v1/user/me 200 3861.949 ms
+2026-06-11 17:09:54 [info]: GET /api/v1/user/me 304 3620.186 ms
+2026-06-11 17:09:57 [info]: GET /api/v1/user/me 304 2278.281 ms
+2026-06-11 17:10:13 [info]: GET /api/v1/user/me 304 3271.839 ms
+2026-06-11 18:01:19 [info]: GET /api/v1/user/me 304 6709.676 ms
+2026-06-11 18:01:22 [info]: GET /api/v1/user/me 304 3141.954 ms
+2026-06-11 18:01:24 [info]: GET /api/v1/user/me 304 2478.041 ms
+2026-06-11 18:01:27 [info]: GET /api/v1/user/me 304 3049.185 ms
+2026-06-11 18:01:29 [info]: GET /api/v1/user/me 304 1914.974 ms
+2026-06-11 18:01:33 [info]: GET /api/v1/user/me 304 2905.490 ms
+2026-06-11 18:01:37 [info]: GET /api/v1/user/me 304 3259.998 ms
+2026-06-11 18:01:39 [info]: GET /api/v1/user/me 304 2209.333 ms
+2026-06-11 18:01:42 [info]: GET /api/v1/user/me 304 2205.270 ms
+2026-06-11 18:01:44 [info]: GET /api/v1/user/me 304 2308.084 ms
+2026-06-11 18:01:47 [info]: GET /api/v1/user/me 304 2542.641 ms
+2026-06-11 18:01:49 [info]: GET /api/v1/user/me 304 2497.132 ms
+2026-06-11 18:01:52 [info]: GET /api/v1/user/me 304 2429.048 ms
+2026-06-11 18:01:54 [info]: GET /api/v1/user/me 304 1931.434 ms
+2026-06-11 18:01:57 [info]: GET /api/v1/user/me 304 2529.624 ms
+2026-06-11 18:01:59 [info]: GET /api/v1/user/me 304 2678.579 ms
+2026-06-11 18:02:03 [info]: GET /api/v1/user/me 304 3242.324 ms
+2026-06-11 18:02:05 [info]: GET /api/v1/user/me 304 2239.122 ms
+2026-06-11 18:02:08 [info]: GET /api/v1/user/me 304 2921.339 ms
+2026-06-11 18:02:10 [info]: GET /api/v1/user/me 304 2355.254 ms
+2026-06-11 18:02:12 [info]: GET /api/v1/user/me 304 1753.935 ms
+2026-06-11 18:02:14 [info]: GET /api/v1/user/me 304 1773.989 ms
+2026-06-11 18:02:17 [info]: GET /api/v1/user/me 304 2736.664 ms
+2026-06-11 18:02:19 [info]: GET /api/v1/user/me 304 2090.352 ms
+2026-06-11 18:02:21 [info]: GET /api/v1/user/me 304 2298.710 ms
+2026-06-11 18:02:24 [info]: GET /api/v1/user/me 304 2358.952 ms
+2026-06-11 18:02:29 [info]: GET /api/v1/user/me 304 3151.704 ms
+2026-06-11 18:02:31 [info]: GET /api/v1/user/me 304 1931.498 ms
+2026-06-11 18:02:33 [info]: GET /api/v1/user/me 304 1763.514 ms
+2026-06-11 18:02:35 [info]: GET /api/v1/user/me 304 1754.446 ms
+2026-06-11 18:02:37 [info]: GET /api/v1/user/me 304 2216.443 ms
+2026-06-11 18:02:40 [info]: GET /api/v1/user/me 304 2401.495 ms
+2026-06-11 18:02:42 [info]: GET /api/v1/user/me 304 1977.512 ms
+2026-06-11 18:02:44 [info]: GET /api/v1/user/me 304 2088.722 ms
+2026-06-11 18:02:47 [info]: GET /api/v1/user/me 304 2648.675 ms
+2026-06-11 18:02:49 [info]: GET /api/v1/user/me 304 2305.068 ms
+2026-06-11 18:02:51 [info]: GET /api/v1/user/me 304 1920.706 ms
+2026-06-11 18:02:53 [info]: GET /api/v1/user/me 304 1733.845 ms
+2026-06-11 18:02:55 [info]: GET /api/v1/user/me 304 2283.675 ms
+2026-06-11 18:02:58 [info]: GET /api/v1/user/me 304 2096.664 ms
+2026-06-11 18:02:59 [info]: GET /api/v1/user/me 304 1818.867 ms
+2026-06-11 18:03:02 [info]: GET /api/v1/user/me 304 2106.853 ms
+2026-06-11 18:03:03 [info]: GET /api/v1/user/me 304 1864.594 ms
+2026-06-11 18:03:06 [info]: GET /api/v1/user/me 304 2065.458 ms
+2026-06-11 18:03:08 [info]: GET /api/v1/user/me 304 2412.589 ms
+2026-06-11 18:03:11 [info]: GET /api/v1/user/me 304 3009.760 ms
+2026-06-11 18:03:14 [info]: GET /api/v1/user/me 304 2599.355 ms
+2026-06-11 18:03:17 [info]: GET /api/v1/user/me 304 2972.135 ms
+2026-06-11 18:03:20 [info]: GET /api/v1/user/me 304 2586.014 ms
+2026-06-11 18:03:22 [info]: GET /api/v1/user/me 304 2128.554 ms
+2026-06-11 18:03:25 [info]: GET /api/v1/user/me 304 2567.192 ms
+2026-06-11 18:03:27 [info]: GET /api/v1/user/me 304 2869.406 ms
+2026-06-11 18:03:30 [info]: GET /api/v1/user/me 304 2207.830 ms
+2026-06-11 18:03:32 [info]: GET /api/v1/user/me 304 1929.526 ms
+2026-06-11 18:03:34 [info]: GET /api/v1/user/me 304 1851.081 ms
+2026-06-11 18:03:37 [info]: GET /api/v1/user/me 304 2366.176 ms
+2026-06-11 18:03:39 [info]: GET /api/v1/user/me 304 2277.617 ms
+2026-06-11 18:03:41 [info]: GET /api/v1/user/me 304 2074.130 ms
+2026-06-11 18:03:44 [info]: GET /api/v1/user/me 304 2454.883 ms
+2026-06-11 18:03:46 [info]: GET /api/v1/user/me 304 2425.950 ms
+2026-06-11 18:03:48 [info]: GET /api/v1/user/me 304 2396.800 ms
+2026-06-11 18:03:51 [info]: GET /api/v1/user/me 304 2674.293 ms
+2026-06-11 18:03:54 [info]: GET /api/v1/user/me 304 2635.079 ms
+2026-06-11 18:03:57 [info]: GET /api/v1/user/me 304 2855.941 ms
+2026-06-11 18:04:00 [info]: GET /api/v1/user/me 304 3050.185 ms
+2026-06-11 18:04:03 [info]: GET /api/v1/user/me 304 2624.095 ms
+2026-06-11 18:04:05 [info]: GET /api/v1/user/me 304 2102.631 ms
+2026-06-11 18:04:07 [info]: GET /api/v1/user/me 304 1912.831 ms
+2026-06-11 18:04:10 [info]: GET /api/v1/user/me 304 2697.188 ms
+2026-06-11 18:04:12 [info]: GET /api/v1/user/me 304 2507.039 ms
+2026-06-11 18:04:15 [info]: GET /api/v1/user/me 304 2632.009 ms
+2026-06-11 18:04:17 [info]: GET /api/v1/user/me 304 1819.028 ms
+2026-06-11 18:04:19 [info]: GET /api/v1/user/me 304 1911.543 ms
+2026-06-11 18:04:21 [info]: GET /api/v1/user/me 304 1958.930 ms
+2026-06-11 18:04:24 [info]: GET /api/v1/user/me 304 2282.155 ms
+2026-06-11 18:04:26 [info]: GET /api/v1/user/me 304 1884.604 ms
+2026-06-11 18:04:28 [info]: GET /api/v1/user/me 304 2552.263 ms
+2026-06-11 18:04:31 [info]: GET /api/v1/user/me 304 2445.267 ms
+2026-06-11 18:04:33 [info]: GET /api/v1/user/me 304 2276.764 ms
+2026-06-11 18:04:36 [info]: GET /api/v1/user/me 304 2622.852 ms
+2026-06-11 18:04:39 [info]: GET /api/v1/user/me 304 1826.267 ms
+2026-06-11 18:04:41 [info]: GET /api/v1/user/me 304 1779.814 ms
+2026-06-11 18:04:44 [info]: GET /api/v1/user/me 304 2666.883 ms
+2026-06-11 18:04:47 [info]: GET /api/v1/user/me 304 2960.420 ms
+2026-06-11 18:04:49 [info]: GET /api/v1/user/me 304 2509.601 ms
+2026-06-11 18:04:52 [info]: GET /api/v1/user/me 304 2493.872 ms
+2026-06-11 18:04:54 [info]: GET /api/v1/user/me 304 2377.039 ms
+2026-06-11 18:04:57 [info]: GET /api/v1/user/me 304 2228.718 ms
+2026-06-11 18:04:59 [info]: GET /api/v1/user/me 304 2210.943 ms
+2026-06-11 18:05:02 [info]: GET /api/v1/user/me 304 2784.135 ms
+2026-06-11 18:05:04 [info]: GET /api/v1/user/me 304 2610.684 ms
+2026-06-11 18:05:07 [info]: GET /api/v1/user/me 304 2467.173 ms
+2026-06-11 18:05:10 [info]: GET /api/v1/user/me 304 2430.972 ms
+2026-06-11 18:05:12 [info]: GET /api/v1/user/me 304 1774.918 ms
+2026-06-11 18:05:14 [info]: GET /api/v1/user/me 304 2127.102 ms
+2026-06-11 18:05:17 [info]: GET /api/v1/user/me 304 2506.646 ms
+2026-06-11 18:05:20 [info]: GET /api/v1/user/me 304 2580.178 ms
+2026-06-11 18:05:26 [info]: GET /api/v1/user/me 304 3489.369 ms
+2026-06-11 18:05:29 [info]: GET /api/v1/user/me 304 3159.040 ms
+2026-06-11 18:05:32 [info]: GET /api/v1/user/me 304 2460.283 ms
+2026-06-11 18:05:34 [info]: GET /api/v1/user/me 304 2668.403 ms
+2026-06-11 18:05:37 [info]: GET /api/v1/user/me 304 2549.898 ms
+2026-06-11 18:05:40 [info]: GET /api/v1/user/me 304 2602.932 ms
+2026-06-11 18:05:42 [info]: GET /api/v1/user/me 304 2720.170 ms
+2026-06-11 18:05:45 [info]: GET /api/v1/user/me 304 2561.402 ms
+2026-06-11 18:05:48 [info]: GET /api/v1/user/me 304 2881.930 ms
+2026-06-11 18:05:50 [info]: GET /api/v1/user/me 304 2603.827 ms
+2026-06-11 18:05:53 [info]: GET /api/v1/user/me 304 2972.928 ms
+2026-06-11 18:05:59 [info]: GET /api/v1/user/me 304 3449.633 ms
+2026-06-11 18:06:01 [info]: GET /api/v1/user/me 401 487.041 ms
+2026-06-11 18:06:01 [info]: POST /api/v1/auth/refresh 200 659.306 ms
+2026-06-11 18:06:04 [info]: GET /api/v1/user/me 200 2182.416 ms
+2026-06-11 18:06:08 [info]: GET /api/v1/user/me 304 6408.810 ms
+2026-06-11 18:06:11 [info]: GET /api/v1/user/me 304 2811.483 ms
+2026-06-11 18:06:12 [info]: GET /api/v1/user/me 304 2941.347 ms
+2026-06-11 18:06:14 [info]: GET /api/v1/user/me 304 2969.397 ms
+2026-06-11 18:06:14 [info]: GET /api/v1/user/me 304 2870.720 ms
+2026-06-11 18:06:16 [info]: GET /api/v1/user/me 304 2286.436 ms
+2026-06-11 18:06:17 [info]: GET /api/v1/user/me 304 2668.223 ms
+2026-06-11 18:06:20 [info]: GET /api/v1/user/me 304 2335.247 ms
+2026-06-11 18:06:21 [info]: GET /api/v1/user/me 304 4535.858 ms
+2026-06-11 18:06:23 [info]: GET /api/v1/user/me 304 2158.983 ms
+2026-06-11 18:06:24 [info]: GET /api/v1/user/me 304 2418.970 ms
+2026-06-11 18:06:24 [info]: GET /api/v1/user/me 304 1793.831 ms
+2026-06-11 18:06:26 [info]: GET /api/v1/user/me 304 1941.627 ms
+2026-06-11 18:06:28 [info]: GET /api/v1/user/me 304 3132.383 ms
+2026-06-11 18:06:28 [info]: GET /api/v1/user/me 304 2346.433 ms
+2026-06-11 18:06:30 [info]: GET /api/v1/user/me 304 2150.615 ms
+2026-06-11 18:06:31 [info]: GET /api/v1/user/me 304 2123.817 ms
+2026-06-11 18:06:32 [info]: GET /api/v1/user/me 304 2090.933 ms
+2026-06-11 18:06:33 [info]: GET /api/v1/user/me 304 2318.578 ms
+2026-06-11 18:06:35 [info]: GET /api/v1/user/me 304 2547.643 ms
+2026-06-11 18:06:36 [info]: GET /api/v1/user/me 304 2734.502 ms
+2026-06-11 18:06:37 [info]: GET /api/v1/user/me 304 2444.727 ms
+2026-06-11 18:06:38 [info]: GET /api/v1/user/me 304 2423.115 ms
+2026-06-11 18:06:39 [info]: GET /api/v1/user/me 304 2242.921 ms
+2026-06-11 18:06:40 [info]: GET /api/v1/user/me 304 2079.323 ms
+2026-06-11 18:06:42 [info]: GET /api/v1/user/me 304 2540.931 ms
+2026-06-11 18:06:43 [info]: GET /api/v1/user/me 304 2464.043 ms
+2026-06-11 18:06:44 [info]: GET /api/v1/user/me 304 2275.834 ms
+2026-06-11 18:06:45 [info]: GET /api/v1/user/me 304 2215.985 ms
+2026-06-11 18:06:46 [error]: getCurrentUser auth error: invalid JWT: unable to parse or verify signature, token has invalid claims: token is expired
+2026-06-11 18:06:46 [info]: GET /api/v1/user/me 401 571.551 ms
+2026-06-11 18:06:46 [info]: GET /api/v1/user/me 304 1984.064 ms
+2026-06-11 18:06:48 [info]: POST /api/v1/auth/refresh 200 1061.573 ms
+2026-06-11 18:06:49 [info]: GET /api/v1/user/me 304 2437.450 ms
+2026-06-11 18:06:51 [info]: GET /api/v1/user/me 304 2470.133 ms
+2026-06-11 18:06:52 [info]: GET /api/v1/user/me 304 2667.287 ms
+2026-06-11 18:06:54 [info]: GET /api/v1/user/me 304 2452.382 ms
+2026-06-11 18:06:55 [info]: GET /api/v1/user/me 304 2399.240 ms
+2026-06-11 18:06:56 [info]: GET /api/v1/user/me 304 2351.600 ms
+2026-06-11 18:06:57 [info]: GET /api/v1/user/me 304 2119.826 ms
+2026-06-11 18:06:59 [info]: GET /api/v1/user/me 304 2520.326 ms
+2026-06-11 18:07:00 [info]: GET /api/v1/user/me 304 2164.195 ms
+2026-06-11 18:07:01 [info]: GET /api/v1/user/me 304 2314.505 ms
+2026-06-11 18:07:01 [info]: GET /api/v1/user/me 304 1775.016 ms
+2026-06-11 18:07:03 [info]: GET /api/v1/user/me 304 2294.688 ms
+2026-06-11 18:07:04 [info]: GET /api/v1/user/me 304 2446.829 ms
+2026-06-11 18:07:05 [info]: GET /api/v1/user/me 304 2022.129 ms
+2026-06-11 18:07:06 [info]: GET /api/v1/user/me 304 2497.954 ms
+2026-06-11 18:07:08 [info]: GET /api/v1/user/me 304 2629.252 ms
+2026-06-11 18:07:09 [info]: GET /api/v1/user/me 304 2582.315 ms
+2026-06-11 18:07:11 [info]: GET /api/v1/user/me 304 2729.836 ms
+2026-06-11 18:07:12 [info]: GET /api/v1/user/me 304 2622.212 ms
+2026-06-11 18:07:13 [info]: GET /api/v1/user/me 304 1893.892 ms
+2026-06-11 18:07:14 [info]: GET /api/v1/user/me 304 2460.865 ms
+2026-06-11 18:07:15 [info]: GET /api/v1/user/me 304 2387.678 ms
+2026-06-11 18:07:17 [info]: GET /api/v1/user/me 304 2663.364 ms
+2026-06-11 18:07:18 [info]: GET /api/v1/user/me 304 2582.927 ms
+2026-06-11 18:07:19 [info]: GET /api/v1/user/me 304 2342.301 ms
+2026-06-11 18:07:20 [info]: GET /api/v1/user/me 304 2200.030 ms
+2026-06-11 18:07:22 [info]: GET /api/v1/user/me 304 2385.201 ms
+2026-06-11 18:07:23 [info]: GET /api/v1/user/me 304 3483.962 ms
+2026-06-11 18:07:24 [info]: GET /api/v1/user/me 304 2483.840 ms
+2026-06-11 18:07:25 [info]: GET /api/v1/user/me 304 1826.239 ms
+2026-06-11 18:07:26 [info]: GET /api/v1/user/me 304 2004.716 ms
+2026-06-11 18:07:27 [info]: GET /api/v1/user/me 304 2057.501 ms
+2026-06-11 18:07:28 [info]: GET /api/v1/user/me 304 1752.844 ms
+2026-06-11 18:07:29 [info]: GET /api/v1/user/me 304 1788.671 ms
+2026-06-11 18:07:30 [info]: GET /api/v1/user/me 304 1863.631 ms
+2026-06-11 18:07:31 [info]: GET /api/v1/user/me 304 1874.467 ms
+2026-06-11 18:07:32 [info]: GET /api/v1/user/me 304 2087.622 ms
+2026-06-11 18:07:33 [info]: GET /api/v1/user/me 304 2199.203 ms
+2026-06-11 18:07:35 [info]: GET /api/v1/user/me 304 2250.012 ms
+2026-06-11 18:07:35 [info]: GET /api/v1/user/me 304 2226.797 ms
+2026-06-11 18:07:37 [info]: GET /api/v1/user/me 304 1999.223 ms
+2026-06-11 18:07:37 [info]: GET /api/v1/user/me 304 1729.726 ms
+2026-06-11 18:07:39 [info]: GET /api/v1/user/me 304 2146.162 ms
+2026-06-11 18:07:40 [info]: GET /api/v1/user/me 304 2734.574 ms
+2026-06-11 18:07:41 [info]: GET /api/v1/user/me 304 1659.777 ms
+2026-06-11 18:07:42 [info]: GET /api/v1/user/me 304 2564.151 ms
+2026-06-11 18:07:44 [info]: GET /api/v1/user/me 304 3084.833 ms
+2026-06-11 18:07:45 [info]: GET /api/v1/user/me 304 2178.813 ms
+2026-06-11 18:07:47 [info]: GET /api/v1/user/me 304 2309.251 ms
+2026-06-11 18:07:48 [info]: GET /api/v1/user/me 304 3189.889 ms
+2026-06-11 18:07:49 [info]: GET /api/v1/user/me 304 2210.745 ms
+2026-06-11 18:07:50 [info]: GET /api/v1/user/me 304 2252.937 ms
+2026-06-11 18:07:51 [info]: GET /api/v1/user/me 304 1759.662 ms
+2026-06-11 18:07:53 [info]: GET /api/v1/user/me 304 2388.033 ms
+2026-06-11 18:07:54 [info]: GET /api/v1/user/me 304 2188.067 ms
+2026-06-11 18:07:55 [info]: GET /api/v1/user/me 304 2264.752 ms
+2026-06-11 18:07:57 [info]: GET /api/v1/user/me 304 2429.439 ms
+2026-06-11 18:07:59 [info]: GET /api/v1/user/me 304 2834.354 ms
+2026-06-11 18:08:00 [info]: GET /api/v1/user/me 304 2538.666 ms
+2026-06-11 18:08:01 [info]: GET /api/v1/user/me 304 2715.180 ms
+2026-06-11 18:08:02 [info]: GET /api/v1/user/me 304 2533.590 ms
+2026-06-11 18:08:04 [info]: GET /api/v1/user/me 304 2612.745 ms
+2026-06-11 18:08:05 [info]: GET /api/v1/user/me 304 2251.233 ms
+2026-06-11 18:08:07 [info]: GET /api/v1/user/me 304 2632.480 ms
+2026-06-11 18:08:08 [info]: GET /api/v1/user/me 304 2754.027 ms
+2026-06-11 18:08:09 [info]: GET /api/v1/user/me 304 2688.434 ms
+2026-06-11 18:08:10 [info]: GET /api/v1/user/me 304 2354.476 ms
+2026-06-11 18:08:12 [info]: GET /api/v1/user/me 304 2147.690 ms
+2026-06-11 18:08:12 [info]: GET /api/v1/user/me 304 2396.312 ms
+2026-06-11 18:08:14 [info]: GET /api/v1/user/me 304 2307.575 ms
+2026-06-11 18:08:15 [info]: GET /api/v1/user/me 304 2683.177 ms
+2026-06-11 18:08:17 [info]: GET /api/v1/user/me 304 2760.200 ms
+2026-06-11 18:08:18 [info]: GET /api/v1/user/me 304 2954.433 ms
+2026-06-11 18:08:20 [info]: GET /api/v1/user/me 304 2153.252 ms
+2026-06-11 18:08:20 [info]: GET /api/v1/user/me 304 2143.897 ms
+2026-06-11 18:08:22 [info]: GET /api/v1/user/me 304 2320.868 ms
+2026-06-11 18:08:22 [info]: GET /api/v1/user/me 304 2259.607 ms
+2026-06-11 18:08:24 [info]: GET /api/v1/user/me 304 2227.492 ms
+2026-06-11 18:08:26 [info]: GET /api/v1/user/me 304 3040.403 ms
+2026-06-11 18:08:26 [info]: GET /api/v1/user/me 304 1982.463 ms
+2026-06-11 18:08:28 [info]: GET /api/v1/user/me 304 1982.164 ms
+2026-06-11 18:08:28 [info]: GET /api/v1/user/me 304 2052.781 ms
+2026-06-11 18:08:30 [info]: GET /api/v1/user/me 304 2146.399 ms
+2026-06-11 18:08:31 [info]: GET /api/v1/user/me 304 2045.593 ms
+2026-06-11 18:08:33 [info]: GET /api/v1/user/me 304 3095.675 ms
+2026-06-11 18:08:34 [info]: GET /api/v1/user/me 304 2798.990 ms
+2026-06-11 18:08:35 [info]: GET /api/v1/user/me 304 2361.498 ms
+2026-06-11 18:08:37 [info]: GET /api/v1/user/me 304 2469.842 ms
+2026-06-11 18:08:37 [info]: GET /api/v1/user/me 304 2130.858 ms
+2026-06-11 18:08:40 [info]: GET /api/v1/user/me 304 2266.079 ms
+2026-06-11 18:08:40 [info]: GET /api/v1/user/me 304 3186.317 ms
+2026-06-11 18:08:43 [info]: GET /api/v1/user/me 304 2873.587 ms
+2026-06-11 18:08:43 [info]: GET /api/v1/user/me 304 2751.702 ms
+2026-06-11 18:08:45 [info]: GET /api/v1/user/me 304 2522.362 ms
+2026-06-11 18:08:46 [info]: GET /api/v1/user/me 304 2488.752 ms
+2026-06-11 18:08:48 [info]: GET /api/v1/user/me 304 2969.727 ms
+2026-06-11 18:08:49 [info]: GET /api/v1/user/me 304 2950.459 ms
+2026-06-11 18:08:51 [info]: GET /api/v1/user/me 304 2792.036 ms
+2026-06-11 18:08:51 [info]: GET /api/v1/user/me 304 2750.450 ms
+2026-06-11 18:08:54 [info]: GET /api/v1/user/me 304 2347.997 ms
+2026-06-11 18:08:54 [info]: GET /api/v1/user/me 304 2400.052 ms
+2026-06-11 18:08:56 [info]: GET /api/v1/user/me 304 2255.510 ms
+2026-06-11 18:08:56 [info]: GET /api/v1/user/me 304 2239.606 ms
+2026-06-11 18:08:58 [info]: GET /api/v1/user/me 304 2246.704 ms
+2026-06-11 18:08:58 [info]: GET /api/v1/user/me 304 2216.318 ms
+2026-06-11 18:09:01 [info]: GET /api/v1/user/me 304 2429.908 ms
+2026-06-11 18:09:01 [info]: GET /api/v1/user/me 304 2424.506 ms
+2026-06-11 18:09:03 [info]: GET /api/v1/user/me 304 2497.460 ms
+2026-06-11 18:09:04 [info]: GET /api/v1/user/me 304 2566.288 ms
+2026-06-11 18:09:06 [info]: GET /api/v1/user/me 304 2120.601 ms
+2026-06-11 18:09:06 [info]: GET /api/v1/user/me 304 2174.392 ms
+2026-06-11 18:09:08 [info]: GET /api/v1/user/me 304 2544.329 ms
+2026-06-11 18:09:08 [info]: GET /api/v1/user/me 304 2514.287 ms
+2026-06-11 18:09:11 [info]: GET /api/v1/user/me 304 2203.013 ms
+2026-06-11 18:09:11 [info]: GET /api/v1/user/me 304 2132.910 ms
+2026-06-11 18:09:12 [info]: GET /api/v1/user/me - - ms

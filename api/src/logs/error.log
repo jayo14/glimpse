@@ -90,3 +90,42 @@ Can't reach database server at `aws-0-eu-west-1.pooler.supabase.com:6543`
 
 Please make sure your database server is running at `aws-0-eu-west-1.pooler.supabase.com:6543`.
 2026-06-05 09:49:07 [error]: forgotPassword controller error: User with this email not found
+2026-06-11 15:44:07 [error]: loginUser error: fetch failed
+2026-06-11 15:44:07 [error]: login controller error: fetch failed
+2026-06-11 15:44:46 [error]: loginUser error: fetch failed
+2026-06-11 15:44:46 [error]: login controller error: fetch failed
+2026-06-11 15:51:58 [error]: loginUser error: fetch failed
+2026-06-11 15:51:58 [error]: login controller error: fetch failed
+2026-06-11 15:56:41 [error]: loginUser error: Invalid login credentials
+2026-06-11 15:56:57 [error]: loginUser error: Invalid login credentials
+2026-06-11 15:57:26 [error]: loginUser error: Invalid login credentials
+2026-06-11 15:57:51 [error]: loginUser error: Invalid login credentials
+2026-06-11 16:04:24 [error]: loginUser error: Invalid login credentials
+2026-06-11 16:05:00 [error]: forgotPassword controller error: invalid_grant: Token has been expired or revoked.
+2026-06-11 16:15:11 [error]: forgotPassword controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-4601f2ec711sm79078155f8f.12 - gsmtp
+2026-06-11 16:18:04 [error]: loginUser error: Invalid login credentials
+2026-06-11 16:18:37 [error]: register controller error: 
+Invalid `prisma.profile.create()` invocation:
+
+{
+  data: {
+    id: "9a556396-921c-4002-80b9-d88992a97348",
++   full_name: String
+  }
+}
+
+Argument `full_name` is missing.
+2026-06-11 16:23:20 [error]: register controller error: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-4601f2ed944sm84405696f8f.13 - gsmtp
+2026-06-11 16:26:45 [error]: forgotPassword controller error: Unexpected socket close
+2026-06-11 16:27:16 [error]: register controller error: Unexpected socket close
+2026-06-11 16:32:51 [error]: Nodemailer configuration invalid: Connection closed
+2026-06-11 16:35:33 [error]: Nodemailer configuration invalid: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-490e2c907ddsm72832125e9.6 - gsmtp
+2026-06-11 16:38:06 [error]: Nodemailer configuration invalid: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials ffacd0b85a97d-4601f2dc412sm84378721f8f.4 - gsmtp
+2026-06-11 16:43:40 [error]: Nodemailer configuration invalid: Invalid login: 535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-490e52a553csm63911745e9.2 - gsmtp
+2026-06-11 17:05:03 [error]: register controller error: connect ENETUNREACH 2a00:1450:4009:c0f::6c:465
+2026-06-11 18:06:46 [error]: getCurrentUser auth error: invalid JWT: unable to parse or verify signature, token has invalid claims: token is expired

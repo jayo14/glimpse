@@ -1,18 +1,34 @@
+import logger from "../utils/logger.js";
 import dotenv from "dotenv";
 import nodemailer from "nodemailer";
 
 dotenv.config();
+// const transporter = nodemailer.createTransport({
+//   service: "gmail",
+//   auth: {
+//     type: "OAuth2",
+//     user: process.env.EMAIL_USER,
+//     clientId: process.env.CLIENT_ID,
+//     clientSecret: process.env.CLIENT_SECRET,
+//     refreshToken: process.env.REFRESH_TOKEN,
+//   },
+// });
+
 const transporter = nodemailer.createTransport({
-  service: "gmail",
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
   auth: {
-    type: "OAuth2",
-    user: process.env.EMAIL_USER,
-    clientId: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    refreshToken: process.env.REFRESH_TOKEN,
+    user: process.env.EMAIL_USER, 
+    pass: process.env.EMAIL_APP_PASSWORD,
   },
 });
 
+console.log("--- DEBUGGING EMAIL ENVIRONMENT VARIABLES ---");
+console.log("EMAIL_USER:", process.env.EMAIL_USER || "NOT FOUND");
+console.log("EMAIL_APP_PASSWORD EXISTS?:", process.env.EMAIL_APP_PASSWORD ? "YES" : "NO");
+console.log("EMAIL_APP_PASSWORD LENGTH:", process.env.EMAIL_APP_PASSWORD ? process.env.EMAIL_APP_PASSWORD.length : 0);
+console.log("---------------------------------------------");
 
 export const sendVerificationEmail = async ({ email, verificationLink }) => {
   await transporter.sendMail({
@@ -81,3 +97,13 @@ export const sendPasswordResetEmail = async ({ email, resetLink }) => {
     `,
   });
 };
+
+transporter.verify((error, success) => {
+  if (error) {
+    console.error("Nodemailer Setup Error:", error.message);
+    logger.error(`Nodemailer configuration invalid: ${error.message}`);
+  } else {
+    console.log("Email server is ready to take messages!");
+    logger.info("Nodemailer connected successfully.");
+  }
+});
