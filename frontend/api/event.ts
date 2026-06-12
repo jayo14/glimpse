@@ -18,7 +18,7 @@ export const EventService = {
     },
 
     async uploadCoverImage(eventId: string, file: File) {
-        const signatureRes = await api.post(`/event/${eventId}/cover-signature?filename=${file.name}`);
+        const signatureRes = await api.post(`/event/${eventId}/media-upload?filename=${file.name}`);
         const { uploadUrl } = signatureRes.data;
 
         await axios.put(uploadUrl, file, {
@@ -33,10 +33,10 @@ export const EventService = {
         return res.data;
     },
 
-    async checkGateAccess(eventId: string, invitationToken?: string) {
+    async checkGateAccess(eventId: string, inviteToken?: string) {
         const res = await api.post('/event/verify-access', {
             event_id: eventId,
-            token: invitationToken
+            token: inviteToken
         });
         return res.data;
     }

@@ -43,7 +43,7 @@ export default function LoginForm() {
         return;
       }
 
-      router.push(role === "HOST" ? "/host-dashboard" : "/guest-hub");
+      router.push(role === "HOST" ? "/host" : "/guest");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (err: any) {
       // Trigger error toast with custom fallback
@@ -168,7 +168,7 @@ export default function LoginForm() {
       {/* GUEST */}
       <div className="text-center mt-4">
         <Link
-          href="/guest-hub"
+          href="/guest"
           className="text-sm text-gray hover:text-foreground font-medium hover:underline"
         >
           Continue as Guest

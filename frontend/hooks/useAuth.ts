@@ -55,8 +55,8 @@ export const useAuth = ({
               !profileComplete
                 ? "/role-selection"
                 : role === "HOST"
-                ? "/host-dashboard"
-                : "/guest-hub"
+                ? "/host"
+                : "/guest"
             );
           }
         } 
@@ -65,13 +65,13 @@ export const useAuth = ({
           return;
         } 
         else if (pathname === "/role-selection" && profileComplete) {
-          router.replace(role === "HOST" ? "/host-dashboard" : "/guest-hub");
+          router.replace(role === "HOST" ? "/host" : "/guest");
           return;
         }
 
         if (profileComplete && allowedRoles.length > 0 && !allowedRoles.includes(role)) {
           console.warn(`Access Denied: Role "${role}" is not authorized for this view.`);
-          router.replace(role === "HOST" ? "/host-dashboard" : "/guest-hub");
+          router.replace(role === "HOST" ? "/host" : "/guest");
           return;
         }
 

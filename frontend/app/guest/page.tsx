@@ -1,4 +1,4 @@
-// src/app/guest-hub/page.tsx
+// src/app/guest/page.tsx
 "use client";
 
 import React from "react";

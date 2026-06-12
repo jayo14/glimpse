@@ -60,7 +60,7 @@ export default function DashboardHeader({ role }: HeaderProps) {
         <div className="flex items-center gap-3">
           {role === "HOST" && (
             <Link 
-              href="/host-dashboard/create-event" 
+              href="/host/create-event" 
               className="inline-flex items-center gap-1 h-8 px-3.5 rounded-full border border-border bg-card/40 text-[10px] uppercase tracking-wider font-semibold hover:bg-card transition-colors cursor-pointer"
             >
               <Sparkles size={10} /> Create

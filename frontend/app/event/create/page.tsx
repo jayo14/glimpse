@@ -50,6 +50,8 @@ export default function CreateEventPage() {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [liveEventId, setLiveEventId] = useState<string>("");
+  const [eventQrUrl, setEventQrUrl] = useState<string>("");
+  const [inviteToken, setInviteToken] = useState<string>("");
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   const methods = useForm<EventFormInputs>({
@@ -110,9 +112,13 @@ export default function CreateEventPage() {
       });
 
       const structuralId = eventResponse?.event?.id;
+      const backendQdCodeUrl = eventResponse?.event?.qrCodeUrl;
+      const backendInviteToken = eventResponse?.event?.inviteToken;
 
       if (structuralId) {
         setLiveEventId(structuralId);
+        setEventQrUrl(backendQdCodeUrl || "");
+        setInviteToken(backendInviteToken || "");
 
         if (selectedFile) {
           try {
@@ -139,7 +145,7 @@ export default function CreateEventPage() {
         setStep("LIVE_SUCCESS");
       } else {
         toast.error("Fail to create event");
-        router.push("/host-dashboard");
+        router.push("/host");
       }
     } catch (err: any) {
       toast.error(err?.message || "Failed to create event, internal error");
@@ -174,7 +180,7 @@ export default function CreateEventPage() {
           </div>
           <div className="flex flex-col gap-2 w-full mt-2">
             <Button
-              onClick={() => router.push("/host-dashboard")}
+              onClick={() => router.push("/host")}
               className="w-full rounded-full"
             >
               Go to Dashboard
@@ -221,7 +227,9 @@ export default function CreateEventPage() {
                   description={methods.getValues("description")}
                   imagePreview={imagePreview}
                   eventId={liveEventId}
-                  onDone={() => router.push("/host-dashboard")}
+                  inviteToken={inviteToken}
+                  qrCodeUrl={eventQrUrl}
+                  onDone={() => router.push("/host")}
                 />
               )}
             </AnimatePresence>

@@ -13,6 +13,8 @@ interface SuccessStepProps {
   description?: string;
   imagePreview: string | null;
   eventId: string;
+  inviteToken: string;
+  qrCodeUrl: string;
   onDone: () => void;
 }
 
@@ -22,10 +24,15 @@ export default function SuccessStep({
   description,
   imagePreview,
   eventId,
+  inviteToken,
+  qrCodeUrl,
   onDone,
 }: SuccessStepProps) {
   const qrRef = useRef<SVGSVGElement>(null);
-  const liveShareUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/join/${eventId}`;
+
+  const liveShareUrl =
+    qrCodeUrl ||
+    `${typeof window !== "undefined" ? window.location.origin : ""}/event/join/${eventId}?inviteToken=${inviteToken}`;
 
   const downloadQRCode = () => {
     if (!qrRef.current) return;
@@ -44,7 +51,7 @@ export default function SuccessStep({
       canvas.height = 512;
       const context = canvas.getContext("2d");
       if (context) {
-        context.fillStyle = "#ffffff"; // Solid white padding canvas backing rules
+        context.fillStyle = "#ffffff";
         context.fillRect(0, 0, 512, 512);
         context.drawImage(image, 32, 32, 448, 448);
 
@@ -119,7 +126,7 @@ export default function SuccessStep({
           size={180}
           level="H"
           bgColor="#ffffff"
-          fgColor="#040406" // Matches coal
+          fgColor="#040406"
           includeMargin={false}
         />
       </div>
