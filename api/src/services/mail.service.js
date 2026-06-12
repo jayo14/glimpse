@@ -24,11 +24,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-console.log("--- DEBUGGING EMAIL ENVIRONMENT VARIABLES ---");
-console.log("EMAIL_USER:", process.env.EMAIL_USER || "NOT FOUND");
-console.log("EMAIL_APP_PASSWORD EXISTS?:", process.env.EMAIL_APP_PASSWORD ? "YES" : "NO");
-console.log("EMAIL_APP_PASSWORD LENGTH:", process.env.EMAIL_APP_PASSWORD ? process.env.EMAIL_APP_PASSWORD.length : 0);
-console.log("---------------------------------------------");
 
 export const sendVerificationEmail = async ({ email, verificationLink }) => {
   await transporter.sendMail({
@@ -100,10 +95,8 @@ export const sendPasswordResetEmail = async ({ email, resetLink }) => {
 
 transporter.verify((error, success) => {
   if (error) {
-    console.error("Nodemailer Setup Error:", error.message);
-    logger.error(`Nodemailer configuration invalid: ${error.message}`);
+    logger.error(`Nodemailer setup error: ${error.message}`);
   } else {
-    console.log("Email server is ready to take messages!");
     logger.info("Nodemailer connected successfully.");
   }
 });

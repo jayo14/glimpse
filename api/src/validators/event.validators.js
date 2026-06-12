@@ -41,3 +41,24 @@ export const signUploadSchema = z.object({
     }),
   }),
 });
+
+
+export const addCollaboratorSchema = z.object({
+  email: z
+    .string({
+      required_error: "Collaborator email is required",
+    })
+    .email("Please provide a valid email address"),
+});
+
+export const checkGateAccessSchema = z.object({
+  event_code: z
+    .string({
+      required_error: "Event code or ID parameter is required",
+    })
+    .min(1, "Event identifier cannot be blank"),
+
+  inviteToken: z
+    .string()
+    .optional(),
+});

@@ -129,3 +129,54 @@ Argument `full_name` is missing.
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials 5b1f17b1804b1-490e52a553csm63911745e9.2 - gsmtp
 2026-06-11 17:05:03 [error]: register controller error: connect ENETUNREACH 2a00:1450:4009:c0f::6c:465
 2026-06-11 18:06:46 [error]: getCurrentUser auth error: invalid JWT: unable to parse or verify signature, token has invalid claims: token is expired
+2026-06-11 22:34:05 [error]: login controller error: 
+Invalid `prisma.profile.findUnique()` invocation:
+
+
+Can't reach database server at `aws-0-eu-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-eu-west-1.pooler.supabase.com:6543`.
+2026-06-11 22:34:44 [error]: login controller error: 
+Invalid `prisma.profile.findUnique()` invocation:
+
+
+Can't reach database server at `aws-0-eu-west-1.pooler.supabase.com:6543`
+
+Please make sure your database server is running at `aws-0-eu-west-1.pooler.supabase.com:6543`.
+2026-06-12 13:05:37 [error]: Nodemailer configuration invalid: connect ENETUNREACH 2a00:1450:4009:c19::6d:465
+2026-06-12 13:09:49 [error]: requestUploadSignature error: 
+Invalid `prisma.photo.create()` invocation:
+
+{
+  data: {
+    eventId: "21282fde-c780-4125-8578-5dea07725f69",
+    uploadedBy: "d415e41c-89a8-4d94-82f7-b6cfd842a0fd",
+    roleType: "authenticated",
+              ~~~~~~~~~~~~~~~
+    storagePath: "21282fde-c780-4125-8578-5dea07725f69/candid-lens/1781266189218_logo1.png",
+    processingStatus: "PENDING"
+  }
+}
+
+Invalid value for argument `roleType`. Expected RoleType.
+2026-06-12 13:25:38 [error]: Nodemailer configuration invalid: connect ETIMEDOUT 172.217.76.108:465
+2026-06-12 13:30:15 [error]: Nodemailer configuration invalid: connect ENETUNREACH 2a00:1450:4009:c0f::6d:465
+2026-06-12 13:39:39 [error]: ReferenceError: checkGateAccessSchema is not defined
+    at checkGateAccess (file:///C:/Archive/Web/glimpse/api/src/controllers/event.controller.js:66:18)
+    at Layer.handleRequest (C:\Archive\Web\glimpse\api\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Archive\Web\glimpse\api\node_modules\router\lib\route.js:157:13)
+    at requireAuth (file:///C:/Archive/Web/glimpse/api/src/middleware/auth.middleware.js:30:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-06-12 13:42:56 [error]: Nodemailer configuration invalid: connect ETIMEDOUT 142.250.105.109:465
+2026-06-12 13:44:36 [error]: ReferenceError: checkGateAccessSchema is not defined
+    at checkGateAccess (file:///C:/Archive/Web/glimpse/api/src/controllers/event.controller.js:66:18)
+    at Layer.handleRequest (C:\Archive\Web\glimpse\api\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Archive\Web\glimpse\api\node_modules\router\lib\route.js:157:13)
+    at requireAuth (file:///C:/Archive/Web/glimpse/api/src/middleware/auth.middleware.js:30:5)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2026-06-12 13:45:28 [error]: Nodemailer configuration invalid: connect ETIMEDOUT 172.217.76.109:465
+2026-06-12 13:47:50 [error]: Nodemailer setup error: connect ETIMEDOUT 172.217.76.109:465
+2026-06-12 15:36:23 [error]: Nodemailer setup error: connect ENETUNREACH 2a00:1450:4009:c0f::6c:465
+2026-06-12 15:37:10 [error]: Nodemailer setup error: connect ENETUNREACH 2a00:1450:4009:c0f::6c:465
+2026-06-12 15:39:01 [error]: Nodemailer setup error: connect ETIMEDOUT 172.217.76.109:465
+2026-06-12 15:43:26 [error]: Nodemailer setup error: connect ETIMEDOUT 172.217.76.108:465
