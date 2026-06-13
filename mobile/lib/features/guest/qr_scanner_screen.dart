@@ -1,19 +1,22 @@
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/utils/responsive.dart';
 import 'package:go_router/go_router.dart';
 import 'dart:ui';
+import 'providers/guest_provider.dart';
 
-class QRScannerScreen extends StatefulWidget {
+class QRScannerScreen extends ConsumerStatefulWidget {
   const QRScannerScreen({super.key});
 
   @override
-  State<QRScannerScreen> createState() => _QRScannerScreenState();
+  ConsumerState<QRScannerScreen> createState() => _QRScannerScreenState();
 }
 
-class _QRScannerScreenState extends State<QRScannerScreen> with SingleTickerProviderStateMixin {
+class _QRScannerScreenState extends ConsumerState<QRScannerScreen> with SingleTickerProviderStateMixin {
   late AnimationController _scanController;
   bool _flashActive = false;
+  bool _isProcessing = false;
 
   @override
   void initState() {
@@ -27,12 +30,33 @@ class _QRScannerScreenState extends State<QRScannerScreen> with SingleTickerProv
     super.dispose();
   }
 
+  Future<void> _handleBarcode(String code) async {
+    if (_isProcessing) return;
+    setState(() => _isProcessing = true);
+
+    try {
+      await ref.read(guestProvider.notifier).verifyAccess(token: code);
+      if (mounted) {
+        context.go('/guest-name');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to join event: ${e.toString()}')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isProcessing = false);
+    }
+  }
+
   void _handleShutter() {
     setState(() => _flashActive = true);
     Future.delayed(const Duration(milliseconds: 300), () {
       if (mounted) {
         setState(() => _flashActive = false);
-        context.go('/guest-name');
+        // Manual shutter doesn't have a code, typically for mock/testing
+        // or we could show an error that QR must be scanned
       }
     });
   }
@@ -50,7 +74,7 @@ class _QRScannerScreenState extends State<QRScannerScreen> with SingleTickerProv
                 final String? code = barcodes.first.rawValue;
                 if (code != null) {
                    debugPrint('Barcode found! $code');
-                   context.go('/guest-name');
+                   _handleBarcode(code);
                 }
               }
             },
@@ -90,6 +114,10 @@ class _QRScannerScreenState extends State<QRScannerScreen> with SingleTickerProv
                 ),
                 SizedBox(height: 20.h(context)),
                 Text('Point at the host\'s event QR code', style: TextStyle(color: Colors.white.withValues(alpha: 0.45), fontSize: 13.sp(context), letterSpacing: 0.02 * 13)),
+                if (_isProcessing) ...[
+                   SizedBox(height: 20.h(context)),
+                   const CircularProgressIndicator(color: Colors.white),
+                ],
                 SizedBox(height: 80.h(context)),
               ],
             ),

@@ -1,22 +1,76 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/colors.dart';
 import '../../core/utils/responsive.dart';
 import '../shared/widgets/onboarding_controls.dart';
+import 'providers/event_provider.dart';
 
-class EventCreationScreen extends StatefulWidget {
+class EventCreationScreen extends ConsumerStatefulWidget {
   const EventCreationScreen({super.key});
 
   @override
-  State<EventCreationScreen> createState() => _EventCreationScreenState();
+  ConsumerState<EventCreationScreen> createState() => _EventCreationScreenState();
 }
 
-class _EventCreationScreenState extends State<EventCreationScreen> {
+class _EventCreationScreenState extends ConsumerState<EventCreationScreen> {
   int _currentStep = 0;
   final int _totalSteps = 3;
 
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _locationController = TextEditingController();
+  DateTime? _selectedDate;
+  TimeOfDay? _selectedTime;
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _locationController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleCreateEvent() async {
+    if (_nameController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter an event name')),
+      );
+      return;
+    }
+
+    final eventStart = _selectedDate != null && _selectedTime != null
+        ? DateTime(
+            _selectedDate!.year,
+            _selectedDate!.month,
+            _selectedDate!.day,
+            _selectedTime!.hour,
+            _selectedTime!.minute,
+          )
+        : null;
+
+    final eventData = {
+      'title': _nameController.text,
+      'location': _locationController.text,
+      'event_start': eventStart?.toIso8601String(),
+    };
+
+    try {
+      await ref.read(eventProvider.notifier).createEvent(eventData);
+      if (mounted) {
+        context.push('/event-launch');
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: ${e.toString()}')),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final eventState = ref.watch(eventProvider);
+
     return Scaffold(
       backgroundColor: GlimpseColors.deepCharcoal,
       body: SafeArea(
@@ -58,15 +112,17 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
                     )
                   else
                     const SizedBox(),
-                  NextButton(
-                    onClick: () {
-                      if (_currentStep < _totalSteps - 1) {
-                        setState(() => _currentStep++);
-                      } else {
-                        context.push('/event-launch');
-                      }
-                    },
-                  ),
+                  eventState.isLoading
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : NextButton(
+                          onClick: () {
+                            if (_currentStep < _totalSteps - 1) {
+                              setState(() => _currentStep++);
+                            } else {
+                              _handleCreateEvent();
+                            }
+                          },
+                        ),
                 ],
               ),
               SizedBox(height: 20.h(context)),
@@ -91,9 +147,9 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
           ),
         ),
         SizedBox(height: 32.h(context)),
-        _buildInputField('Event Name', 'e.g. Sarah & David Wedding'),
+        _buildInputField('Event Name', 'e.g. Sarah & David Wedding', controller: _nameController),
         SizedBox(height: 16.h(context)),
-        _buildInputField('Location', 'e.g. Paris, France'),
+        _buildInputField('Location', 'e.g. Paris, France', controller: _locationController),
       ],
     );
   }
@@ -112,9 +168,33 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
           ),
         ),
         SizedBox(height: 32.h(context)),
-        _buildInputField('Date', 'Select Date', icon: Icons.calendar_today),
+        _buildInputField(
+          'Date',
+          _selectedDate == null ? 'Select Date' : '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}',
+          icon: Icons.calendar_today,
+          onTap: () async {
+            final date = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime.now(),
+              lastDate: DateTime.now().add(const Duration(days: 365 * 2)),
+            );
+            if (date != null) setState(() => _selectedDate = date);
+          },
+        ),
         SizedBox(height: 16.h(context)),
-        _buildInputField('Time', 'Select Time', icon: Icons.access_time),
+        _buildInputField(
+          'Time',
+          _selectedTime == null ? 'Select Time' : _selectedTime!.format(context),
+          icon: Icons.access_time,
+          onTap: () async {
+            final time = await showTimePicker(
+              context: context,
+              initialTime: TimeOfDay.now(),
+            );
+            if (time != null) setState(() => _selectedTime = time);
+          },
+        ),
       ],
     );
   }
@@ -149,7 +229,7 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
     );
   }
 
-  Widget _buildInputField(String label, String hint, {IconData? icon}) {
+  Widget _buildInputField(String label, String hint, {IconData? icon, TextEditingController? controller, VoidCallback? onTap}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -158,19 +238,40 @@ class _EventCreationScreenState extends State<EventCreationScreen> {
           style: TextStyle(color: GlimpseColors.coolGray, fontSize: 12.sp(context), letterSpacing: 1),
         ),
         SizedBox(height: 8.h(context)),
-        Container(
-          padding: EdgeInsets.symmetric(horizontal: 16.w(context), vertical: 14.h(context)),
-          decoration: BoxDecoration(
-            color: Colors.white.withValues(alpha: 0.05),
-            borderRadius: BorderRadius.circular(12.h(context)),
-          ),
-          child: Row(
-            children: [
-              Expanded(
-                child: Text(hint, style: TextStyle(color: Colors.white.withValues(alpha: 0.3), fontSize: 15.sp(context))),
-              ),
-              if (icon != null) Icon(icon, color: Colors.white.withValues(alpha: 0.3), size: 18.sp(context)),
-            ],
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 16.w(context), vertical: 14.h(context)),
+            decoration: BoxDecoration(
+              color: Colors.white.withValues(alpha: 0.05),
+              borderRadius: BorderRadius.circular(12.h(context)),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: controller != null
+                      ? TextField(
+                          controller: controller,
+                          style: TextStyle(color: Colors.white, fontSize: 15.sp(context)),
+                          decoration: InputDecoration(
+                            hintText: hint,
+                            hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.3), fontSize: 15.sp(context)),
+                            border: InputBorder.none,
+                            isDense: true,
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                        )
+                      : Text(
+                          hint,
+                          style: TextStyle(
+                            color: _selectedDate != null || _selectedTime != null ? Colors.white : Colors.white.withValues(alpha: 0.3),
+                            fontSize: 15.sp(context),
+                          ),
+                        ),
+                ),
+                if (icon != null) Icon(icon, color: Colors.white.withValues(alpha: 0.3), size: 18.sp(context)),
+              ],
+            ),
           ),
         ),
       ],

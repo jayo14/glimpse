@@ -1,10 +1,58 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../core/theme/colors.dart';
 import '../../core/utils/responsive.dart';
+import 'providers/event_provider.dart';
 
-class InvitePhotographersScreen extends StatelessWidget {
+class InvitePhotographersScreen extends ConsumerStatefulWidget {
   const InvitePhotographersScreen({super.key});
+
+  @override
+  ConsumerState<InvitePhotographersScreen> createState() => _InvitePhotographersScreenState();
+}
+
+class _InvitePhotographersScreenState extends ConsumerState<InvitePhotographersScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  bool _isInviting = false;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  Future<void> _handleInvite() async {
+    final email = _emailController.text.trim();
+    if (email.isEmpty) return;
+
+    final event = ref.read(eventProvider).value;
+    if (event == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No active event context found')),
+      );
+      return;
+    }
+
+    setState(() => _isInviting = true);
+    try {
+      await ref.read(eventProvider.notifier).addCollaborator(event.id, email);
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Invite sent successfully')),
+        );
+        _emailController.clear();
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to send invite: ${e.toString()}')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => _isInviting = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +86,40 @@ class InvitePhotographersScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 40.h(context)),
+
+              // Email Invite Field
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.white.withValues(alpha: 0.05),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.1)),
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: _emailController,
+                        style: const TextStyle(color: Colors.white),
+                        decoration: InputDecoration(
+                          hintText: 'Enter photographer email',
+                          hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.3)),
+                          border: InputBorder.none,
+                        ),
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                    ),
+                    _isInviting
+                        ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white))
+                        : IconButton(
+                            icon: const Icon(Icons.send, color: Colors.white),
+                            onPressed: _handleInvite,
+                          ),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: 24.h(context)),
               _buildInviteOption(
                 context,
                 'Share Invite Link',
