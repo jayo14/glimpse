@@ -5,6 +5,20 @@ import '../models/user_model.dart';
 class AuthRepository {
   final Dio _dio = ApiClient.instance;
 
+  Future<AuthResponse> googleSignIn(String idToken) async {
+    try {
+      final response = await _dio.post("/auth/google-sign-in", data: {
+        "id_token": idToken,
+      });
+      return AuthResponse.fromJson(response.data);
+    } on DioException catch (e) {
+      if (e.response != null && e.response?.data != null) {
+        throw Exception(e.response?.data["message"] ?? "Google Sign-In failed");
+      }
+      throw Exception("Network error or server unavailable");
+    }
+  }
+
   Future<AuthResponse> login(String email, String password) async {
     try {
       final response = await _dio.post('/auth/login', data: {

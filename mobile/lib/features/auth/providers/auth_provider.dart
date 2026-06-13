@@ -34,6 +34,17 @@ class AuthNotifier extends AsyncNotifier<UserModel?> {
     return null; // Start unauthenticated
   }
 
+  Future<void> googleSignIn(String idToken) async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() async {
+      final response = await _authRepository.googleSignIn(idToken);
+      if (response.accessToken != null) {
+        await SecureStorage.saveTokens(accessToken: response.accessToken!);
+      }
+      return response.user;
+    });
+  }
+
   Future<void> login(String email, String password) async {
     state = const AsyncValue.loading();
     state = await AsyncValue.guard(() async {
