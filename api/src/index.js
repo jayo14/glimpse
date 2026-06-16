@@ -10,6 +10,7 @@ import errorHandler from "./middleware/error-handler.js";
 import authRoutes from "./routes/auth.routes.js";
 import userRoutes from "./routes/user.routes.js";
 import eventRoutes from "./routes/event.routes.js";
+import waitlistRoutes from "./routes/waitlist.routes.js";
 
 import { setupSwagger } from "./docs/swagger.js";
 
@@ -41,6 +42,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/event", eventRoutes);
+app.use("/api/v1/waitlist", waitlistRoutes);
 
 // Health check
 app.get("/health", (req, res) =>

@@ -5,6 +5,8 @@ import numpy as np
 from insightface.app import FaceAnalysis
 import os
 import time
+import io
+from PIL import Image
 from app.core.config import settings
 
 logger = logging.getLogger(__name__)
@@ -40,13 +42,17 @@ class FaceEngine:
         """
         try:
             model_path = os.path.abspath(settings.MODELS_DIR)
-            logger.info(f"Initializing FaceAnalysis with root: {model_path}")
+            model_name = os.getenv('INSIGHTFACE_MODEL_NAME', 'buffalo_l')
 
-            # name='buffalo_l' refers to the model pack containing SCRFD and ArcFace
+            logger.info(f"Initializing FaceAnalysis with root: {model_path}, model: {model_name}")
+
+            # providers can be customized via env if needed, defaulting to CPU
+            providers = os.getenv('ONNXRUNTIME_PROVIDERS', 'CPUExecutionProvider').split(',')
+
             app = FaceAnalysis(
-                name='buffalo_l',
+                name=model_name,
                 root=model_path,
-                providers=['CPUExecutionProvider']
+                providers=providers
             )
 
             # This will download the model if not found in root/models/
@@ -64,6 +70,25 @@ class FaceEngine:
             logger.error(f"Failed to initialize FaceEngine: {e}")
             raise
 
+    def scrub_exif(self, img_bytes: bytes) -> bytes:
+        """
+        Removes EXIF metadata from image bytes using Pillow.
+        """
+        try:
+            img = Image.open(io.BytesIO(img_bytes))
+            data = list(img.getdata())
+            img_without_exif = Image.new(img.mode, img.size)
+            img_without_exif.putdata(data)
+
+            output = io.BytesIO()
+            # Preserve format if possible, otherwise default to JPEG
+            fmt = img.format if img.format else 'JPEG'
+            img_without_exif.save(output, format=fmt)
+            return output.getvalue()
+        except Exception as e:
+            logger.warning(f"Failed to scrub EXIF: {e}. Returning original bytes.")
+            return img_bytes
+
     def process_image(self, img_bytes: bytes) -> list[dict]:
         """
         Decodes image bytes, detects faces, and extracts normalized embeddings.
@@ -72,8 +97,11 @@ class FaceEngine:
         start_time = time.perf_counter()
 
         try:
+            # Scrub EXIF for security/privacy
+            clean_bytes = self.scrub_exif(img_bytes)
+
             # Convert raw bytes to numpy array for OpenCV without disk writes
-            nparr = np.frombuffer(img_bytes, np.uint8)
+            nparr = np.frombuffer(clean_bytes, np.uint8)
             img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
             if img is None:
