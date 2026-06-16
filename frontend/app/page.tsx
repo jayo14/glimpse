@@ -26,6 +26,8 @@ import PhoneMockup from "@/components/landing-page/PhoneMockup";
 import BlogPage from "@/components/landing-page/BlogPage";
 import CaseStudies from "@/components/landing-page/CaseStudies";
 import AuthPages from "@/components/landing-page/AuthPages";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
+import { WaitlistSection } from "@/components/landing-page/WaitlistSection";
 import {
   Menubar,
   MenubarContent,
@@ -103,10 +105,10 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F5F5] text-[night] selection:bg-[rose-mist]/40 selection:text-[deep-rose] font-sans overflow-x-hidden antialiased">
+    <div className="min-h-screen bg-background text-foreground selection:bg-[rose-mist]/40 selection:text-[deep-rose] font-sans overflow-x-hidden antialiased">
       {/* TOAST SYSTEM */}
       {toastMessage && (
-        <div className="fixed bottom-8 right-8 z-50 max-w-sm rounded-[16px] bg-white border border-[silver] p-4 shadow-cluely-premium flex items-start space-x-3.5 text-sm text-[night] animate-fade-in">
+        <div className="fixed bottom-8 right-8 z-50 max-w-sm rounded-[16px] bg-card border border-[silver] p-4 shadow-cluely-premium flex items-start space-x-3.5 text-sm text-foreground animate-fade-in">
           <div className="h-6 w-6 mt-0.5 rounded-full bg-[night] flex items-center justify-center text-white shrink-0 text-xs text-center font-bold">
             ✓
           </div>
@@ -114,7 +116,7 @@ export default function App() {
             <p className="text-[10px] text-[deep-slate] font-sans font-semibold uppercase tracking-wider">
               Update
             </p>
-            <p className="text-[12px] text-[ash] font-light leading-normal mt-0.5">
+            <p className="text-[12px] text-muted-foreground font-light leading-normal mt-0.5">
               {toastMessage}
             </p>
           </div>
@@ -132,7 +134,7 @@ export default function App() {
       )}
 
       {/* MINIMAL NAVBAR */}
-      <header className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-[silver]/60 select-none">
+      <header className="sticky top-0 z-40 bg-card/80 backdrop-blur-md border-b border-[silver]/60 select-none">
         <div className="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between font-sans">
           <div
             className="flex items-center space-x-2.5 cursor-pointer font-serif"
@@ -145,6 +147,7 @@ export default function App() {
             <span className="font-medium text-lg tracking-tight">glimpse.</span>
           </div>
 
+<div className="flex items-center gap-2"><ThemeToggle />
           <nav className="hidden md:flex items-center">
             {/* SHADCN MENUBAR COMPONENT */}
             <Menubar className="border-0 bg-transparent flex items-center gap-1">
@@ -154,27 +157,27 @@ export default function App() {
                     setCurrentView("home");
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
-                  className="text-[10px] uppercase font-semibold text-[ash] tracking-widest hover:text-[deep-slate] transition-all cursor-pointer px-3 py-1.5 rounded-lg hover:bg-stone-100"
+                  className="text-[10px] uppercase font-semibold text-muted-foreground tracking-widest hover:text-[deep-slate] transition-all cursor-pointer px-3 py-1.5 rounded-lg hover:bg-stone-100"
                 >
                   Overview
                 </button>
               </MenubarMenu>
 
               <MenubarMenu>
-                <MenubarTrigger className="text-[10px] uppercase font-semibold text-[ash] tracking-widest hover:text-[deep-slate] transition-all cursor-pointer px-3 py-1.5 rounded-lg hover:bg-stone-100 aria-expanded:bg-stone-200">
+                <MenubarTrigger className="text-[10px] uppercase font-semibold text-muted-foreground tracking-widest hover:text-[deep-slate] transition-all cursor-pointer px-3 py-1.5 rounded-lg hover:bg-stone-100 aria-expanded:bg-stone-200">
                   Case Studies
                 </MenubarTrigger>
-                <MenubarContent className="bg-white border border-[silver]/60 p-1 rounded-xl shadow-lg min-w-[200px] z-50">
+                <MenubarContent className="bg-card border border-[silver]/60 p-1 rounded-xl shadow-lg min-w-[200px] z-50">
                   <MenubarItem
                     onClick={() => {
                       setActiveCaseId("wedding");
                       setCurrentView("case-study");
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
-                    className="flex items-center justify-between px-3 py-2 text-[11px] hover:bg-[#F5F5F5] rounded-lg cursor-pointer"
+                    className="flex items-center justify-between px-3 py-2 text-[11px] hover:bg-background rounded-lg cursor-pointer"
                   >
                     <span className="font-serif">Wedding Case Study</span>
-                    <span className="text-[9px] font-mono text-[ash] uppercase">
+                    <span className="text-[9px] font-mono text-muted-foreground uppercase">
                       Sarah & James
                     </span>
                   </MenubarItem>
@@ -225,7 +228,7 @@ export default function App() {
                 <MenubarTrigger className="text-[10px] uppercase font-semibold text-ash tracking-widest hover:text-deep-slate transition-all cursor-pointer px-3 py-1.5 rounded-lg hover:bg-stone-100 aria-expanded:bg-stone-200">
                   Host Portal
                 </MenubarTrigger>
-                <MenubarContent className="bg-white border border-silver/60 p-1 rounded-xl shadow-lg min-w-50 z-50">
+                <MenubarContent className="bg-card border border-silver/60 p-1 rounded-xl shadow-lg min-w-50 z-50">
                   <MenubarItem
                     onClick={() => {
                       setAuthMode("login");
@@ -242,7 +245,7 @@ export default function App() {
                       setAuthMode("signup");
                       setCurrentView("auth");
                     }}
-                    className="flex items-center justify-between px-3 py-2 text-[11px] hover:bg-[#F5F5F5] rounded-lg cursor-pointer"
+                    className="flex items-center justify-between px-3 py-2 text-[11px] hover:bg-background rounded-lg cursor-pointer"
                   >
                     <span>Register Dashboard</span>
                     <User className="h-3.5 w-3.5 text-[deep-slate]" />
@@ -253,10 +256,10 @@ export default function App() {
                       setAuthMode("forgot");
                       setCurrentView("auth");
                     }}
-                    className="flex items-center justify-between px-3 py-2 text-[11px] hover:bg-[#F5F5F5] rounded-lg cursor-pointer"
+                    className="flex items-center justify-between px-3 py-2 text-[11px] hover:bg-background rounded-lg cursor-pointer"
                   >
                     <span>Restore Password</span>
-                    <Lock className="h-3.5 w-3.5 text-[ash]" />
+                    <Lock className="h-3.5 w-3.5 text-muted-foreground" />
                   </MenubarItem>
                   <MenubarSeparator className="h-px bg-stone-100 my-1" />
                   <MenubarItem
@@ -264,7 +267,7 @@ export default function App() {
                       setAuthMode("reset");
                       setCurrentView("auth");
                     }}
-                    className="flex items-center justify-between px-3 py-2 text-[11px] hover:bg-[#F5F5F5] rounded-lg cursor-pointer"
+                    className="flex items-center justify-between px-3 py-2 text-[11px] hover:bg-background rounded-lg cursor-pointer"
                   >
                     <span>Reset Credentials</span>
                     <Sparkles className="h-3.5 w-3.5 text-emerald-500" />
@@ -294,6 +297,7 @@ export default function App() {
               Start Event
             </button>
           </div>
+</div>
         </div>
       </header>
 
@@ -323,21 +327,21 @@ export default function App() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <div className="text-[11px] font-mono uppercase tracking-widest text-[ash] flex items-center space-x-2">
+                  <div className="text-[11px] font-mono uppercase tracking-widest text-muted-foreground flex items-center space-x-2">
                     <span className="text-[deep-slate] font-bold">/ /</span>
                     <span>Uncomplicated Crowdsourcing Portal</span>
                   </div>
 
-                  <h1 className="font-serif font-light text-[42px] sm:text-5xl md:text-6xl lg:text-7xl text-[night] tracking-tight leading-[1.02] sm:leading-[0.95]">
+                  <h1 className="font-serif font-light text-[42px] sm:text-5xl md:text-6xl lg:text-7xl text-foreground tracking-tight leading-[1.02] sm:leading-[0.95]">
                     Stop asking guests to download an app.
                   </h1>
 
-                  <p className="text-[ash] text-sm md:text-base leading-relaxed font-sans font-light max-w-xl">
+                  <p className="text-muted-foreground text-sm md:text-base leading-relaxed font-sans font-light max-w-xl">
                     Asking guests to download an app kills the vibe. Blurry
                     photos, forgotten cameras, and login screens do the rest.
                   </p>
 
-                  <p className="text-[night] text-sm md:text-base leading-relaxed font-sans font-medium max-w-xl">
+                  <p className="text-foreground text-sm md:text-base leading-relaxed font-sans font-medium max-w-xl">
                     <strong>
                       Guests just scan a QR code with their regular camera. No
                       app. No password. No typing.
@@ -363,22 +367,22 @@ export default function App() {
                           document.getElementById("visual-showcase");
                         target?.scrollIntoView({ behavior: "smooth" });
                       }}
-                      className="inline-flex items-center gap-2 group text-xs font-semibold text-[deep-slate] hover:text-[ash] uppercase tracking-widest transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-2 group text-xs font-semibold text-[deep-slate] hover:text-muted-foreground uppercase tracking-widest transition-colors cursor-pointer"
                     >
                       See it live
                       <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                     </button>
                   </div>
 
-                  <div className="border-t border-[silver]/60 pt-8 grid grid-cols-2 sm:grid-cols-4 gap-6 text-[10px] uppercase tracking-widest text-[ash]">
+                  <div className="border-t border-[silver]/60 pt-8 grid grid-cols-2 sm:grid-cols-4 gap-6 text-[10px] uppercase tracking-widest text-muted-foreground">
                     <div>
-                      <p className="font-serif text-lg text-[night] mb-0.5 font-light">
+                      <p className="font-serif text-lg text-foreground mb-0.5 font-light">
                         0s Sign-up
                       </p>
                       <p className="font-sans font-light">No app needed</p>
                     </div>
                     <div>
-                      <p className="font-serif text-lg text-[night] mb-0.5 font-light">
+                      <p className="font-serif text-lg text-foreground mb-0.5 font-light">
                         100% Web
                       </p>
                       <p className="font-sans font-light font-normal">
@@ -386,7 +390,7 @@ export default function App() {
                       </p>
                     </div>
                     <div>
-                      <p className="font-serif text-lg text-[night] mb-0.5 font-light">
+                      <p className="font-serif text-lg text-foreground mb-0.5 font-light">
                         Unlimited
                       </p>
                       <p className="font-sans font-light">
@@ -394,7 +398,7 @@ export default function App() {
                       </p>
                     </div>
                     <div>
-                      <p className="font-serif text-lg text-[night] mb-0.5 font-light">
+                      <p className="font-serif text-lg text-foreground mb-0.5 font-light">
                         Live Sync
                       </p>
                       <p className="font-sans font-light font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded shadow-sm inline-block">
@@ -416,15 +420,15 @@ export default function App() {
                   }}
                 >
                   {/* Floating aesthetic labels */}
-                  <div className="absolute -top-6 left-2 sm:-left-6 bg-white border border-[silver]/60 shadow-cluely-premium p-3 rounded-2xl flex items-center gap-2.5 z-20">
+                  <div className="absolute -top-6 left-2 sm:-left-6 bg-card border border-[silver]/60 shadow-cluely-premium p-3 rounded-2xl flex items-center gap-2.5 z-20">
                     <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></div>
                     <span className="text-[9.5px] font-sans font-semibold text-[deep-slate] uppercase tracking-wide">
                       Live Camera Uplink
                     </span>
                   </div>
 
-                  <div className="absolute -bottom-4 right-2 sm:-right-4 bg-white border border-[silver]/60 shadow-cluely-premium p-3.5 rounded-2xl z-20 font-sans max-w-[150px] hidden sm:block">
-                    <p className="text-[8.5px] uppercase text-[ash] font-semibold tracking-wider">
+                  <div className="absolute -bottom-4 right-2 sm:-right-4 bg-card border border-[silver]/60 shadow-cluely-premium p-3.5 rounded-2xl z-20 font-sans max-w-[150px] hidden sm:block">
+                    <p className="text-[8.5px] uppercase text-muted-foreground font-semibold tracking-wider">
                       Try Sandbox
                     </p>
                     <p className="text-[10px] text-[deep-slate] font-light mt-0.5 leading-snug">
@@ -466,15 +470,15 @@ export default function App() {
                 viewport={{ once: true, margin: "-100px" }}
               >
                 <div className="space-y-4 text-left">
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-[ash]">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
                     How it works
                   </span>
-                  <h2 className="font-serif text-3xl md:text-5xl text-[night] font-light tracking-tight">
+                  <h2 className="font-serif text-3xl md:text-5xl text-foreground font-light tracking-tight">
                     Scan. Upload. Done.
                   </h2>
                 </div>
-                <p className="text-xs text-[ash] font-sans max-w-sm font-light text-left">
-                  <strong className="text-[night] font-semibold">
+                <p className="text-xs text-muted-foreground font-sans max-w-sm font-light text-left">
+                  <strong className="text-foreground font-semibold">
                     Guests just scan a QR code with their regular camera. No
                     app. No password. No typing.
                   </strong>{" "}
@@ -494,10 +498,10 @@ export default function App() {
                   <span className="font-serif text-3xl font-light text-[silver] block">
                     01 /
                   </span>
-                  <h3 className="font-medium text-sm text-[night] uppercase tracking-wider">
+                  <h3 className="font-medium text-sm text-foreground uppercase tracking-wider">
                     Put the QR code out
                   </h3>
-                  <p className="text-xs text-[ash] leading-relaxed font-light">
+                  <p className="text-xs text-muted-foreground leading-relaxed font-light">
                     Put it on tables, at the bar, or on a screen. Guests already
                     know what to do when they see a camera prompt.
                   </p>
@@ -508,10 +512,10 @@ export default function App() {
                   <span className="font-serif text-3xl font-light text-[silver] block">
                     02 /
                   </span>
-                  <h3 className="font-medium text-sm text-[night] uppercase tracking-wider">
+                  <h3 className="font-medium text-sm text-foreground uppercase tracking-wider">
                     They upload in one tap
                   </h3>
-                  <p className="text-xs text-[ash] leading-relaxed font-light">
+                  <p className="text-xs text-muted-foreground leading-relaxed font-light">
                     They pick a photo, add a note if they want, and hit send.
                     The whole thing feels as fast as texting.
                   </p>
@@ -522,10 +526,10 @@ export default function App() {
                   <span className="font-serif text-3xl font-light text-[silver] block">
                     03 /
                   </span>
-                  <h3 className="font-medium text-sm text-[night] uppercase tracking-wider">
+                  <h3 className="font-medium text-sm text-foreground uppercase tracking-wider">
                     The room sees it immediately
                   </h3>
-                  <p className="text-xs text-[ash] leading-relaxed font-light">
+                  <p className="text-xs text-muted-foreground leading-relaxed font-light">
                     Photos appear on the big screen before your guest even puts
                     their phone back in their pocket.
                   </p>
@@ -543,7 +547,7 @@ export default function App() {
           </section>
 
           {/* LIVE PROJECTOR EXPERIENCE ENHANCER */}
-          <section className="py-24 px-6 bg-white relative overflow-hidden flex flex-col items-center border-y border-[silver]/60">
+          <section className="py-24 px-6 bg-card relative overflow-hidden flex flex-col items-center border-y border-[silver]/60">
             <motion.div
               className="max-w-4xl text-center space-y-8 relative z-10"
               variants={fadeUpVariant}
@@ -554,11 +558,11 @@ export default function App() {
               <div className="mx-auto h-12 w-12 rounded-full bg-[deep-slate]/5 border border-[deep-slate]/10 flex items-center justify-center text-[deep-slate] shadow-cluely-lifted mb-4">
                 <Tv className="h-5 w-5 text-[deep-slate]" />
               </div>
-              <h3 className="font-serif text-3xl md:text-5xl font-light tracking-tight text-[night]">
+              <h3 className="font-serif text-3xl md:text-5xl font-light tracking-tight text-foreground">
                 Experience the{" "}
                 <span className="italic">Live Projection Cast</span>.
               </h3>
-              <p className="text-xs md:text-sm text-[ash] leading-relaxed max-w-xl mx-auto font-sans font-light">
+              <p className="text-xs md:text-sm text-muted-foreground leading-relaxed max-w-xl mx-auto font-sans font-light">
                 Toggle our premium fullscreen projector screen. Typically
                 deployed on ballroom smart TVs or stage walls, this view serves
                 gorgeous cross-fades of guest uploads in real time.
@@ -598,14 +602,14 @@ export default function App() {
                 whileInView="whileInView"
                 viewport={{ once: true }}
               >
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[ash]">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
                   Why waste money on disposable cameras?
                 </span>
-                <h2 className="font-serif text-3xl md:text-5xl text-[night] font-light tracking-tight">
+                <h2 className="font-serif text-3xl md:text-5xl text-foreground font-light tracking-tight">
                   For two cocktails per person, keep the memories forever.
                 </h2>
-                <p className="text-xs text-[ash] max-w-lg font-light leading-relaxed">
-                  <strong className="text-[night] font-semibold">
+                <p className="text-xs text-muted-foreground max-w-lg font-light leading-relaxed">
+                  <strong className="text-foreground font-semibold">
                     For the price of 2 cocktails per guest, you get a lifetime
                     of memories.
                   </strong>{" "}
@@ -628,14 +632,14 @@ export default function App() {
                 whileInView="whileInView"
                 viewport={{ once: true }}
               >
-                <span className="text-[10px] font-mono uppercase tracking-widest text-[ash]">
+                <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">
                   Common questions
                 </span>
-                <h2 className="font-serif text-3xl md:text-5xl text-[night] font-light tracking-tight">
+                <h2 className="font-serif text-3xl md:text-5xl text-foreground font-light tracking-tight">
                   The questions hosts actually ask.
                 </h2>
-                <p className="text-xs text-[ash] max-w-lg font-light leading-relaxed">
-                  <strong className="text-[night] font-semibold">
+                <p className="text-xs text-muted-foreground max-w-lg font-light leading-relaxed">
+                  <strong className="text-foreground font-semibold">
                     If your guests can use a camera, they can use Glimpse.
                   </strong>{" "}
                   That is the short answer to almost every FAQ below.
@@ -651,13 +655,13 @@ export default function App() {
                       <button
                         id={`faq-toggle-${index}`}
                         onClick={() => setActiveFaq(isOpen ? null : index)}
-                        className="w-full flex items-center justify-between text-left focus:outline-none hover:text-[ash] transition-colors cursor-pointer"
+                        className="w-full flex items-center justify-between text-left focus:outline-none hover:text-muted-foreground transition-colors cursor-pointer"
                       >
-                        <span className="font-serif font-light text-[night] text-base md:text-lg pr-4">
+                        <span className="font-serif font-light text-foreground text-base md:text-lg pr-4">
                           {faq.question}
                         </span>
                         <ChevronDown
-                          className={`h-4 w-4 text-[ash] transition-transform duration-300 transform ${isOpen ? "rotate-180" : ""}`}
+                          className={`h-4 w-4 text-muted-foreground transition-transform duration-300 transform ${isOpen ? "rotate-180" : ""}`}
                         />
                       </button>
 
@@ -670,7 +674,7 @@ export default function App() {
                         transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
                         className="overflow-hidden"
                       >
-                        <div className="pt-4 text-xs md:text-sm text-[ash] leading-relaxed font-light font-sans max-w-2xl">
+                        <div className="pt-4 text-xs md:text-sm text-muted-foreground leading-relaxed font-light font-sans max-w-2xl">
                           {faq.answer}
                         </div>
                       </motion.div>
@@ -688,7 +692,7 @@ export default function App() {
                 viewport={{ once: true }}
               >
                 <span className="inline-block h-px w-12 bg-[stone] mb-2"></span>
-                <h3 className="font-serif text-xl md:text-2xl text-[night] font-light">
+                <h3 className="font-serif text-xl md:text-2xl text-foreground font-light">
                   Stop begging for photos. Start collecting joy. Pick your plan
                   below.
                 </h3>
@@ -713,14 +717,14 @@ export default function App() {
               >
                 <div className="max-w-5xl mx-auto relative z-10">
                   <div className="text-center max-w-2xl mx-auto space-y-4 mb-16">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-[ash] flex items-center justify-center gap-2">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground flex items-center justify-center gap-2">
                       <Smartphone className="h-3 w-3 text-[deep-slate]" />{" "}
                       Standalone Client Utility
                     </span>
-                    <h2 className="font-serif text-3xl md:text-5xl text-[night] font-light tracking-tight">
+                    <h2 className="font-serif text-3xl md:text-5xl text-foreground font-light tracking-tight">
                       Gather Glimpses anywhere.
                     </h2>
-                    <p className="text-xs text-[ash] font-sans font-light leading-relaxed">
+                    <p className="text-xs text-muted-foreground font-sans font-light leading-relaxed">
                       For professional event planners, wedding registrars, and
                       projection staff: access offline queues, interactive
                       casting streams, and remote moderation nodes.
@@ -730,7 +734,7 @@ export default function App() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* iOS BADGE COMPANION BLOCK */}
                     <motion.div
-                      className="bg-white border border-[silver]/60 p-8 rounded-2xl md:rounded-3xl shadow-sm text-left flex flex-col justify-between hover:shadow-md transition-shadow"
+                      className="bg-card border border-[silver]/60 p-8 rounded-2xl md:rounded-3xl shadow-sm text-left flex flex-col justify-between hover:shadow-md transition-shadow"
                       variants={fadeUpVariant}
                       initial="initial"
                       whileInView="whileInView"
@@ -740,7 +744,7 @@ export default function App() {
                     >
                       <div className="space-y-6">
                         <div className="flex items-center justify-between">
-                          <div className="h-10 w-10 bg-[night]/5 rounded-xl flex items-center justify-center text-[night]">
+                          <div className="h-10 w-10 bg-[night]/5 rounded-xl flex items-center justify-center text-foreground">
                             <Apple className="h-5 w-5" />
                           </div>
                           <span className="text-[9px] font-mono tracking-widest text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-full uppercase font-semibold">
@@ -749,10 +753,10 @@ export default function App() {
                         </div>
 
                         <div className="space-y-2">
-                          <h3 className="font-serif text-xl font-light text-[night]">
+                          <h3 className="font-serif text-xl font-light text-foreground">
                             Glimpse for iOS
                           </h3>
-                          <p className="text-xs text-[ash] leading-relaxed font-light">
+                          <p className="text-xs text-muted-foreground leading-relaxed font-light">
                             Integrated directly with Apple Photos API, AirPlay
                             casting, dynamic lockscreen widgets, and native push
                             alerts for immediate guest event alerts.
@@ -790,7 +794,7 @@ export default function App() {
 
                     {/* ANDROID BADGE COMPANION BLOCK */}
                     <motion.div
-                      className="bg-white border border-[silver]/60 p-8 rounded-2xl md:rounded-3xl shadow-sm text-left flex flex-col justify-between hover:shadow-md transition-shadow"
+                      className="bg-card border border-[silver]/60 p-8 rounded-2xl md:rounded-3xl shadow-sm text-left flex flex-col justify-between hover:shadow-md transition-shadow"
                       variants={fadeUpVariant}
                       initial="initial"
                       whileInView="whileInView"
@@ -815,10 +819,10 @@ export default function App() {
                         </div>
 
                         <div className="space-y-2">
-                          <h3 className="font-serif text-xl font-light text-[night]">
+                          <h3 className="font-serif text-xl font-light text-foreground">
                             Glimpse for Android
                           </h3>
-                          <p className="text-xs text-[ash] leading-relaxed font-light">
+                          <p className="text-xs text-muted-foreground leading-relaxed font-light">
                             Engineered around Material You adaptive parameters.
                             Built-in local offline background image queues, high
                             density network recovery protocols, and legacy cast
@@ -848,10 +852,10 @@ export default function App() {
                             "Accessing Google Play Hub... Safe transfer handshake verified on Android client.",
                           );
                         }}
-                        className="mt-8 w-full group flex items-center justify-center gap-2.5 h-12 bg-white hover:bg-stone-50 text-[night] border border-[silver]/80 text-xs font-semibold rounded-xl transition-all tracking-wider uppercase cursor-pointer"
+                        className="mt-8 w-full group flex items-center justify-center gap-2.5 h-12 bg-card hover:bg-stone-50 text-foreground border border-[silver]/80 text-xs font-semibold rounded-xl transition-all tracking-wider uppercase cursor-pointer"
                       >
                         <svg
-                          className="h-4 w-4 fill-current text-[night]"
+                          className="h-4 w-4 fill-current text-foreground"
                           viewBox="0 0 24 24"
                         >
                           <path d="M17.523 15.3l1.816 3.146a.82.82 0 01-.301 1.122.828.828 0 01-1.125-.301L16.08 16.09A9.123 9.123 0 0112 17a9.123 9.123 0 01-4.08-.91l-1.83 3.177a.825.825 0 01-1.426-.822l1.816-3.146A8.995 8.995 0 013 9.308c0-2.41 1.083-4.576 2.784-6.071L4.694 1.583a.825.825 0 111.426-.822l1.107 1.921c1.398-.67 2.964-1.05 4.623-1.05 1.66 0 3.225.38 4.623 1.05l1.107-1.921a.825.825 0 111.426.822l-1.09 1.904A8.91 8.91 0 0121 9.308a8.995 8.995 0 01-3.477 5.992zM7 9a1 1 0 100-2 1 1 0 000 2zm10 0a1 1 0 100-2 1 1 0 000 2z" />
@@ -884,7 +888,7 @@ export default function App() {
                 <div className="h-2 w-2 rounded-full bg-[deep-slate]"></div>
                 <span>glimpse.</span>
               </div>
-              <p className="text-xs text-[ash] font-sans font-light leading-relaxed max-w-sm">
+              <p className="text-xs text-muted-foreground font-sans font-light leading-relaxed max-w-sm">
                 The absolute standard for guest-sourced visual assets. High
                 resolution storage vaults, encrypted transit locks, and
                 real-time interactive projection grids.
@@ -898,7 +902,7 @@ export default function App() {
                     e.preventDefault();
                     showToast("Connected to verified secure archive feed.");
                   }}
-                  className="h-8 w-8 rounded-full border border-stone-100 hover:border-[night] flex items-center justify-center text-[ash] hover:text-[night] transition-all hover:-translate-y-0.5"
+                  className="h-8 w-8 rounded-full border border-stone-100 hover:border-[night] flex items-center justify-center text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5"
                 >
                   <Camera className="h-4 w-4" />
                 </a>
@@ -910,7 +914,7 @@ export default function App() {
                       "Establishing professional networks handshake...",
                     );
                   }}
-                  className="h-8 w-8 rounded-full border border-stone-100 hover:border-[night] flex items-center justify-center text-[ash] hover:text-[night] transition-all hover:-translate-y-0.5"
+                  className="h-8 w-8 rounded-full border border-stone-100 hover:border-[night] flex items-center justify-center text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5"
                 >
                   <Briefcase className="h-4 w-4" />
                 </a>
@@ -920,7 +924,7 @@ export default function App() {
                     e.preventDefault();
                     showToast("Routing microblogging transmission client...");
                   }}
-                  className="h-8 w-8 rounded-full border border-stone-100 hover:border-[night] flex items-center justify-center text-[ash] hover:text-[night] transition-all hover:-translate-y-0.5"
+                  className="h-8 w-8 rounded-full border border-stone-100 hover:border-[night] flex items-center justify-center text-muted-foreground hover:text-foreground transition-all hover:-translate-y-0.5"
                 >
                   {/* Twitter Custom Premium Mini SVG */}
                   <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">
@@ -932,10 +936,10 @@ export default function App() {
 
             {/* Column 2: System Solutions */}
             <div className="lg:col-span-2 space-y-4">
-              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[night] font-semibold">
+              <h4 className="text-[10px] font-mono uppercase tracking-widest text-foreground font-semibold">
                 Architecture
               </h4>
-              <ul className="space-y-2.5 text-xs font-light text-[ash]">
+              <ul className="space-y-2.5 text-xs font-light text-muted-foreground">
                 <li>
                   <button
                     onClick={() => {
@@ -1000,10 +1004,10 @@ export default function App() {
 
             {/* Column 3: Case Chronics */}
             <div className="lg:col-span-2 space-y-4">
-              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[night] font-semibold">
+              <h4 className="text-[10px] font-mono uppercase tracking-widest text-foreground font-semibold">
                 Live Case Studies
               </h4>
-              <ul className="space-y-2.5 text-xs font-light text-[ash]">
+              <ul className="space-y-2.5 text-xs font-light text-muted-foreground">
                 <li>
                   <button
                     onClick={() => {
@@ -1045,10 +1049,10 @@ export default function App() {
 
             {/* Column 4: Host Vault */}
             <div className="lg:col-span-3 space-y-4">
-              <h4 className="text-[10px] font-mono uppercase tracking-widest text-[night] font-semibold">
+              <h4 className="text-[10px] font-mono uppercase tracking-widest text-foreground font-semibold">
                 Access Portal
               </h4>
-              <ul className="space-y-2.5 text-xs font-light text-[ash]">
+              <ul className="space-y-2.5 text-xs font-light text-muted-foreground">
                 <li>
                   <button
                     onClick={() => {
@@ -1099,7 +1103,7 @@ export default function App() {
 
           {/* Separation Guard */}
           <div className="border-t border-[silver]/60 pt-10 flex flex-col sm:flex-row items-center justify-between gap-6 text-left">
-            <div className="text-[10px] text-[ash] space-y-1.5 font-mono tracking-wider">
+            <div className="text-[10px] text-muted-foreground space-y-1.5 font-mono tracking-wider">
               <p>
                 © {new Date().getFullYear()} glimpse. Spacecraft and Control,
                 Inc. All rights reserved.
@@ -1109,7 +1113,7 @@ export default function App() {
                 PORT 3000 DIRECT ROUTE • PRIVACY VAULT ONLINE
               </p>
             </div>
-            <div className="text-[10px] text-[ash] font-mono tracking-wide uppercase flex items-center gap-4">
+            <div className="text-[10px] text-muted-foreground font-mono tracking-wide uppercase flex items-center gap-4">
               <a
                 href="#rules"
                 onClick={(e) => {
@@ -1118,7 +1122,7 @@ export default function App() {
                     "Security parameters enforce no persistent cookie tracking.",
                   );
                 }}
-                className="hover:text-[night]"
+                className="hover:text-foreground"
               >
                 Privacy Code
               </a>
@@ -1129,7 +1133,7 @@ export default function App() {
                   e.preventDefault();
                   showToast("Displaying statutory event legal provisions.");
                 }}
-                className="hover:text-[night]"
+                className="hover:text-foreground"
               >
                 Provision Terms
               </a>
@@ -1137,8 +1141,9 @@ export default function App() {
           </div>
 
           {/* ULTRA-BOLD MASSIVE ANCHOR STAMP */}
-          <div className="text-[11vw] sm:text-[13vw] font-black tracking-widest text-[night]/5 select-none text-center block leading-none pt-12 md:pt-16 uppercase transition-all font-sans font-extrabold pointer-events-none">
+          <div className="text-[11vw] sm:text-[13vw] font-black tracking-widest text-foreground/5 select-none text-center block leading-none pt-12 md:pt-16 uppercase transition-all font-sans font-extrabold pointer-events-none">
             glimpse
+<WaitlistSection />
           </div>
         </div>
       </footer>
