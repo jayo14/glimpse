@@ -1,3 +1,4 @@
+"use client";
 /* eslint-disable @next/next/no-img-element */
 import React, { useState, useEffect } from "react";
 import { X, Play, Pause, ChevronLeft, ChevronRight, Tv, Heart, Sparkles, Flame } from "lucide-react";
