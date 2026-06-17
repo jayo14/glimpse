@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/navigation";
 
 import { PRELOADED_THEMES, FAQS, Photo } from "@/lib/types";
