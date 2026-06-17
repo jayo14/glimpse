@@ -15,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { motion } from "framer-motion";
 
 interface HeaderProps {
   role: "HOST" | "GUEST" | "PHOTOGRAPHER";
@@ -27,86 +28,82 @@ export default function DashboardHeader({ role }: HeaderProps) {
   const handleSignOut = async () => {
     try {
       await AuthService.logout();
-      toast.success("Signed out successfully.");
+      toast.success("Signed out.");
       router.push("/auth/login");
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (err) {
-      toast.error("Failed to terminate session securely.");
+      toast.error("Failed to sign out.");
     }
   };
 
   return (
-    <header className="w-full h-16 border-b border-border/40 bg-background/80 backdrop-blur-md sticky top-0 z-50 flex items-center justify-center px-4">
-      {/* Constraints header area to match your minimalist step form forms width exactly */}
-      <div className="w-full max-w-md flex items-center justify-between">
+    <header className="w-full h-20 border-b border-white/5 bg-black/50 backdrop-blur-xl sticky top-0 z-50 flex items-center px-6">
+      <div className="w-full max-w-6xl mx-auto flex items-center justify-between bg-white/5 px-6 h-12 rounded-full border border-white/5 shadow-2xl">
         
-        {/* BRANDING LOGO */}
         <Link 
           href={role === "HOST" ? "/host" : "/guest"} 
-          className="flex items-center gap-2 group cursor-pointer"
+          className="flex items-center gap-3 group cursor-pointer"
         >
-          <div className="w-4 h-4 fill-current text-foreground transition-transform group-hover:rotate-45 duration-300">
-            <svg className="w-full h-full" viewBox="0 0 24 24">
-              <path d="M12 2l1.88 5.79h6.08l-4.92 3.58 1.88 5.79-4.92-3.58-4.92 3.58 1.88-5.79-4.92-3.58h6.08z"/>
-            </svg>
-          </div>
-          <span className="font-serif text-md font-semibold tracking-wide lowercase">glimpse</span>
-          <span className="text-[8px] font-mono tracking-widest uppercase px-1.5 py-0.5 bg-muted rounded-md text-muted-foreground opacity-60">
+          <span className="font-heading text-xl font-bold tracking-tighter italic">glimpse</span>
+          <span className="text-[8px] font-bold tracking-[0.2em] uppercase px-2 py-0.5 bg-white/5 border border-white/10 rounded-full text-white/40">
             {role}
           </span>
         </Link>
 
-        {/* RIGHT UTILITIES PANEL */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           {role === "HOST" && (
-            <Link 
-              href="/host/create-event" 
-              className="inline-flex items-center gap-1 h-8 px-3.5 rounded-full border border-border bg-card/40 text-[10px] uppercase tracking-wider font-semibold hover:bg-card transition-colors cursor-pointer"
-            >
-              <Sparkles size={10} /> Create
-            </Link>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link 
+                href="/event/create" 
+                className="inline-flex items-center gap-2 h-8 px-4 rounded-full bg-white text-black text-[10px] uppercase tracking-[0.2em] font-bold hover:bg-white/90 transition-all cursor-pointer shadow-xl"
+              >
+                <Sparkles size={10} /> Create
+              </Link>
+            </motion.div>
           )}
 
-          {/* USER PROFILE CONTROL SELECTION */}
           <DropdownMenu>
             <DropdownMenuTrigger className="outline-none">
-              <div className="w-8 h-8 rounded-full border border-border bg-card overflow-hidden flex items-center justify-center cursor-pointer transition-transform active:scale-95">
+              <motion.div 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="w-8 h-8 rounded-full border border-white/10 bg-white/5 overflow-hidden flex items-center justify-center cursor-pointer transition-all shadow-xl"
+              >
                 {loading ? (
-                  <Loader2 size={12} className="animate-spin text-muted-foreground" />
+                  <Loader2 size={12} className="animate-spin text-white/20" />
                 ) : user?.avatar_url ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={user.avatar_url} alt="Avatar" className="w-full h-full object-cover" />
+                  <img src={user.avatar_url} alt="Avatar" className="w-full h-full object-cover grayscale" />
                 ) : (
-                  <div className="font-serif text-xs font-bold text-muted-foreground uppercase">
+                  <div className="font-heading text-[10px] font-bold text-white/40 uppercase">
                     {(user?.full_name || "U").charAt(0)}
                   </div>
                 )}
-              </div>
+              </motion.div>
             </DropdownMenuTrigger>
             
-            <DropdownMenuContent align="end" className="w-52 rounded-xl border border-border bg-popover text-popover-foreground shadow-neo-blue p-1 font-sans">
-              <DropdownMenuLabel className="px-2.5 py-2 text-xs">
-                <p className="font-semibold text-foreground truncate">{user?.full_name || "User Profile"}</p>
-                <p className="text-[10px] text-muted-foreground tracking-wide font-normal truncate mt-0.5">Workspace account</p>
+            <DropdownMenuContent align="end" className="w-60 rounded-[32px] border border-white/10 bg-black/90 backdrop-blur-2xl text-white shadow-2xl p-2 font-body mt-4">
+              <DropdownMenuLabel className="px-4 py-4 space-y-1">
+                <p className="font-bold text-sm tracking-tight truncate uppercase tracking-[0.1em]">{user?.full_name || "Architect"}</p>
+                <p className="text-[10px] text-white/30 tracking-[0.2em] font-bold uppercase truncate italic">{user?.email || "Session active"}</p>
               </DropdownMenuLabel>
               
-              <DropdownMenuSeparator className="bg-border/40" />
+              <DropdownMenuSeparator className="bg-white/5 mx-2" />
               
-              <DropdownMenuItem className="flex items-center gap-2 rounded-lg text-xs px-2.5 py-2 focus:bg-accent focus:text-accent-foreground cursor-pointer">
-                <LayoutGrid size={14} /> Hub Console
+              <DropdownMenuItem className="flex items-center gap-3 rounded-full text-xs px-4 py-3 focus:bg-white/5 focus:text-white cursor-pointer transition-all mt-1">
+                <LayoutGrid size={14} className="opacity-30" /> Hub Console
               </DropdownMenuItem>
               
-              <DropdownMenuItem className="flex items-center gap-2 rounded-lg text-xs px-2.5 py-2 focus:bg-accent focus:text-accent-foreground cursor-pointer">
-                <Settings size={14} /> Profile Settings
+              <DropdownMenuItem className="flex items-center gap-3 rounded-full text-xs px-4 py-3 focus:bg-white/5 focus:text-white cursor-pointer transition-all">
+                <Settings size={14} className="opacity-30" /> Profile Settings
               </DropdownMenuItem>
               
-              <DropdownMenuSeparator className="bg-border/40" />
+              <DropdownMenuSeparator className="bg-white/5 mx-2 mt-1" />
               
               <DropdownMenuItem 
                 onClick={handleSignOut}
-                className="flex items-center gap-2 rounded-lg text-xs px-2.5 py-2 text-red-500 focus:bg-red-500/10 focus:text-red-500 cursor-pointer"
+                className="flex items-center gap-3 rounded-full text-xs px-4 py-3 text-red-400 focus:bg-red-500/10 focus:text-red-400 cursor-pointer transition-all mt-1 mb-1"
               >
-                <LogOut size={14} /> Sign Out
+                <LogOut size={14} className="opacity-50" /> Finalize Session
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

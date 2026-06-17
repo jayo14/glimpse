@@ -1,4 +1,3 @@
-// src/app/auth/reset-password/page.tsx
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
@@ -6,8 +5,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { Loader2, CheckCircle2 } from "lucide-react";
-import Image from "next/image";
+import { Loader2, CheckCircle2, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
@@ -33,7 +32,6 @@ function ResetPasswordForm() {
     resolver: zodResolver(resetSchema),
   });
 
-  // Extract access token parameter securely on component mount
   useEffect(() => {
     let accessToken = null;
     if (typeof window !== "undefined" && window.location.hash) {
@@ -44,16 +42,15 @@ function ResetPasswordForm() {
       accessToken = searchParams.get("access_token");
     }
     if (!accessToken) {
-      toast.error("Missing or expired password authentication token key.");
+      toast.error("Invalid or expired token.");
     } else {
-      // Defer state update to avoid cascading render warning
       Promise.resolve().then(() => setToken(accessToken));
     }
   }, [searchParams]);
 
   const onResetSubmit = async (data: ResetStepInput) => {
     if (!token) {
-      toast.error("Cannot process reset without a valid authentication token parameter.");
+      toast.error("Invalid token.");
       return;
     }
     
@@ -65,7 +62,7 @@ function ResetPasswordForm() {
         confirm_password: data.confirm_password,
       });
 
-      toast.success(res.message || "Password successfully updated!");
+      toast.success(res.message || "Password updated.");
       setIsSuccessRedirect(true);
 
       setTimeout(() => {
@@ -75,40 +72,30 @@ function ResetPasswordForm() {
         if (!role || !fullName?.trim()) {
           router.push("/role-selection");
         } else {
-          router.push(role === "HOST" ? "/dashboard/host" : "/dashboard/guest");
+          router.push(role === "HOST" ? "/host" : "/guest");
         }
-      }, 2500);
+      }, 2000);
     } catch (err: unknown) {
       const errorResponse = err as { response?: { data?: { message?: string } }; message?: string };
       const errorMsg =
         errorResponse?.response?.data?.message ||
         errorResponse?.message ||
-        "Token validation failed. Your link may have expired.";
+        "Reset failed.";
       toast.error(errorMsg);
     }
   };
 
   return (
-    <>
-      <div className="flex flex-col justify-center items-center mb-6 text-center w-full">
-        <div className="mb-4">
-          <Image
-            src="/images/auth-image.png"
-            alt="Logo"
-            width={140}
-            height={140}
-            priority
-          />
-        </div>
-
-        <h2 className="text-2xl sm:text-3xl font-serif tracking-tight leading-[1.1] mb-2 text-night text-center">
-          {isSuccessRedirect ? "Access Granted" : "Reset Password"}
+    <div className="w-full max-w-lg bg-white/[0.02] border border-white/5 p-10 md:p-16 rounded-[60px] shadow-2xl space-y-12">
+      <div className="space-y-6 text-center lg:text-left">
+        <span className="text-[10px] uppercase tracking-[0.4em] text-white/30 block font-bold">Security</span>
+        <h2 className="text-5xl md:text-6xl font-heading text-white tracking-tighter leading-none italic">
+          {isSuccessRedirect ? "Success." : "New password."}
         </h2>
-
-        <p className="text-ash text-sm font-light text-center">
+        <p className="text-xl text-white/40 font-light leading-relaxed italic">
           {isSuccessRedirect
-            ? "Your password credentials have been restored. Authenticating session parameters..."
-            : "Type your new password below to update and secure your profile authentication key."}
+            ? "Your credentials have been restored. Redirecting..."
+            : "Define your new secure password to regain control room access."}
         </p>
       </div>
 
@@ -116,97 +103,103 @@ function ResetPasswordForm() {
         {!isSuccessRedirect ? (
           <motion.form
             key="reset-form"
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.98 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             onSubmit={handleSubmit(onResetSubmit)}
-            className="space-y-4 text-left"
+            className="space-y-8"
           >
-            <div className="relative w-full">
-              <input
-                {...register("password")}
-                type={showPassword ? "text" : "password"}
-                id="password"
-                placeholder=" "
-                className="peer block w-full h-12 rounded-lg border border-silver bg-off-white px-4 sm:px-6 pb-2 pt-3 text-sm pr-12 text-night outline-none focus:border-deep-slate"
-              />
-              <label
-                htmlFor="password"
-                className="absolute top-1.5 sm:top-2 left-3 sm:left-4 z-10 origin-left -translate-y-4 scale-75 transform bg-background px-2 text-[14px] sm:text-[16px] text-ash duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-1.5 sm:peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-night"
-              >
-                New Password
-              </label>
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-sm font-medium text-ash hover:text-night cursor-pointer"
-              >
-                {showPassword ? "Hide" : "Show"}
-              </button>
-              {errors.password && (
-                <p className="mt-1 text-xs text-error font-bold">
-                  {errors.password.message}
-                </p>
-              )}
+            <div className="space-y-6">
+              <div className="space-y-3">
+                <label htmlFor="password" className="text-[10px] uppercase tracking-[0.3em] text-white/30 font-bold ml-2">New Password</label>
+                <input
+                  {...register("password")}
+                  type={showPassword ? "text" : "password"}
+                  id="password"
+                  placeholder="••••••••"
+                  className="w-full h-16 bg-white/[0.03] border-white/10 rounded-3xl text-white px-8 placeholder:text-white/10 focus:outline-none focus:border-white transition-all text-lg"
+                />
+                {errors.password && (
+                  <p className="mt-2 text-xs text-red-500 italic ml-2">{errors.password.message}</p>
+                )}
+              </div>
+
+              <div className="space-y-3">
+                <label htmlFor="confirm_password" className="text-[10px] uppercase tracking-[0.3em] text-white/30 font-bold ml-2">Confirm Password</label>
+                <input
+                  {...register("confirm_password")}
+                  type={showPassword ? "text" : "password"}
+                  id="confirm_password"
+                  placeholder="••••••••"
+                  className="w-full h-16 bg-white/[0.03] border-white/10 rounded-3xl text-white px-8 placeholder:text-white/10 focus:outline-none focus:border-white transition-all text-lg"
+                />
+                {errors.confirm_password && (
+                  <p className="mt-2 text-xs text-red-500 italic ml-2">{errors.confirm_password.message}</p>
+                )}
+              </div>
             </div>
 
-            <div className="relative w-full">
-              <input
-                {...register("confirm_password")}
-                type={showPassword ? "text" : "password"}
-                id="confirm_password"
-                placeholder=" "
-                className="peer block w-full h-12 rounded-lg border border-silver bg-off-white px-4 sm:px-6 pb-2 pt-3 text-sm text-night outline-none focus:border-deep-slate"
-              />
-              <label
-                htmlFor="confirm_password"
-                className="absolute top-1.5 sm:top-2 left-3 sm:left-4 z-10 origin-left -translate-y-4 scale-75 transform bg-background px-2 text-[14px] sm:text-[16px] text-ash duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-1.5 sm:peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:text-night"
-              >
-                Confirm New Password
-              </label>
-              {errors.confirm_password && (
-                <p className="mt-1 text-xs text-error font-bold">
-                  {errors.confirm_password.message}
-                </p>
-              )}
-            </div>
-
-            <Button
-              size="lg"
+            <motion.button
+              whileHover={{ scale: 1.02, y: -2 }}
+              whileTap={{ scale: 0.98 }}
               type="submit"
               disabled={isSubmitting || !token}
-              className="rounded-full flex items-center justify-center w-full h-11 sm:h-12 bg-night text-white hover:opacity-90 transition-opacity cursor-pointer font-bold"
+              className="w-full h-20 bg-white text-black text-[11px] uppercase tracking-[0.4em] rounded-full hover:bg-white/90 transition-all font-bold shadow-2xl flex items-center justify-center gap-3"
             >
-              {isSubmitting && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {isSubmitting ? "Updating Password..." : "Update Password"}
-            </Button>
+              {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
+              {isSubmitting ? "Updating..." : "Update Password"}
+            </motion.button>
           </motion.form>
         ) : (
           <motion.div
-            key="success-redirect"
+            key="success"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="flex flex-col items-center justify-center py-4 text-center"
+            className="flex flex-col items-center justify-center py-12 text-center space-y-6"
           >
-            <CheckCircle2 className="h-14 w-14 text-sage-green mb-2 stroke-[1.25]" />
-            <p className="text-sm font-medium text-ash">
-              Redirecting shortly...
+            <CheckCircle2 className="h-20 w-20 text-white stroke-[1]" />
+            <p className="text-lg font-bold text-white tracking-widest uppercase">
+              Authenticated.
             </p>
           </motion.div>
         )}
       </AnimatePresence>
-    </>
+    </div>
   );
 }
 
 export default function ResetPasswordPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center flex-col p-4 sm:p-6 bg-off-white text-night">
-      <div className="flex w-full max-w-sm flex-col">
-        <Suspense fallback={<div className="flex items-center justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-ash" /></div>}>
+    <div className="min-h-screen flex flex-col bg-background text-foreground antialiased font-body">
+      <header className="px-6 h-24 flex items-center justify-between fixed top-0 left-0 right-0 z-50">
+        <motion.div 
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="max-w-6xl w-full mx-auto flex items-center justify-between bg-white/5 backdrop-blur-xl border border-white/5 px-8 h-16 rounded-full shadow-2xl"
+        >
+          <Link
+            href="/auth/login"
+            className="group inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/30 hover:text-white transition-all cursor-pointer font-bold"
+          >
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" /> Exit
+          </Link>
+
+          <div className="flex items-center gap-2 cursor-pointer font-heading">
+            <span className="font-bold text-xl tracking-tighter italic">glimpse</span>
+          </div>
+        </motion.div>
+      </header>
+
+      <main className="flex-1 flex items-center justify-center p-6 pt-32 pb-16">
+        <Suspense fallback={<Loader2 className="h-12 w-12 animate-spin text-white/20" />}>
           <ResetPasswordForm />
         </Suspense>
-      </div>
+      </main>
+
+      <footer className="h-24 flex items-center justify-center">
+         <p className="text-[9px] uppercase tracking-[0.4em] text-white/10 font-bold">© glimpse systems • secure session active</p>
+      </footer>
     </div>
   );
 }
+

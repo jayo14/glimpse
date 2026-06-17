@@ -35,10 +35,10 @@ export const PRELOADED_THEMES: EventTheme[] = [
     id: "wedding",
     label: "Elegant Wedding",
     icon: "Heart",
-    primaryColor: "rose",
-    accentColor: "amber",
-    gradientFrom: "from-rose-500/20",
-    gradientTo: "to-amber-500/10",
+    primaryColor: "white",
+    accentColor: "stone",
+    gradientFrom: "from-white/5",
+    gradientTo: "to-stone-500/5",
     tagline: "Love in full frame, gathered from every table.",
     samplePhotos: [
       {
@@ -79,10 +79,10 @@ export const PRELOADED_THEMES: EventTheme[] = [
     id: "conference",
     label: "Tech Conference",
     icon: "Cpu",
-    primaryColor: "blue",
-    accentColor: "cyan",
-    gradientFrom: "from-blue-600/20",
-    gradientTo: "to-cyan-500/10",
+    primaryColor: "white",
+    accentColor: "zinc",
+    gradientFrom: "from-white/5",
+    gradientTo: "to-zinc-500/5",
     tagline: "Connecting builders, tech insights, and backstage secrets.",
     samplePhotos: [
       {
@@ -123,10 +123,10 @@ export const PRELOADED_THEMES: EventTheme[] = [
     id: "festival",
     label: "Music Festival",
     icon: "Music",
-    primaryColor: "purple",
-    accentColor: "fuchsia",
-    gradientFrom: "from-purple-600/20",
-    gradientTo: "to-fuchsia-500/10",
+    primaryColor: "white",
+    accentColor: "slate",
+    gradientFrom: "from-white/5",
+    gradientTo: "to-slate-500/5",
     tagline: "Dust, lasers, and shared visual frequencies.",
     samplePhotos: [
       {

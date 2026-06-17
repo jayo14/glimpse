@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import SignupForm from "@/components/auth/SignupForm";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
 import LoaderTwo from "@/components/ui/loader-two";
 
 export default function SignupPage() {
@@ -12,18 +13,10 @@ export default function SignupPage() {
   const [isVerified, setIsVerified] = useState(false);
 
   useEffect(() => {
-    const hasSeenIntro = localStorage.getItem("glimpse_seen_intro");
-    
-    if (hasSeenIntro !== "true") {
-      // Force onboarding layout first if record doesn't exist
-      router.replace("/auth/intro");
-    } else {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setIsVerified(true);
-    }
-  }, [router]);
+    // Basic verification for demo purposes
+    setIsVerified(true);
+  }, []);
 
-  // Keep rendering standard design setup loader during runtime redirect
   if (!isVerified) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
@@ -33,40 +26,50 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center flex-col gap-1 p-4 sm:p-6 bg-background">
-      {/* HEADER */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="flex flex-col justify-center items-center mb-3 text-center max-w-sm w-full"
-      >
-        <motion.div
-          className="mb-4"
-          initial={{ scale: 0.85, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+    <div className="min-h-screen flex flex-col bg-background text-foreground antialiased font-body">
+      <header className="px-6 h-24 flex items-center justify-between fixed top-0 left-0 right-0 z-50">
+        <motion.div 
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="max-w-6xl w-full mx-auto flex items-center justify-between bg-white/5 backdrop-blur-xl border border-white/5 px-8 h-16 rounded-full shadow-2xl"
         >
-          <Image
-            src="/images/auth-image.png"
-            alt="Logo"
-            width={200}
-            height={200}
-            priority
-          />
+          <Link
+            href="/"
+            className="group inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/30 hover:text-white transition-all cursor-pointer font-bold"
+          >
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" /> Back
+          </Link>
+
+          <div className="flex items-center gap-2 cursor-pointer font-heading">
+            <span className="font-bold text-xl tracking-tighter italic">glimpse</span>
+          </div>
         </motion.div>
+      </header>
 
-        <h2 className="text-2xl sm:text-3xl text-foreground font-serif">
-          Join Glimpse
-        </h2>
+      <main className="flex-1 flex items-center justify-center p-6 pt-32 pb-16">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="w-full max-w-lg bg-white/[0.02] border border-white/5 p-10 md:p-16 rounded-[60px] shadow-2xl space-y-12"
+        >
+          <div className="space-y-6 text-center lg:text-left">
+            <span className="text-[10px] uppercase tracking-[0.4em] text-white/30 block font-bold">Onboarding</span>
+            <h2 className="text-5xl md:text-6xl font-heading text-white tracking-tighter leading-none italic">
+              Join the elite.
+            </h2>
+            <p className="text-xl text-white/40 font-light leading-relaxed italic">
+              Create your event dashboard and start capturing magic.
+            </p>
+          </div>
 
-        <p className="text-muted-foreground text-sm sm:text-base mt-1">
-          Join Glimpse to host unforgettable events, share digital galleries, and capture live memories with your guests.
-        </p>
-      </motion.div>
+          <SignupForm />
+        </motion.div>
+      </main>
 
-      {/* Signup Form */}
-      <SignupForm />
+      <footer className="h-24 flex items-center justify-center">
+         <p className="text-[9px] uppercase tracking-[0.4em] text-white/10 font-bold">© glimpse systems • secure onboarding active</p>
+      </footer>
     </div>
   );
 }

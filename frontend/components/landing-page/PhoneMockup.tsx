@@ -24,7 +24,7 @@ const GUEST_SAMPLE_PRESETS = [
   },
   {
     url: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=85",
-    caption: "Captured the happiest couple on earth ❤️",
+    caption: "Captured the happiest couple on earth",
     author: "Aria Winters"
   },
   {
@@ -36,7 +36,6 @@ const GUEST_SAMPLE_PRESETS = [
 
 export default function PhoneMockup({
   eventName,
-  themeColor,
   onPhotoUploaded
 }: PhoneMockupProps) {
   const [uploaderName, setUploaderName] = useState("");
@@ -46,41 +45,6 @@ export default function PhoneMockup({
   const [isUploading, setIsUploading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  // Cluely themed color matching
-  const getThemeColorClass = () => {
-    switch (themeColor) {
-      case "rose": 
-        return "bg-rose-mist hover:bg-rose-mist/95 text-deep-rose border border-rose-mist font-medium rounded-xl shadow-cluely-lifted";
-      case "emerald": 
-        return "bg-sage-green hover:bg-sage-green/95 text-forest border border-sage-green font-medium rounded-xl shadow-cluely-lifted";
-      case "blue": 
-        return "bg-deep-slate hover:bg-night text-white border border-deep-slate font-medium rounded-xl shadow-cluely-large";
-      case "purple": 
-        return "bg-[#8C929D] hover:bg-[#263043] text-white border border-[#8C929D] font-medium rounded-xl shadow-cluely-lifted";
-      default: 
-        return "bg-deep-slate hover:bg-night text-white border border-deep-slate font-medium rounded-xl shadow-cluely-large";
-    }
-  };
-
-  const getThemeTextClass = () => {
-    switch (themeColor) {
-      case "rose": return "text-rose-mist";
-      case "emerald": return "text-sage-green";
-      case "blue": return "text-steel-gray";
-      case "purple": return "text-stone";
-      default: return "text-[#E4E4E7]";
-    }
-  };
-
-  const getThemeBorderClass = () => {
-    switch (themeColor) {
-      case "rose": return "border-rose-mist/35 focus:border-rose-mist";
-      case "emerald": return "border-sage-green/35 focus:border-sage-green";
-      case "blue": return "border-silver/45 focus:border-platinum";
-      default: return "border-silver/35 focus:border-platinum";
-    }
-  };
 
   const triggerFileInput = () => {
     fileInputRef.current?.click();
@@ -140,176 +104,158 @@ export default function PhoneMockup({
   };
 
   return (
-    <div id="phone-portal" className="relative w-full max-w-[320px] mx-auto sm:mx-0 select-none">
-      {/* Phone Case Bezel - Sleek minimal slate device */}
-      <div className="relative aspect-[9/19] w-full rounded-[40px] border-[10px] border-deep-slate bg-[#18171C] p-2 shadow-2xl">
-        
-        {/* Dynamic Island Camera Notch */}
-        <div className="absolute top-4 left-1/2 z-30 h-4 w-24 -translate-x-1/2 rounded-full bg-[#18171C]"></div>
-        
-        {/* Screen Container */}
-        <div className="relative flex h-full w-full flex-col overflow-hidden rounded-[28px] bg-[#18171C] text-platinum font-sans">
-          
-          {/* Status bar mock */}
-          <div className="flex h-7 items-center justify-between px-5 pt-1 text-[10px] font-medium text-stone">
+    <div id="phone-portal" className="relative w-full max-w-[320px] mx-auto select-none">
+      <div className="relative aspect-[9/19] w-full rounded-[48px] border-[8px] border-white/5 bg-black p-2.5 shadow-2xl ring-1 ring-white/10">
+
+        <div className="absolute top-4 left-1/2 z-30 h-4 w-20 -translate-x-1/2 rounded-full bg-white/5"></div>
+
+        <div className="relative flex h-full w-full flex-col overflow-hidden rounded-[38px] bg-black text-white font-body">
+
+          <div className="flex h-8 items-center justify-between px-6 pt-2 text-[10px] font-medium text-white/30">
             <span>9:41</span>
-            <div className="flex items-center space-x-1.5">
+            <div className="flex items-center gap-1.5">
               <span>5G</span>
-              <div className="h-2 w-4 rounded-xs border border-stone/80 p-0.5">
-                <div className="h-full w-2.5 bg-stone"></div>
+              <div className="h-2 w-4 rounded-sm border border-white/10 p-0.5">
+                <div className="h-full w-2.5 bg-white/40"></div>
               </div>
             </div>
           </div>
 
-          {/* Web App Header inside Screen */}
-          <header className={`px-4 py-3 text-center bg-[#263043]/30 border-b border-silver/15`}>
-            <div className="flex items-center justify-center space-x-1.5">
-              <Camera className={`h-4 w-4 ${getThemeTextClass()}`} />
-              <span className="font-serif font-medium text-sm text-platinum">Glimpse Portal</span>
+          <header className="px-6 py-4 text-center border-b border-white/5">
+            <div className="flex items-center justify-center gap-2">
+              <span className="font-heading font-bold text-lg tracking-tighter italic">glimpse</span>
             </div>
-            <p className="mt-0.5 text-[10px] text-stone truncate max-w-[200px] mx-auto">
-              Guest upload for <span className="text-platinum font-medium">{eventName || "My Event"}</span>
+            <p className="mt-1 text-[8px] text-white/20 uppercase tracking-[0.2em] truncate max-w-[200px] mx-auto">
+              Event: <span className="text-white/40">{eventName || "Untitled"}</span>
             </p>
           </header>
 
-          {/* Screen Scrollable Body */}
-          <div className="flex-1 overflow-y-auto px-4 py-4 scrollbar-thin scrollbar-thumb-deep-slate scrollbar-track-transparent">
+          <div className="flex-1 overflow-y-auto px-6 py-6 scrollbar-none">
             {uploadSuccess ? (
-              <div className="flex flex-col items-center justify-center py-10 text-center animate-fade-in">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sage-green/10 border border-sage-green/20 text-sage-green mb-4 animate-bounce">
-                  <Check className="h-5 w-5" />
+              <div className="flex flex-col items-center justify-center py-12 text-center space-y-6">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-white text-black">
+                  <Check className="h-8 w-8" />
                 </div>
-                <h4 className="font-serif font-medium text-sm text-platinum">Upload Complete!</h4>
-                <p className="mt-1.5 text-[11px] text-stone font-sans">
-                  Your photo was beamed straight onto the host&apos;s central live screen hub.
-                </p>
+                <div className="space-y-2">
+                  <h4 className="font-heading italic text-2xl text-white">Beamed.</h4>
+                  <p className="text-[12px] text-white/30 font-light leading-relaxed italic">
+                    Your memory is now live on the main screen.
+                  </p>
+                </div>
                 <button
-                  id="reset-success-btn"
                   onClick={() => setUploadSuccess(false)}
-                  className="mt-6 rounded-xl border border-silver/15 px-4 py-2 text-xs font-medium text-platinum hover:bg-platinum/5 transition-all w-full cursor-pointer font-sans"
+                  className="mt-4 w-full py-4 border border-white/10 text-[10px] uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all font-bold"
                 >
-                  Upload Another Photo
+                  Upload Another
                 </button>
               </div>
             ) : isUploading ? (
-              <div className="flex flex-col items-center justify-center py-12 text-center">
-                <div className="relative mb-5 flex h-12 w-12 items-center justify-center">
-                  <div className="absolute inset-0 rounded-full border border-silver/20 border-t-2 animate-spin border-t-platinum"></div>
-                  <Upload className={`h-4 w-4 ${getThemeTextClass()} animate-pulse-slow`} />
+              <div className="flex flex-col items-center justify-center py-16 text-center space-y-8">
+                <div className="relative flex h-16 w-16 items-center justify-center">
+                   <div className="absolute inset-0 rounded-full border border-white/5 border-t-white animate-spin"></div>
+                   <Upload className="h-6 w-6 text-white/40" />
                 </div>
-                <h4 className="font-serif font-medium text-sm text-platinum">Beaming Moment...</h4>
-                <p className="mt-1 text-[10px] text-stone font-sans">Compressing & optimizing for the main screen</p>
-                
-                {/* Simulated Progress bar */}
-                <div className="mt-5 w-full bg-[#263043] h-1.5 rounded-full overflow-hidden">
-                  <div 
-                    className="h-full bg-[#EDEEF2] transition-all duration-150"
-                    style={{ width: `${uploadProgress}%` }}
-                  ></div>
+                <div className="space-y-2">
+                  <h4 className="font-heading italic text-2xl text-white">Transmitting...</h4>
+                  <p className="text-[10px] text-white/20 uppercase tracking-widest">Optimizing for projection</p>
                 </div>
-                <span className="mt-2 text-[10px] font-mono text-platinum">{uploadProgress}%</span>
+
+                <div className="w-full space-y-4">
+                   <div className="w-full bg-white/5 h-px overflow-hidden">
+                     <div
+                       className="h-full bg-white transition-all duration-300"
+                       style={{ width: `${uploadProgress}%` }}
+                     ></div>
+                   </div>
+                   <span className="text-[10px] font-bold text-white/40 tracking-widest">{uploadProgress}%</span>
+                </div>
               </div>
             ) : (
-              <div className="space-y-4">
-                {/* Form Elements */}
-                <div>
-                  <label className="block text-[10px] font-medium text-stone uppercase tracking-wider mb-1 font-sans">Your Name</label>
+              <div className="space-y-6">
+                <div className="space-y-2">
+                  <label className="block text-[9px] font-bold text-white/30 uppercase tracking-[0.2em]">Contributor</label>
                   <input
-                    id="guest-name-input"
                     type="text"
-                    placeholder="e.g. Grandma, Cousin Sarah"
+                    placeholder="Your Name"
                     value={uploaderName}
                     onChange={(e) => setUploaderName(e.target.value)}
-                    className={`w-full rounded-xl bg-charcoal/40 px-3 py-2 text-xs text-platinum border placeholder:text-stone/50 focus:outline-none transition-all ${getThemeBorderClass()}`}
+                    className="w-full bg-white/[0.03] px-4 py-4 text-sm text-white border border-white/5 rounded-none outline-none focus:border-white transition-all placeholder:text-white/10"
                   />
                 </div>
 
-                {/* Upload Trigger Area */}
-                <div>
-                  <label className="block text-[10px] font-medium text-stone uppercase tracking-wider mb-1 font-sans">Upload Photo</label>
-                  
+                <div className="space-y-2">
+                  <label className="block text-[9px] font-bold text-white/30 uppercase tracking-[0.2em]">Visual Asset</label>
+
                   {selectedImage ? (
-                    <div className="relative rounded-2xl overflow-hidden border border-silver/30 group shadow-sm">
-                      <img 
-                        src={selectedImage} 
-                        alt="Preview" 
-                        className="w-full aspect-square object-cover"
+                    <div className="relative group overflow-hidden border border-white/5">
+                      <img
+                        src={selectedImage}
+                        alt="Preview"
+                        className="w-full aspect-square object-cover grayscale opacity-80"
                         referrerPolicy="no-referrer"
                       />
                       <button
-                        id="clear-img-btn"
                         onClick={() => setSelectedImage(null)}
-                        className="absolute top-2 right-2 bg-charcoal/80 hover:bg-charcoal text-platinum rounded-full p-1.5 transition-colors cursor-pointer"
-                        title="Remove image"
+                        className="absolute top-4 right-4 bg-black/80 text-white rounded-full p-2 border border-white/20 transition-all hover:bg-black"
                       >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                        <X className="h-3 w-3" />
                       </button>
                     </div>
                   ) : (
-                    <div 
+                    <div
                       onClick={triggerFileInput}
-                      className={`border border-dashed rounded-2xl p-4 flex flex-col items-center justify-center cursor-pointer hover:bg-platinum/5 transition-all text-center ${getThemeBorderClass()}`}
+                      className="border border-dashed border-white/10 p-8 flex flex-col items-center justify-center cursor-pointer hover:bg-white/5 transition-all text-center group"
                     >
-                      <input 
-                        type="file" 
-                        ref={fileInputRef} 
-                        name="guest-photo"
-                        accept="image/*" 
-                        onChange={handleFileChange} 
-                        className="hidden" 
+                      <input
+                        type="file"
+                        ref={fileInputRef}
+                        accept="image/*"
+                        onChange={handleFileChange}
+                        className="hidden"
                       />
-                      <Camera className="h-6 w-6 text-stone mb-1.5" />
-                      <span className="text-[10px] text-platinum font-medium font-sans">Take a Photo or Browse</span>
-                      <p className="text-[8px] text-stone mt-0.5 font-sans">Supports high-res JPG, PNG</p>
+                      <Camera className="h-8 w-8 text-white/10 mb-3 group-hover:text-white/40 transition-colors" />
+                      <span className="text-[10px] text-white/30 uppercase tracking-[0.2em] font-bold">Capture Frame</span>
                     </div>
                   )}
                 </div>
 
-                {/* Optional Caption */}
-                <div>
-                  <label className="block text-[10px] font-medium text-stone uppercase tracking-wider mb-1 font-sans">Cheeky Caption</label>
+                <div className="space-y-2">
+                  <label className="block text-[9px] font-bold text-white/30 uppercase tracking-[0.2em]">Toast / Caption</label>
                   <input
-                    id="guest-caption-input"
                     type="text"
-                    placeholder="Add a silly tag or toast..."
+                    placeholder="Optional message..."
                     value={caption}
                     onChange={(e) => setCaption(e.target.value)}
-                    className={`w-full rounded-xl bg-charcoal/40 px-3 py-2 text-xs text-platinum border placeholder:text-stone/50 focus:outline-none transition-all ${getThemeBorderClass()}`}
+                    className="w-full bg-white/[0.03] px-4 py-4 text-sm text-white border border-white/5 rounded-none outline-none focus:border-white transition-all placeholder:text-white/10 italic"
                   />
                 </div>
 
-                {/* Submit action */}
                 <button
-                  id="guest-upload-finish-btn"
                   onClick={handleSimulatedUpload}
                   disabled={!selectedImage}
-                  className={`w-full py-3 rounded-xl text-xs font-medium transition-all flex items-center justify-center gap-1.5 cursor-pointer select-none disabled:opacity-40 disabled:cursor-not-allowed ${getThemeColorClass()}`}
+                  className="w-full py-5 bg-white text-black text-[11px] uppercase tracking-[0.3em] font-bold disabled:opacity-30 transition-all hover:bg-white/90"
                 >
-                  <Upload className="h-3.5 w-3.5" />
-                  Upload Photo
+                  Beam Moment
                 </button>
 
-                {/* Interactive Sandbox Helper Panel */}
-                <div className="pt-3 border-t border-silver/10">
-                  <div className="flex items-center space-x-1.5 text-stone mb-2">
-                    <Sparkles className="h-3 w-3 text-rose-mist animate-pulse" />
-                    <span className="text-[9px] font-bold uppercase tracking-wider font-sans">Sandbox Shortcuts:</span>
+                <div className="pt-6 border-t border-white/5 space-y-4">
+                  <div className="flex items-center gap-2 text-white/20">
+                    <Sparkles className="h-3 w-3" />
+                    <span className="text-[9px] font-bold uppercase tracking-widest">Simulation Presets</span>
                   </div>
-                  
-                  <div className="grid grid-cols-2 gap-2">
+
+                  <div className="grid grid-cols-2 gap-3">
                     {GUEST_SAMPLE_PRESETS.map((preset, index) => (
                       <button
-                        id={`sandbox-shortcut-${index}`}
                         key={index}
                         onClick={() => selectPresetImage(preset.url, preset.caption, preset.author)}
-                        className="flex flex-col text-left p-1.5 rounded-xl bg-charcoal/50 text-[8.5px] hover:bg-charcoal border border-silver/10 hover:border-platinum/30 transition-all text-stone group cursor-pointer"
-                        title={preset.caption}
+                        className="p-3 text-left bg-white/[0.02] border border-white/5 hover:border-white/20 transition-all group"
                       >
-                        <div className="flex items-center space-x-1 mb-0.5 font-bold text-platinum">
-                          <ImageIcon className="h-2 w-2 text-stone group-hover:text-platinum" />
-                          <span className="truncate">{preset.author}</span>
+                        <div className="flex items-center gap-2 mb-1.5 font-bold text-white/40">
+                          <ImageIcon className="h-2.5 w-2.5 text-white/10 group-hover:text-white/40" />
+                          <span className="text-[8px] truncate uppercase tracking-tighter">{preset.author}</span>
                         </div>
-                        <span className="truncate max-w-[100px] text-stone/70 italic">&quot;{preset.caption}&quot;</span>
+                        <span className="block truncate text-[8px] text-white/20 italic font-light">"{preset.caption}"</span>
                       </button>
                     ))}
                   </div>
@@ -319,12 +265,17 @@ export default function PhoneMockup({
             )}
           </div>
 
-          {/* Phone Bottom Notch Spacer */}
-          <footer className="footer-notch h-4 flex items-center justify-center py-2">
-            <div className="h-1 w-20 rounded-full bg-stone/30"></div>
+          <footer className="h-6 flex items-center justify-center">
+            <div className="h-1 w-16 rounded-full bg-white/10"></div>
           </footer>
         </div>
       </div>
     </div>
+  );
+}
+
+function X({ className }: { className?: string }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" className={className} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
   );
 }

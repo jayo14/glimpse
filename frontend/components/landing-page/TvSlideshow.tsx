@@ -8,13 +8,14 @@ interface TvSlideshowProps {
   themeColor: string;
   photos: Photo[];
   onClose: () => void;
+  isHero?: boolean;
 }
 
-export default function TvSlideshow({ eventName, themeColor, photos, onClose }: TvSlideshowProps) {
+export default function TvSlideshow({ eventName, themeColor, photos, onClose, isHero = false }: TvSlideshowProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
-  const SLIDE_DURATION = 6000; // 6 seconds per slide
+  const SLIDE_DURATION = 6000;
 
   useEffect(() => {
     if (photos.length === 0) return;
@@ -23,7 +24,6 @@ export default function TvSlideshow({ eventName, themeColor, photos, onClose }: 
     let progressTimer: NodeJS.Timeout;
 
     if (isPlaying) {
-      // Progress Bar Interval (runs every 100ms)
       const startTime = Date.now();
       progressTimer = setInterval(() => {
         const elapsed = Date.now() - startTime;
@@ -31,7 +31,6 @@ export default function TvSlideshow({ eventName, themeColor, photos, onClose }: 
         setProgress(widthPercent);
       }, 100);
 
-      // Slide Change Timer
       timer = setTimeout(() => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % photos.length);
         setProgress(0);
@@ -46,18 +45,19 @@ export default function TvSlideshow({ eventName, themeColor, photos, onClose }: 
 
   if (photos.length === 0) {
     return (
-      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-night text-platinum font-sans">
-        <button
-          id="close-empty-slideshow-btn"
-          onClick={onClose}
-          className="absolute top-6 right-6 flex items-center justify-center h-10 w-10 rounded-full bg-charcoal border border-silver/15 text-stone hover:text-platinum hover:bg-deep-slate transition-colors cursor-pointer"
-        >
-          <X className="h-5 w-5" />
-        </button>
-        <Tv className="h-16 w-16 text-[#8C929D] animate-pulse mb-4" />
-        <h3 className="font-serif font-medium text-xl">No Photos Uploaded Yet</h3>
-        <p className="text-stone text-xs mt-1.5 max-w-sm text-center">
-          Upload some photos in the mock smartphone preview first, then cast your slideshow to see them live!
+      <div className={isHero ? "w-full h-full flex flex-col items-center justify-center bg-black text-white font-body" : "fixed inset-0 z-50 flex flex-col items-center justify-center bg-black text-white font-body"}>
+        {!isHero && (
+          <button
+            onClick={onClose}
+            className="absolute top-6 right-6 flex items-center justify-center h-12 w-12 rounded-full bg-white/5 border border-white/10 text-white/50 hover:text-white transition-all cursor-pointer"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        )}
+        <Tv className="h-16 w-16 text-white/10 animate-pulse mb-6" />
+        <h3 className="font-heading italic text-2xl tracking-tight">No Photos Uploaded Yet</h3>
+        <p className="text-white/40 text-[11px] uppercase tracking-[0.2em] mt-3 max-w-sm text-center">
+          Upload some photos to see them live
         </p>
       </div>
     );
@@ -75,165 +75,143 @@ export default function TvSlideshow({ eventName, themeColor, photos, onClose }: 
     setProgress(0);
   };
 
-  const getThemeBadgeColor = () => {
-    switch (themeColor) {
-      case "rose": return "bg-rose-mist/10 border-rose-mist/20 text-rose-mist";
-      case "emerald": return "bg-sage-green/10 border-sage-green/20 text-sage-green";
-      case "blue": return "bg-silver/10 border-silver/20 text-[#EDEEF2]";
-      default: return "bg-silver/15 border-silver/25 text-[#EDEEF2]";
-    }
-  };
+  const content = (
+    <div className={isHero ? "w-full h-full bg-black flex flex-col justify-between overflow-hidden relative select-none font-body text-white" : "fixed inset-0 z-50 bg-black flex flex-col justify-between overflow-hidden select-none font-body text-white"}>
 
-  return (
-    <div id="tv-slideshow-overlay" className="fixed inset-0 z-50 bg-[#18171C] flex flex-col justify-between overflow-hidden select-none font-sans text-platinum">
-      
-      {/* AMBIENT GLOW BACKDROP */}
-      <div className="absolute inset-0 z-0 opacity-25 scale-110 pointer-events-none filter blur-3xl transition-all duration-1000">
-        <img 
-          src={currentPhoto.url} 
-          alt="" 
-          className="w-full h-full object-cover"
+      <div className="absolute inset-0 z-0 opacity-20 scale-110 pointer-events-none filter blur-[120px] transition-all duration-1000">
+        <img
+          src={currentPhoto.url}
+          alt=""
+          className="w-full h-full object-cover grayscale"
           referrerPolicy="no-referrer"
         />
       </div>
 
-      {/* TOP HEADER STATUS */}
-      <header className="relative z-10 flex items-center justify-between px-8 py-6 bg-gradient-to-b from-[#000000]/80 to-transparent">
-        <div className="flex items-center space-x-3.5">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#263043]/30 border border-silver/10 text-platinum">
+      <header className="relative z-10 flex items-center justify-between px-8 py-8 bg-gradient-to-b from-black/80 to-transparent">
+        <div className="flex items-center gap-4">
+          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 border border-white/10 text-white">
             <Tv className="h-5 w-5" />
           </div>
           <div>
-            <div className="flex items-center space-x-2">
-              <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded border ${getThemeBadgeColor()}`}>
-                Live Feedcast Active
+            <div className="flex items-center gap-3">
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] px-3 py-1 rounded-full border bg-white text-black border-white">
+                Live Stream Active
               </span>
             </div>
-            <h1 className="font-serif font-medium text-base text-platinum tracking-tight mt-0.5">
+            <h1 className="font-heading italic text-xl text-white tracking-tight mt-1">
               {eventName || "My Event Hub"}
             </h1>
           </div>
         </div>
 
-        {/* CONTROLS */}
-        <div className="flex items-center space-x-3">
-          <button
-            id="slideshow-prev-btn"
-            onClick={handlePrev}
-            className="flex items-center justify-center h-10 w-10 rounded-xl bg-charcoal/40 border border-silver/10 hover:bg-[#263043]/60 text-stone hover:text-platinum transition-colors cursor-pointer"
-            title="Previous Photo"
-          >
-            <ChevronLeft className="h-5 w-5" />
-          </button>
-          
-          <button
-            id="slideshow-play-pause-btn"
-            onClick={() => setIsPlaying(!isPlaying)}
-            className="flex items-center justify-center h-10 w-10 rounded-xl bg-[#263043] hover:bg-[#18171C] text-platinum border border-[#263043] transition-colors cursor-pointer"
-            title={isPlaying ? "Pause Slideshow" : "Play Slideshow"}
-          >
-            {isPlaying ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4 fill-white" />}
-          </button>
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handlePrev}
+              className="flex items-center justify-center h-12 w-12 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white/50 hover:text-white transition-all cursor-pointer"
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </button>
 
-          <button
-            id="slideshow-next-btn"
-            onClick={handleNext}
-            className="flex items-center justify-center h-10 w-10 rounded-xl bg-charcoal/40 border border-silver/10 hover:bg-[#263043]/60 text-stone hover:text-platinum transition-colors cursor-pointer"
-            title="Next Photo"
-          >
-            <ChevronRight className="h-5 w-5" />
-          </button>
+            <button
+              onClick={() => setIsPlaying(!isPlaying)}
+              className="flex items-center justify-center h-12 w-12 rounded-xl bg-white text-black hover:bg-white/90 transition-all cursor-pointer shadow-xl"
+            >
+              {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5 fill-black" />}
+            </button>
 
-          <div className="h-6 w-px bg-silver/10 my-auto"></div>
+            <button
+              onClick={handleNext}
+              className="flex items-center justify-center h-12 w-12 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white/50 hover:text-white transition-all cursor-pointer"
+            >
+              <ChevronRight className="h-5 w-5" />
+            </button>
+          </div>
 
-          <button
-            id="slideshow-exit-btn"
-            onClick={onClose}
-            className="flex items-center justify-center h-10 px-4 gap-1.5 rounded-xl bg-deep-rose/20 border border-deep-rose/30 text-rose-mist hover:text-platinum hover:bg-deep-rose hover:border-transparent transition-all cursor-pointer text-xs font-semibold"
-            title="Exit Projector Cast"
-          >
-            <X className="h-4 w-4" />
-            Exit Cast
-          </button>
+          {!isHero && (
+            <>
+              <div className="h-8 w-px bg-white/10 mx-2"></div>
+              <button
+                onClick={onClose}
+                className="flex items-center justify-center h-12 px-6 gap-2 rounded-full border border-white/20 text-white hover:bg-white hover:text-black transition-all cursor-pointer text-[11px] font-bold uppercase tracking-[0.2em]"
+              >
+                <X className="h-4 w-4" />
+                Exit
+              </button>
+            </>
+          )}
         </div>
       </header>
 
-      {/* CENTRAL IMMERSIVE PHOTO CANVAS */}
-      <main className="relative flex-1 z-10 flex items-center justify-center px-4 md:px-12 py-4">
-        <div className="relative max-h-[75vh] max-w-[85vw] flex flex-col justify-center items-center shadow-2xl rounded-2xl overflow-hidden border border-silver/10 bg-[#18171C]/50">
-          
-          {/* Main Photo */}
-          <img 
-            src={currentPhoto.url} 
-            alt="Venue Display" 
-            className="max-h-[70vh] object-contain select-none animate-fade-in"
-            style={{ animationDuration: "350ms" }}
+      <main className="relative flex-1 z-10 flex items-center justify-center px-4 md:px-24 py-8">
+        <div className="relative max-h-[70vh] w-full flex flex-col justify-center items-center shadow-2xl rounded-2xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-sm">
+
+          <img
+            src={currentPhoto.url}
+            alt="Venue Display"
+            className="max-h-[65vh] object-contain select-none animate-fade-in grayscale-[20%] opacity-90"
+            style={{ animationDuration: "500ms" }}
             referrerPolicy="no-referrer"
           />
 
-          {/* Reaction Bubbles layer */}
-          <div className="absolute right-4 bottom-4 flex items-center space-x-1 p-2 bg-[#000000]/60 backdrop-blur-md rounded-full border border-silver/10 text-[11px] font-sans font-medium text-platinum">
-            <div className="flex items-center space-x-1 px-1.5 text-rose-mist">
-              <Heart className="h-3.5 w-3.5 fill-[#F4C9C8]/10" />
+          <div className="absolute right-6 bottom-6 flex items-center gap-2 p-3 bg-black/60 backdrop-blur-xl rounded-2xl border border-white/10 text-[10px] font-medium text-white">
+            <div className="flex items-center gap-1.5 px-2 border-r border-white/10">
+              <Heart className="h-3.5 w-3.5 fill-white text-white" />
               <span>{currentPhoto.reactions.heart}</span>
             </div>
-            <div className="flex items-center space-x-1 px-1.5 text-sage-green">
-              <Flame className="h-3.5 w-3.5 fill-[#A7C3A8]/10" />
+            <div className="flex items-center gap-1.5 px-2 border-r border-white/10">
+              <Flame className="h-3.5 w-3.5 text-white" />
               <span>{currentPhoto.reactions.fire}</span>
             </div>
-            <div className="flex items-center space-x-1 px-1.5 text-steel-gray">
-              <Sparkles className="h-3.5 w-3.5" />
+            <div className="flex items-center gap-1.5 px-2">
+              <Sparkles className="h-3.5 w-3.5 text-white" />
               <span>{currentPhoto.reactions.sparkle}</span>
             </div>
           </div>
         </div>
       </main>
 
-      {/* FOOTER METADATA AND PROGRESS CAROUSEL */}
-      <footer className="relative z-10 bg-gradient-to-t from-[#000000]/90 to-transparent pt-12 pb-8 px-12">
-        <div className="max-w-5xl mx-auto flex flex-col md:flex-row md:items-end md:justify-between gap-6 border-b border-silver/10 pb-6">
-          
-          {/* Slide metadata text */}
-          <div className="space-y-2 max-w-xl">
-            <div className="flex items-center space-x-2">
-              <div className="h-7 w-7 rounded-full bg-deep-slate border border-[#8C929D]/20 flex items-center justify-center font-serif font-semibold text-xs text-platinum">
-                {currentPhoto.uploaderName.charAt(0).toUpperCase()}
+      <footer className="relative z-10 bg-gradient-to-t from-black to-transparent pt-16 pb-12 px-12">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-end md:justify-between gap-8 border-b border-white/10 pb-8">
+
+          <div className="space-y-4 max-w-2xl">
+            <div className="flex items-center gap-3">
+              <div className="h-8 w-8 rounded-full bg-white text-black flex items-center justify-center font-heading font-bold text-xs uppercase">
+                {currentPhoto.uploaderName.charAt(0)}
               </div>
-              <div className="font-sans">
-                <span className="text-platinum text-sm font-semibold tracking-wide">
+              <div className="font-body">
+                <span className="text-white text-sm font-semibold tracking-wide">
                   {currentPhoto.uploaderName}
                 </span>
-                <span className="text-stone text-[10px] uppercase font-mono ml-2">
-                  Uploaded at {currentPhoto.timestamp}
+                <span className="text-white/40 text-[11px] uppercase tracking-widest ml-3">
+                  {currentPhoto.timestamp}
                 </span>
               </div>
             </div>
 
             {currentPhoto.caption ? (
-              <p className="text-[#EDEEF2] text-lg md:text-xl font-serif font-medium leading-relaxed italic pr-12">
-                &quot;{currentPhoto.caption}&quot;
+              <p className="text-white text-2xl md:text-3xl font-heading italic leading-tight tracking-tight pr-12">
+                "{currentPhoto.caption}"
               </p>
             ) : (
-              <p className="text-stone text-sm italic font-serif">
+              <p className="text-white/40 text-sm italic font-heading">
                 Captured another perspective...
               </p>
             )}
           </div>
 
-          {/* Carousel tracker numbers */}
-          <div className="text-right font-sans">
-            <span className="text-stone font-mono text-[11px] uppercase tracking-wider block">Currently projecting</span>
-            <span className="text-platinum font-mono text-xl font-semibold block mt-0.5">
-              {currentIndex + 1} <span className="text-stone">/</span> {photos.length}
+          <div className="text-right">
+            <span className="text-white/30 text-[10px] uppercase tracking-[0.2em] block mb-2">Projecting</span>
+            <span className="text-white font-heading text-3xl italic block">
+              {currentIndex + 1} <span className="text-white/20 font-light mx-1">/</span> {photos.length}
             </span>
           </div>
         </div>
 
-        {/* TIMER PROGRESS LOADING BAR */}
-        <div className="max-w-5xl mx-auto mt-6">
-          <div className="h-[2px] w-full bg-zinc-800 rounded-full overflow-hidden">
-            <div 
-              className="h-full bg-[#94A8F3] transition-all duration-100 ease-linear rounded-full"
+        <div className="max-w-6xl mx-auto mt-8">
+          <div className="h-px w-full bg-white/10 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-white transition-all duration-100 ease-linear"
               style={{ width: `${progress}%` }}
             ></div>
           </div>
@@ -242,4 +220,6 @@ export default function TvSlideshow({ eventName, themeColor, photos, onClose }: 
 
     </div>
   );
+
+  return isHero ? content : content;
 }

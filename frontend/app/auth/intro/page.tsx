@@ -1,24 +1,22 @@
-// src/app/auth/intro/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
+import { ArrowRight, ArrowLeft } from "lucide-react";
 
 const SCENES = [
   {
-    type: "text-only",
-    text: "Once captures the film of your life through every eye that matters.",
+    text: "Capture the film of your life through every eye that matters.",
+    sub: "Raw emotion, gathered natively."
   },
   {
-    type: "mixed",
-    image: "/images/auth-image.png", // Replace with your showcase graphic
-    text: "Host unforgettable events, share digital galleries, and capture live memories.",
+    text: "Host unforgettable events and share digital galleries.",
+    sub: "High resolution, zero friction."
   },
   {
-    type: "text-only",
-    text: "Your seamless guest-sourced event visual accumulator. Raw joy, streamed natively.",
+    text: "The absolute standard for guest-sourced visual assets.",
+    sub: "Join the vanguard of event photography."
   },
 ];
 
@@ -27,14 +25,11 @@ export default function IntroPage() {
   const [currentScene, setCurrentScene] = useState(0);
   const [direction, setDirection] = useState(0);
 
-  // Auto-advance slides every 8 seconds
   useEffect(() => {
     const timer = setTimeout(() => {
-      // eslint-disable-next-line react-hooks/immutability
       handleNext();
     }, 8000);
     return () => clearTimeout(timer);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentScene]);
 
   const handleNext = () => {
@@ -60,40 +55,46 @@ export default function IntroPage() {
 
   const slideVariants = {
     enter: (dir: number) => ({
-      x: dir > 0 ? 80 : -80,
       opacity: 0,
+      filter: "blur(20px)",
+      scale: 1.1,
     }),
     center: {
-      x: 0,
       opacity: 1,
+      filter: "blur(0px)",
+      scale: 1,
     },
     exit: (dir: number) => ({
-      x: dir > 0 ? -80 : 80,
       opacity: 0,
+      filter: "blur(20px)",
+      scale: 0.9,
     }),
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center flex-col p-4 sm:p-6 bg-background text-foreground overflow-hidden select-none relative">
+    <div className="min-h-screen bg-black text-white font-body antialiased flex flex-col items-center justify-center relative overflow-hidden select-none">
       
-      <div className="absolute top-8 left-1/2 -translate-x-1/2 flex items-center justify-center gap-2 z-30">
-        <div className="w-5 h-5 relative flex items-center justify-center">
-          {/* Using a clean inline SVG Asterisk fallback if your logo image isn't loaded */}
-          <svg className="w-full h-full fill-current" viewBox="0 0 24 24">
-            <path d="M12 2l1.88 5.79h6.08l-4.92 3.58 1.88 5.79-4.92-3.58-4.92 3.58 1.88-5.79-4.92-3.58h6.08z"/>
-          </svg>
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.05),transparent)] pointer-events-none" />
+
+      <header className="absolute top-0 left-0 right-0 h-24 px-8 flex items-center justify-between z-50">
+        <div className="flex items-center gap-2 cursor-pointer font-heading">
+          <span className="font-bold text-xl tracking-tighter italic">glimpse</span>
         </div>
-        <span className="font-serif text-lg tracking-wide">Glimpse</span>
+        <button 
+          onClick={completeIntro}
+          className="text-[10px] uppercase tracking-[0.4em] text-white/30 hover:text-white transition-all font-bold"
+        >
+          Skip
+        </button>
+      </header>
+
+      {/* Invisible Tap/Click wrappers */}
+      <div className="absolute inset-0 flex z-40">
+        <div className="w-1/3 h-full cursor-pointer" onClick={handlePrev} />
+        <div className="w-2/3 h-full cursor-pointer" onClick={handleNext} />
       </div>
 
-      {/* Invisible Tap/Click wrappers to split navigation screen natively */}
-      <div className="absolute inset-0 flex z-10">
-        <div className="w-1/2 h-full cursor-w-resize" onClick={handlePrev} />
-        <div className="w-1/2 h-full cursor-e-resize" onClick={handleNext} />
-      </div>
-
-      {/* SLIDING CONTENT AREA */}
-      <div className="w-full max-w-4xl flex flex-col items-center justify-center min-h-[50vh] text-center px-4 relative z-20 pointer-events-none">
+      <main className="max-w-5xl w-full px-8 text-center relative z-10 pointer-events-none">
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
             key={currentScene}
@@ -102,52 +103,50 @@ export default function IntroPage() {
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.45, ease: [0.25, 1, 0.5, 1] }}
-            className="w-full flex flex-col items-center justify-center gap-6"
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="space-y-12"
           >
-            {/* Condition: Mixed Layout Render */}
-            {SCENES[currentScene].type === "mixed" && SCENES[currentScene].image && (
-              <div className="w-40 h-40 sm:w-48 sm:h-48 relative mb-2 rounded-xl overflow-hidden flex items-center justify-center">
-                <Image
-                  src={SCENES[currentScene].image!}
-                  alt="Feature Preview"
-                  fill
-                  className="object-cover p-2"
-                  priority
-                />
-              </div>
-            )}
-
-            {/* Typography Engine with tightened leading values */}
-            <h1 className="text-5xl md:text-6xl md:text-[54px] font-serif tracking-tight leading-[1.1] max-w-3xl">
-              {SCENES[currentScene].text}
-            </h1>
+            <div className="space-y-8">
+               <motion.span 
+                 initial={{ opacity: 0, y: 10 }}
+                 animate={{ opacity: 1, y: 0 }}
+                 className="text-[10px] uppercase tracking-[0.4em] text-white/20 block font-bold"
+               >
+                 Scenario 0{currentScene + 1}
+               </motion.span>
+               <h1 className="text-6xl md:text-[8vw] font-heading tracking-tighter leading-[0.85] italic">
+                 {SCENES[currentScene].text}
+               </h1>
+               <p className="text-xl md:text-3xl text-white/40 font-light italic leading-relaxed">
+                 {SCENES[currentScene].sub}
+               </p>
+            </div>
           </motion.div>
         </AnimatePresence>
-      </div>
+      </main>
 
-      <div className="absolute bottom-10 flex items-center gap-6 z-30">
-        <div className="flex gap-2">
+      <footer className="absolute bottom-0 left-0 right-0 h-32 px-12 flex items-center justify-between z-50">
+        <div className="flex gap-3">
           {SCENES.map((_, idx) => (
-            <button
+            <div
               key={idx}
-              onClick={() => {
-                setDirection(idx > currentScene ? 1 : -1);
-                setCurrentScene(idx);
-              }}
-              className={`w-1.5 h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
-                idx === currentScene ? "bg-foreground scale-125" : "bg-muted-foreground/30"
+              className={`h-1 rounded-full transition-all duration-1000 ${
+                idx === currentScene ? "w-12 bg-white" : "w-4 bg-white/10"
               }`}
             />
           ))}
         </div>
-        {/* <button
-          onClick={completeIntro}
-          className="text-xs font-sans tracking-widest uppercase opacity-60 hover:opacity-100 transition-opacity cursor-pointer"
+        
+        <motion.button
+          whileHover={{ x: 5 }}
+          onClick={handleNext}
+          className="group flex items-center gap-4 text-[10px] uppercase tracking-[0.4em] text-white font-bold pointer-events-auto"
         >
-          Skip
-        </button> */}
-      </div>
+          <span>Next</span>
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </motion.button>
+      </footer>
+
     </div>
   );
 }

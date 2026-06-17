@@ -3,11 +3,11 @@
 import React, { useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
-import Image from "next/image";
-import { Loader2, ShieldCheck, ShieldAlert } from "lucide-react";
+import { Loader2, ShieldCheck, ShieldAlert, ArrowLeft } from "lucide-react";
 import { AuthService } from "@/api/auth";
 import { useApiStatus } from "@/hooks/useApiStatus";
 import { toast } from "sonner";
+import Link from "next/link";
 
 function VerifyEmailContent() {
   const router = useRouter();
@@ -27,7 +27,7 @@ function VerifyEmailContent() {
     }
 
     if (!token) {
-      const fallbackMsg = "Invalid or missing verification token.";
+      const fallbackMsg = "Invalid or missing token.";
       setError(null, fallbackMsg);
       toast.error(fallbackMsg);
       return;
@@ -39,22 +39,18 @@ function VerifyEmailContent() {
     const performVerification = async () => {
       try {
         await AuthService.verifyEmail(token);
-        const successMsg =
-          "Email successfully verified! Redirecting to setup...";
-
+        const successMsg = "Email verified successfully.";
         setSuccess(successMsg);
         toast.success(successMsg);
-
         setTimeout(() => {
           router.push("/role-selection");
-        }, 2500);
+        }, 2000);
       } catch (err: unknown) {
         const errorResponse = err as { response?: { data?: { message?: string } }; message?: string };
         const errorMsg =
           errorResponse?.response?.data?.message ||
           errorResponse?.message ||
-          "Verification failed or token expired.";
-
+          "Verification failed.";
         setError(err, errorMsg);
         toast.error(errorMsg);
       }
@@ -67,77 +63,40 @@ function VerifyEmailContent() {
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.4, ease: "easeOut" }}
-      className="flex flex-col items-center max-w-sm w-full text-center"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className="w-full max-w-lg bg-white/[0.02] border border-white/5 p-10 md:p-16 rounded-[60px] shadow-2xl space-y-12 text-center"
     >
-      <div className="w-36 h-36 relative mb-6 flex items-center justify-center">
-        {isLoading && (
-          <div className="relative w-full h-full flex items-center justify-center">
-            <Image
-              src="/images/verify-mail.png"
-              alt="Verifying Status"
-              width={144}
-              height={144}
-              className="object-contain opacity-40 blur-[1px]"
-            />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <Loader2 className="h-8 w-8 animate-spin text-night opacity-80" />
-            </div>
-          </div>
-        )}
-
-        {success && (
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-          >
-            <ShieldCheck className="h-20 w-20 text-sage-green stroke-[1.25]" />
-          </motion.div>
-        )}
+      <div className="space-y-6">
+        <div className="mx-auto h-20 w-20 rounded-full border border-white/10 flex items-center justify-center text-white bg-white/5 shadow-2xl">
+          {isLoading && <Loader2 className="h-10 w-10 animate-spin opacity-20" />}
+          {success && <ShieldCheck className="h-10 w-10" />}
+          {error && <ShieldAlert className="h-10 w-10 opacity-50" />}
+        </div>
+        
+        <div className="space-y-4">
+           <span className="text-[10px] uppercase tracking-[0.4em] text-white/30 block font-bold">Security</span>
+           <h2 className="text-4xl md:text-5xl font-heading text-white tracking-tighter leading-none italic">
+              {isLoading && "Securing..."}
+              {success && "Verified."}
+              {error && "Invalid Link."}
+           </h2>
+           <p className="text-xl text-white/40 leading-relaxed font-light italic">
+              {isLoading && "Authenticating your access parameters. One moment."}
+              {success && "Your account is now active. Redirecting to setup."}
+              {error && "The verification token is missing or has expired."}
+           </p>
+        </div>
 
         {error && (
-          <motion.div
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-          >
-            <ShieldAlert className="h-20 w-20 text-error stroke-[1.25]" />
-          </motion.div>
-        )}
-      </div>
-
-      <h2 className="text-2xl sm:text-3xl font-serif tracking-tight leading-[1.1] mb-2 text-night">
-        {isLoading && "Securing account"}
-        {success && "Token approved"}
-        {error && "Verification failed"}
-      </h2>
-
-      <div className="min-h-[48px]">
-        {isLoading && (
-          <p className="text-ash text-sm font-light">
-            Authenticating your dynamic access token token security keys,
-            please sit tight...
-          </p>
-        )}
-
-        {success && (
-          <p className="text-forest text-sm font-medium">
-            Processing confirmation setup...
-          </p>
-        )}
-
-        {error && (
-          <div className="space-y-3">
-            <p className="text-error text-sm font-medium">
-              Unable to verify credentials
-            </p>
-            <button
-              onClick={() => router.push("/auth/login")}
-              className="text-xs font-sans font-medium uppercase tracking-widest text-ash hover:text-night underline transition-colors cursor-pointer"
+          <div className="pt-8 border-t border-white/5">
+            <Link
+              href="/auth/login"
+              className="text-[10px] uppercase tracking-[0.4em] text-white/30 hover:text-white transition-all font-bold"
             >
-              Go to Login
-            </button>
+              Back to Login
+            </Link>
           </div>
         )}
       </div>
@@ -147,10 +106,35 @@ function VerifyEmailContent() {
 
 export default function VerifyEmailPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center flex-col p-4 sm:p-6 bg-off-white text-night">
-      <Suspense fallback={<Loader2 className="h-8 w-8 animate-spin text-ash" />}>
-        <VerifyEmailContent />
-      </Suspense>
+    <div className="min-h-screen flex flex-col bg-background text-foreground antialiased font-body">
+      <header className="px-6 h-24 flex items-center justify-between fixed top-0 left-0 right-0 z-50">
+        <motion.div 
+          initial={{ y: -20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="max-w-6xl w-full mx-auto flex items-center justify-between bg-white/5 backdrop-blur-xl border border-white/5 px-8 h-16 rounded-full shadow-2xl"
+        >
+          <Link
+            href="/auth/login"
+            className="group inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.3em] text-white/30 hover:text-white transition-all cursor-pointer font-bold"
+          >
+            <ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" /> Back
+          </Link>
+
+          <div className="flex items-center gap-2 cursor-pointer font-heading">
+            <span className="font-bold text-xl tracking-tighter italic">glimpse</span>
+          </div>
+        </motion.div>
+      </header>
+
+      <main className="flex-1 flex items-center justify-center p-6 pt-32 pb-16">
+        <Suspense fallback={<Loader2 className="h-12 w-12 animate-spin text-white/20" />}>
+          <VerifyEmailContent />
+        </Suspense>
+      </main>
+
+      <footer className="h-24 flex items-center justify-center">
+         <p className="text-[9px] uppercase tracking-[0.4em] text-white/10 font-bold">© glimpse systems • secure session active</p>
+      </footer>
     </div>
   );
 }
