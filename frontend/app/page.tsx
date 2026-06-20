@@ -1,5 +1,8 @@
 "use client";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, Menu, Plus, ArrowUpRight } from "lucide-react";
 
 import { PRELOADED_THEMES, FAQS, Photo } from "@/lib/types";
 import IphoneMockupShowcase from "@/components/landing-page/IphoneMockupShowcase";
@@ -13,7 +16,7 @@ const fadeInUp = {
   initial: { opacity: 0, y: 30 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-100px" },
-  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
 };
 
 const staggerContainer = {
@@ -283,6 +286,7 @@ export default function App() {
                       eventName="Sarah & James' Dream Wedding"
                       themeColor={selectedThemeId}
                       photos={photos}
+                      onClose={() => {}}
                       isHero={true}
                     />
                     <div className="absolute bottom-8 left-8 z-10 flex items-center gap-3 px-5 py-2.5 bg-black/60 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl">
