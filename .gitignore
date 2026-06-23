@@ -8,3 +8,10 @@ node_modules/
 .next/
 .env.local
 venv/
+
+# Logs 
+logs/
+*.log
+
+# Prisma generated
+api/src/generated/prisma/

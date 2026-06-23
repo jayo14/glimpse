@@ -20,7 +20,9 @@ const options = {
     servers: [
       {
         url: `${process.env.API_URL}/api/v1`,
-        description: "Development server",
+        description: process.env.NODE_ENV === "production"
+          ? "Production server"
+          : "Development server",
       },
     ],
     components: {
@@ -34,7 +36,7 @@ const options = {
       },
     },
   },
-  apis: [path.join(__dirname, "*.yaml")], 
+  apis: [path.join(__dirname, "*.yaml")],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
