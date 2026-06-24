@@ -233,5 +233,3 @@ paths:
       responses:
         200:
           description: Logged out successfully.
-  
-  
