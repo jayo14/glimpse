@@ -1,0 +1,147 @@
+paths:
+  /event/create:
+    post:
+      summary: Create a new event
+      tags:
+        - Event
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+              properties:
+                title:
+                  type: string
+                  minLength: 3
+                description:
+                  type: string
+                location:
+                  type: string
+                guest_photo_limit:
+                  type: integer
+                  default: 15
+                event_start:
+                  type: string
+                  format: date-time
+                event_end:
+                  type: string
+                  format: date-time
+      responses:
+        201:
+          description: Event created successfully.
+        400:
+          description: Validation failed.
+        401:
+          description: Unauthorized.
+        500:
+          description: Internal server error.
+
+  /event/{eventId}/media-upload:
+    post:
+      summary: Request a signed URL for media upload
+      tags:
+        - Event
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: eventId
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: filename
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Upload URL generated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  uploadUrl:
+                    type: string
+                  storagePath:
+                    type: string
+        400:
+          description: Missing filename or invalid request.
+        401:
+          description: Unauthorized.
+        403:
+          description: Access denied or limit reached.
+        500:
+          description: Internal server error.
+
+  /event/{eventId}/collaborators:
+    post:
+      summary: Add a collaborator to an event
+      tags:
+        - Event
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: eventId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        200:
+          description: Collaborator added successfully.
+        400:
+          description: Validation failed.
+        401:
+          description: Unauthorized.
+        500:
+          description: Internal server error.
+
+  /event/verify-access:
+    post:
+      summary: Check gate access for an event
+      tags:
+        - Event
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - event_id
+              properties:
+                event_id:
+                  type: string
+                token:
+                  type: string
+                  description: Optional invite token.
+      responses:
+        200:
+          description: Access granted.
+        401:
+          description: Unauthorized.
+        403:
+          description: Access denied.

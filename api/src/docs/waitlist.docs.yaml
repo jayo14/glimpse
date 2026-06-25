@@ -1,0 +1,27 @@
+paths:
+  /waitlist/:
+    post:
+      summary: Add an email to the waitlist
+      tags:
+        - Waitlist
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        201:
+          description: Successfully added to waitlist.
+        400:
+          description: Email is required.
+        409:
+          description: Email already in waitlist.
+        500:
+          description: Internal server error.
