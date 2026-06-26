@@ -1,21 +1,17 @@
 "use client";
 
 import React, { useState } from "react";
-import { api } from "@/lib/axios";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { ArrowRight, Check, Lock, Zap, Gift } from "lucide-react";
+import { api } from "@/lib/axios";
+import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true },
-  transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] as const },
-};
-
-export function WaitlistSection() {
+const WaitlistSection = () => {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [waitlistCount, setWaitlistCount] = useState(847);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,7 +20,9 @@ export function WaitlistSection() {
     setIsLoading(true);
     try {
       await api.post("/waitlist", { email });
-      toast.success("You have been added to the waitlist!");
+      setIsSuccess(true);
+      setWaitlistCount(prev => prev + 1);
+      toast.success("You're on the waitlist! We'll be in touch soon.");
       setEmail("");
     } catch (error: any) {
       if (error.response?.status === 409) {
@@ -38,51 +36,136 @@ export function WaitlistSection() {
   };
 
   return (
-    <section className="py-48 px-6 border-t border-white/5 bg-black antialiased relative overflow-hidden">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.03),transparent)] pointer-events-none" />
-      <div className="max-w-4xl mx-auto text-center relative z-10">
-        <motion.div
-          variants={fadeInUp}
-          initial="initial"
-          whileInView="whileInView"
-          viewport={{ once: true }}
-          className="space-y-16"
-        >
-          <div className="space-y-8">
-             <motion.span 
-               initial={{ opacity: 0, scale: 0.9 }}
-               whileInView={{ opacity: 1, scale: 1 }}
-               className="text-[10px] uppercase tracking-[0.4em] text-white/30 block font-bold"
-             >
-               Priority Access
-             </motion.span>
-             <h2 className="text-6xl md:text-9xl font-heading text-white tracking-tighter italic leading-[0.8]">Join the <br /> vanguard.</h2>
-             <p className="text-2xl text-white/40 max-w-xl mx-auto font-light leading-relaxed italic">
-               Be the first to experience the future of event photography. We are onboarding architects and curators in limited batches.
-             </p>
-          </div>
+    <section id="waitlist" className="relative py-24 md:py-32 px-6 lg:px-10 overflow-hidden bg-[#f9f8f6]">
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#1a1a1a]/[.03] rounded-full blur-[100px] pointer-events-none" />
 
-          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-6 max-w-2xl mx-auto">
+      <div className="max-w-[640px] mx-auto relative z-10 text-center">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-6"
+        >
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white border border-black/[.06] text-[11px] font-semibold tracking-[.1em] uppercase text-[#78716c]">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inset-0 bg-[#1a1a1a]/30 rounded-full"></span>
+              <span className="absolute inset-0 bg-[#1a1a1a] rounded-full animate-ping" style={{ animationDuration: '2s' }}></span>
+            </span>
+            Early Access
+          </span>
+        </motion.div>
+
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.08 }}
+          className="font-fh text-4xl md:text-[3.6rem] font-normal tracking-[-.02em] leading-[1.05] mb-5"
+        >
+          Join the <em className="text-[#78716c] not-italic">waitlist</em>
+        </motion.h2>
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.16 }}
+          className="text-[16px] font-light text-[#78716c] leading-[1.7] max-w-md mx-auto mb-10"
+        >
+          Be among the first to experience instant face-matching for your events. We're onboarding new photographers every week.
+        </motion.p>
+
+        {/* Social proof count */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.24 }}
+          className="flex items-center justify-center gap-3 mb-10"
+        >
+          <div className="flex -space-x-2">
+            {[1, 2, 3, 4, 5].map((i) => (
+              <img
+                key={i}
+                src={`https://picsum.photos/seed/wl${i}/64/64.jpg`}
+                className="w-8 h-8 rounded-lg border-2 border-[#f9f8f6] object-cover"
+                alt="Waitlist member"
+              />
+            ))}
+          </div>
+          <div className="text-left">
+            <p className="text-[13px] font-medium text-[#1a1a1a]">{waitlistCount.toLocaleString()} people</p>
+            <p className="text-[11px] text-[#a09890]">on the waitlist</p>
+          </div>
+        </motion.div>
+
+        {!isSuccess ? (
+          <motion.form
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.32 }}
+            onSubmit={handleSubmit}
+            className="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto"
+          >
             <input
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email address"
-              className="flex-1 h-20 px-8 rounded-full border border-white/10 bg-white/[0.02] text-lg text-white font-body outline-none focus:border-white focus:bg-white/[0.05] transition-all placeholder:text-white/20 italic"
+              placeholder="your@email.com"
+              className={cn(
+                "bg-white border-1.5 border-black/[.08] rounded-2xl px-5 py-4 text-[15px] text-[#1a1a1a] outline-none w-full focus:border-black/20 focus:ring-4 focus:ring-black/[.04] transition-all placeholder:text-black/25",
+                isLoading && "opacity-50 pointer-events-none"
+              )}
               required
             />
-            <motion.button
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.98 }}
+            <button
               type="submit"
               disabled={isLoading}
-              className="h-20 px-12 bg-white text-black text-[13px] uppercase tracking-[0.4em] rounded-full hover:bg-white/90 transition-all font-bold cursor-pointer shadow-[0_20px_50px_rgba(255,255,255,0.1)]"
+              className="bg-[#1a1a1a] text-white rounded-2xl px-8 py-4 font-semibold text-[15px] hover:bg-[#333] transition-all whitespace-nowrap flex items-center justify-center gap-2 hover:translate-y-[-1px] hover:shadow-lg"
             >
-              {isLoading ? "Transmitting..." : "Get Access"}
-            </motion.button>
-          </form>
+              <span>{isLoading ? "Joining..." : "Join Waitlist"}</span>
+              {!isLoading && <ArrowRight className="w-4 h-4" />}
+            </button>
+          </motion.form>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="inline-flex items-center gap-3 px-6 py-4 rounded-[28px] bg-[#1a1a1a] text-white"
+          >
+            <div className="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center">
+              <Check className="w-4 h-4 animate-check-pop" />
+            </div>
+            <div className="text-left">
+              <p className="text-[14px] font-semibold">You're on the list!</p>
+              <p className="text-[12px] text-white/50">We'll reach out when it's your turn.</p>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Trust signals */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-8"
+        >
+          {[
+            { icon: <Lock className="w-3.5 h-3.5" />, text: "No spam, ever" },
+            { icon: <Zap className="w-3.5 h-3.5" />, text: "Priority access" },
+            { icon: <Gift className="w-3.5 h-3.5" />, text: "Free to start" },
+          ].map((signal, idx) => (
+            <div key={idx} className="flex items-center gap-1.5 text-[12px] text-[#a09890]">
+              {signal.icon}
+              {signal.text}
+            </div>
+          ))}
         </motion.div>
       </div>
     </section>
   );
-}
+};
+
+export default WaitlistSection;
