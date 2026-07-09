@@ -4,20 +4,20 @@ import { ThemeProvider } from "@/components/theme/ThemeProvider";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
-  title: "Glimpse — Capture Every Moment",
+  title: "Glimpse — Find every photo you're in",
   description:
-    "Guests scan a QR code. No app. No password. No typing. Photos appear live on screen in about one second.",
+    "The event photo app that finds you. Scan a QR code, take a 10-second selfie, and every photo you're in lands in your own private gallery — while the night is still happening.",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark antialiased">
+    <html lang="en" suppressHydrationWarning className="antialiased">
       <body className="min-h-full flex flex-col bg-background text-foreground antialiased font-body">
         <ThemeProvider
           attribute="class"
-          defaultTheme="dark"
+          defaultTheme="light"
           enableSystem={false}
           disableTransitionOnChange
         >

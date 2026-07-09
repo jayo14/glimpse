@@ -192,7 +192,7 @@ export default function TvSlideshow({ eventName, themeColor, photos, onClose, is
 
             {currentPhoto.caption ? (
               <p className="text-white text-2xl md:text-3xl font-heading italic leading-tight tracking-tight pr-12">
-                "{currentPhoto.caption}"
+                &ldquo;{currentPhoto.caption}&rdquo;
               </p>
             ) : (
               <p className="text-white/40 text-sm italic font-heading">

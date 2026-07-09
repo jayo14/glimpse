@@ -7,33 +7,33 @@ import { Iphone15Pro } from "../magicui/iphone-15-pro";
 import { toast } from "sonner";
 
 const Hero = () => {
-  const [progress, setProgress] = useState(68);
+  const [progress, setProgress] = useState(72);
   const { scrollY } = useScroll();
-  const yPhone = useTransform(scrollY, [0, 500], [0, 100]);
-  const yGlow = useTransform(scrollY, [0, 500], [0, -50]);
+  const yPhone = useTransform(scrollY, [0, 600], [0, 70]);
+  const yGlow = useTransform(scrollY, [0, 600], [0, -40]);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setProgress((prev) => (prev >= 93 ? 68 : prev + 0.2));
+      setProgress((prev) => (prev >= 96 ? 72 : prev + 0.2));
     }, 100);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <section className="pt-28 pb-8 px-6 lg:px-10 relative overflow-hidden">
+    <section className="pt-32 pb-10 px-6 lg:px-10 relative overflow-hidden">
       <motion.div
         style={{ y: yGlow }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#1a1a1a]/[.015] rounded-full blur-[80px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[620px] h-[620px] bg-[#1c1b19]/[.025] rounded-full blur-[90px] pointer-events-none"
       />
-      <div className="max-w-[82rem] mx-auto text-center relative z-10">
+      <div className="shell text-center relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.1 }}
         >
-          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white border border-black/6 text-[11px] font-semibold tracking-[.1em] uppercase text-[#78716c] mb-7">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#1a1a1a]"></span>
-            AI-Powered Event Photos
+          <span className="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white border border-[#1c1b19]/[.08] text-[11px] font-semibold tracking-[.1em] uppercase text-[#57534e] mb-7">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#1c1b19]"></span>
+            Event photos, finally personal
           </span>
         </motion.div>
 
@@ -41,42 +41,42 @@ const Hero = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.25 }}
-          className="font-fh text-[clamp(2.8rem,6.5vw,5.2rem)] font-normal leading-[.92] tracking-[-.02em] mb-6 max-w-3xl mx-auto"
+          className="font-fh text-[clamp(2.8rem,6.5vw,5.4rem)] font-normal leading-[.95] tracking-[-.02em] mb-6 max-w-3xl mx-auto text-[#1c1b19]"
         >
-          Find your moments<br />
-          <em className="text-[#78716c] not-italic">in a flash.</em>
+          The photos of you,<br />
+          <em className="text-[#78716c] not-italic">found.</em>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="text-[17px] font-light text-[#78716c] leading-[1.7] max-w-xl mx-auto mb-10"
+          className="text-[17px] font-light text-[#57534e] leading-[1.7] max-w-xl mx-auto mb-10"
         >
-          An AI-powered event photo platform that matches faces instantly so attendees can find their photos in seconds.
+          Glimpse sends every picture you&rsquo;re in straight to your phone — while the night is still happening. No app to download, no album to dig through, no 40 minutes of scrolling strangers&rsquo; faces.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.55 }}
-          className="flex items-center justify-center gap-3 mb-20"
+          className="flex items-center justify-center gap-3 mb-20 flex-wrap"
         >
-          <a href="#waitlist" className="bp">
-            Join the Waitlist <ArrowRight className="w-4 h-4" />
+          <a href="#waitlist" className="btn-primary">
+            Get early access <ArrowRight className="w-4 h-4" />
           </a>
-          <button onClick={() => toast.info("Demo video coming soon")} className="bs">
-            Watch Demo
-          </button>
+          <a href="#how" className="btn-ghost">
+            See how it works
+          </a>
         </motion.div>
 
         <motion.div style={{ y: yPhone }} className="relative flex justify-center">
-          <Iphone15Pro width={300} height={648} className="iphone shadow-2xl">
+          <Iphone15Pro width={300} height={648} className="shadow-2xl">
             <div className="absolute inset-0">
               <img
-                src="https://picsum.photos/seed/glimpse-event-hall/600/1300.jpg"
+                src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80"
                 className="w-full h-full object-cover"
-                alt="Event"
+                alt="Guests enjoying an event"
               />
               <div className="absolute inset-0 bg-black/25" />
 
@@ -109,11 +109,11 @@ const Hero = () => {
                 <div className="bg-white/10 backdrop-blur-xl rounded-[28px] p-4 border border-white/10">
                   <div className="flex items-center justify-between mb-3">
                     <div>
-                      <p className="text-[10px] tracking-[.1em] uppercase text-white/50 mb-0.5">Processing</p>
-                      <p className="text-[15px] font-semibold text-white">247 faces detected</p>
+                      <p className="text-[10px] tracking-[.1em] uppercase text-white/60 mb-0.5">Finding you</p>
+                      <p className="text-[15px] font-semibold text-white">14 photos ready</p>
                     </div>
                     <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center">
-                      <ScanFace className="w-4 h-4 text-white/60 animate-pulse" />
+                      <ScanFace className="w-4 h-4 text-white/70 animate-pulse" />
                     </div>
                   </div>
                   <div className="w-full h-[3px] bg-white/10 rounded-full overflow-hidden">
@@ -123,8 +123,8 @@ const Hero = () => {
                     />
                   </div>
                   <div className="flex justify-between mt-1.5">
-                    <span className="text-[10px] text-white/30 font-medium">168 indexed</span>
-                    <span className="text-[10px] text-white/30 font-medium">247 total</span>
+                    <span className="text-[10px] text-white/40 font-medium">Matched to your selfie</span>
+                    <span className="text-[10px] text-white/40 font-medium">{Math.round(progress)}%</span>
                   </div>
                 </div>
               </div>
