@@ -1,6 +1,8 @@
 workflows:
   # ─────────────────────────────────────────────────────────────────────────────
-  # Android debug build – runs on every push to main / feature branches
+  # Android Debug (Option 3: emulator / quick feedback)
+  # Produces an unsigned debug APK that installs straight onto an emulator or a
+  # rooted/debuggable physical device. No signing required.
   # ─────────────────────────────────────────────────────────────────────────────
   android-debug:
     name: Glimpse Mobile – Android Debug
@@ -45,6 +47,7 @@ workflows:
       - name: Run unit & widget tests
         script: flutter test --no-pub
 
+      # Option 3 (Android): a debug APK runs on the emulator without any signing.
       - name: Build Android APK (debug)
         script: flutter build apk --debug
 
@@ -60,7 +63,57 @@ workflows:
           failure: true
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # Android release build – produces a signed AAB for Play Store distribution
+  # Android Unsigned APK (Option 2: deliberately skip signing)
+  # Mirrors Marijan's "Option 2" for iOS. Use this when you plan to sign the
+  # artifact later in your own pipeline with a separate enterprise utility.
+  # Runs only when triggered manually.
+  # ─────────────────────────────────────────────────────────────────────────────
+  android-unsigned:
+    name: Glimpse Mobile – Android Unsigned APK
+    max_build_duration: 60
+    instance_type: mac_mini_m2
+
+    environment:
+      flutter: 3.44.4
+      java: 17
+      groups:
+        - glimpse_env               # Codemagic → Teams → Environment variable group
+
+    working_directory: mobile
+
+    scripts:
+      - name: Write .env file
+        script: |
+          cat > .env <<EOF
+          SUPABASE_URL=$SUPABASE_URL
+          SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
+          EOF
+
+      - name: Get Flutter dependencies
+        script: flutter pub get
+
+      - name: Run static analysis
+        script: flutter analyze --no-pub
+
+      # Option 2 (Android): --no-sign strips the signing step so you can sign later.
+      - name: Build unsigned Android APK (release)
+        script: flutter build apk --release --no-sign
+
+    artifacts:
+      - mobile/build/app/outputs/flutter-apk/app-release.apk
+
+    publishing:
+      email:
+        recipients:
+          - team@glimpse.app
+        notify:
+          success: true
+          failure: true
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # Android Release (Option 1: distributable, signed)
+  # Produces a signed AAB for Play Store distribution. An APK is also generated
+  # for direct QA installs. Triggered on version tags (v*).
   # ─────────────────────────────────────────────────────────────────────────────
   android-release:
     name: Glimpse Mobile – Android Release
@@ -101,15 +154,21 @@ workflows:
       - name: Run unit & widget tests
         script: flutter test --no-pub
 
-      - name: Build Android App Bundle (release)
+      # Option 1 (Android): signed release build. AAB goes to Play Store, APK for QA.
+      - name: Build Android App Bundle + APK (release)
         script: |
           flutter build appbundle \
+            --release \
+            --build-name="${FCI_TAG#v}" \
+            --build-number="$BUILD_NUMBER"
+          flutter build apk \
             --release \
             --build-name="${FCI_TAG#v}" \
             --build-number="$BUILD_NUMBER"
 
     artifacts:
       - mobile/build/app/outputs/bundle/release/app-release.aab
+      - mobile/build/app/outputs/flutter-apk/app-release.apk
       - mobile/build/app/outputs/mapping/release/mapping.txt
 
     publishing:
@@ -125,10 +184,13 @@ workflows:
       #   track: internal
 
   # ─────────────────────────────────────────────────────────────────────────────
-  # iOS debug build (requires a Mac instance and Apple Developer account)
+  # iOS Debug bundle (what John originally ran)
+  # `flutter build ios --debug --no-codesign` compiles into a raw iOS app bundle
+  # (Runner.app). There is NO .ipa here — the artifact is the Runner.app folder at
+  # build/ios/iphoneos/Runner.app. This is what you got; it just isn't an .ipa.
   # ─────────────────────────────────────────────────────────────────────────────
   ios-debug:
-    name: Glimpse Mobile – iOS Debug
+    name: Glimpse Mobile – iOS Debug Bundle
     max_build_duration: 90
     instance_type: mac_mini_m2
 
@@ -166,7 +228,8 @@ workflows:
       - name: Install CocoaPods
         script: find . -name "Podfile" -execdir pod install \;
 
-      - name: Build iOS (no codesign)
+      # John's original command. Produces build/ios/iphoneos/Runner.app (no .ipa).
+      - name: Build iOS (no codesign, debug)
         script: |
           flutter build ios \
             --debug \
@@ -174,6 +237,168 @@ workflows:
 
     artifacts:
       - mobile/build/ios/iphoneos/Runner.app
+
+    publishing:
+      email:
+        recipients:
+          - team@glimpse.app
+        notify:
+          success: true
+          failure: true
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # iOS Simulator (Option 3: run on a Simulator / automated UI tests)
+  # Simulators do not require code signing at all. Outputs a simulator-ready
+  # Runner.app under build/ios/simulator/. Runs only when triggered manually.
+  # ─────────────────────────────────────────────────────────────────────────────
+  ios-simulator:
+    name: Glimpse Mobile – iOS Simulator
+    max_build_duration: 90
+    instance_type: mac_mini_m2
+
+    environment:
+      flutter: 3.44.4
+      xcode: latest
+      cocoapods: default
+      groups:
+        - glimpse_env
+
+    working_directory: mobile
+
+    scripts:
+      - name: Write .env file
+        script: |
+          cat > .env <<EOF
+          SUPABASE_URL=$SUPABASE_URL
+          SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
+          EOF
+
+      - name: Get Flutter dependencies
+        script: flutter pub get
+
+      - name: Install CocoaPods
+        script: find . -name "Podfile" -execdir pod install \;
+
+      # Option 3 (iOS): simulator build — no codesign needed.
+      - name: Build iOS (simulator)
+        script: flutter build ios --simulator
+
+    artifacts:
+      - mobile/build/ios/simulator/Runner.app
+
+    publishing:
+      email:
+        recipients:
+          - team@glimpse.app
+        notify:
+          success: true
+          failure: true
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # iOS Unsigned IPA (Option 2: deliberately skip signing)
+  # Flutter cannot emit an unsigned .ipa natively, so we wrap the already-built
+  # Runner.app in a Payload/ directory and zip it. Use this when you plan to sign
+  # the IPA later in your own pipeline. Runs only when triggered manually.
+  # ─────────────────────────────────────────────────────────────────────────────
+  ios-unsigned:
+    name: Glimpse Mobile – iOS Unsigned IPA
+    max_build_duration: 90
+    instance_type: mac_mini_m2
+
+    environment:
+      flutter: 3.44.4
+      xcode: latest
+      cocoapods: default
+      groups:
+        - glimpse_env
+
+    working_directory: mobile
+
+    scripts:
+      - name: Write .env file
+        script: |
+          cat > .env <<EOF
+          SUPABASE_URL=$SUPABASE_URL
+          SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
+          EOF
+
+      - name: Get Flutter dependencies
+        script: flutter pub get
+
+      - name: Install CocoaPods
+        script: find . -name "Podfile" -execdir pod install \;
+
+      # Option 2 (iOS): build the app bundle without signing, then package an .ipa.
+      - name: Build iOS (no codesign, release) + wrap unsigned .ipa
+        script: |
+          flutter build ios --release --no-codesign
+
+          mkdir -p build/ios/iphoneos/Payload
+          cp -r build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload/
+          cd build/ios/iphoneos
+          zip -r Runner.ipa Payload/
+          cd "$CM_BUILD_DIR"
+
+    artifacts:
+      - mobile/build/ios/iphoneos/Runner.ipa
+
+    publishing:
+      email:
+        recipients:
+          - team@glimpse.app
+        notify:
+          success: true
+          failure: true
+
+  # ─────────────────────────────────────────────────────────────────────────────
+  # iOS Release IPA (Option 1: distributable, signed — Recommended)
+  # Produces a real, code-signed .ipa for QA / TestFlight / Firebase App
+  # Distribution. Requires iOS code signing configured in Codemagic. Runs only
+  # when triggered manually (or wire up a branch/tag trigger below).
+  # ─────────────────────────────────────────────────────────────────────────────
+  ios-release:
+    name: Glimpse Mobile – iOS Release IPA
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+
+    environment:
+      flutter: 3.44.4
+      xcode: latest
+      cocoapods: default
+      ios_signing:
+        distribution_type: app_store  # or "ad_hoc" / "development"
+        bundle_identifier: com.glimpse.app
+      groups:
+        - glimpse_env
+
+    working_directory: mobile
+
+    scripts:
+      - name: Write .env file
+        script: |
+          cat > .env <<EOF
+          SUPABASE_URL=$SUPABASE_URL
+          SUPABASE_ANON_KEY=$SUPABASE_ANON_KEY
+          EOF
+
+      - name: Get Flutter dependencies
+        script: flutter pub get
+
+      - name: Run static analysis
+        script: flutter analyze --no-pub
+
+      - name: Install CocoaPods
+        script: find . -name "Podfile" -execdir pod install \;
+
+      # Option 1 (iOS): native, signed .ipa for distribution.
+      - name: Build iOS IPA (release)
+        script: |
+          flutter build ipa --release \
+            --build-name="${FCI_TAG#v}" \
+            --build-number="$BUILD_NUMBER"
+
+    artifacts:
+      - mobile/build/ios/ipa/Runner.ipa
 
     publishing:
       email:
