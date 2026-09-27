@@ -1,111 +1,169 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Link from "next/link";
-import { ScanFace, Send, Camera, User, Globe } from "lucide-react";
+import Icon from "@/components/ui/Icon";
 
 const Footer = () => {
-  const socialLinks = [
-    { icon: <Globe className="w-4 h-4" />, href: "#" },
-    { icon: <Camera className="w-4 h-4" />, href: "#" },
-    { icon: <User className="w-4 h-4" />, href: "#" },
-    { icon: <Send className="w-4 h-4" />, href: "#" },
-  ];
+  const [email, setEmail] = useState("");
+  const [subscribed, setSubscribed] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email.trim()) {
+      setSubscribed(true);
+    }
+  };
 
   return (
-    <footer className="bg-[#111111] px-6 lg:px-10 pt-16 md:pt-20 pb-6">
-      <div className="shell">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 mb-16">
-          <div className="lg:pr-6">
-            <Link href="/" className="flex items-center gap-2.5 mb-5">
-              <span className="w-8 h-8 rounded-[10px] bg-white/10 flex items-center justify-center">
-                <ScanFace className="w-4 h-4 text-white/70" />
-              </span>
-              <span className="text-[16px] font-semibold text-white tracking-tight">Glimpse</span>
-            </Link>
-            <p className="text-[13px] text-white/55 font-light leading-[1.7] mb-6">
-              The event photo app that finds you. One selfie, and every picture you&rsquo;re in lands in your own private gallery.
+    <footer id="contact" className="bg-[#09090b] text-white pt-16 sm:pt-20 pb-12 px-5 sm:px-8 border-t border-zinc-900 font-sans">
+      <div className="max-w-7xl mx-auto">
+        {/* Top Newsletter / Stay Updated Bar */}
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 pb-14 border-b border-zinc-800/80">
+          <div className="max-w-md">
+            <h3 className="font-heading text-2xl sm:text-3xl font-normal tracking-tight text-white mb-2">
+              Stay Updated
+            </h3>
+            <p className="text-sm text-zinc-400 font-normal">
+              Get the latest updates on AI photo matching, new feature releases, and event tech tips.
             </p>
-            <div className="flex items-center gap-4">
-              {socialLinks.map((social, idx) => (
-                <Link
-                  key={idx}
-                  href={social.href}
-                  className="w-9 h-9 rounded-[10px] bg-white/[.06] border border-white/[.08] flex items-center justify-center text-white/50 hover:text-white/80 hover:bg-white/[.1] transition-all"
+          </div>
+
+          {/* Subscribe Form */}
+          <div className="w-full lg:max-w-md">
+            {subscribed ? (
+              <div className="inline-flex items-center gap-2 text-sm text-zinc-300 bg-zinc-900/80 border border-zinc-800 px-4 py-3 rounded-full">
+                <Icon name="check_circle" className="text-base text-white fill" />
+                <span>Thank you! You are on our VIP dispatch list.</span>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="relative flex items-center">
+                <input
+                  type="email"
+                  required
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full bg-zinc-900/90 text-white placeholder-zinc-500 text-xs sm:text-sm rounded-full pl-5 pr-32 py-3.5 border border-zinc-800 focus:outline-hidden focus:border-zinc-500 transition-colors"
+                />
+                <button
+                  type="submit"
+                  className="absolute right-1.5 inline-flex items-center gap-1.5 px-4 sm:px-5 py-2 rounded-full bg-white hover:bg-zinc-200 text-zinc-950 font-semibold text-xs transition-all shadow-xs"
                 >
-                  {social.icon}
-                </Link>
-              ))}
+                  <span>Subscribe</span>
+                  <Icon name="arrow_forward" className="text-xs" />
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+
+        {/* Bottom Columns & Links */}
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 lg:gap-12 py-14">
+          {/* Brand Column */}
+          <div className="col-span-2 space-y-4">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-xl bg-white text-zinc-950 flex items-center justify-center shadow-xs">
+                <Icon name="auto_awesome" className="text-base text-zinc-950" />
+              </div>
+              <span className="text-xl font-bold tracking-tight text-white font-sans">
+                Glimpse
+              </span>
+            </div>
+            <p className="text-xs sm:text-sm text-zinc-400 max-w-sm leading-relaxed font-normal">
+              AI-powered event media platform for photographers, hosts, and guests. Automating photo discovery and real-time delivery with zero friction.
+            </p>
+            <div className="text-xs text-zinc-500 pt-2 font-normal">
+              © {new Date().getFullYear()} Glimpse Technologies Inc. All rights reserved.
             </div>
           </div>
 
+          {/* Column 1: Product */}
           <div>
-            <p className="text-[11px] font-semibold tracking-[.1em] uppercase text-white/40 mb-5">Company</p>
-            <ul className="space-y-3">
-              {["Home", "About Us", "Blog", "Careers", "Contact"].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="text-white/55 hover:text-white/85 text-[13px] transition-all">
-                    {item}
-                  </Link>
-                </li>
-              ))}
+            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-300 mb-4">
+              Product
+            </h4>
+            <ul className="space-y-2.5 text-xs sm:text-sm text-zinc-400 font-normal">
+              <li>
+                <Link href="#features" className="hover:text-white transition-colors">
+                  Features
+                </Link>
+              </li>
+              <li>
+                <Link href="#screenshots" className="hover:text-white transition-colors">
+                  App Screens
+                </Link>
+              </li>
+              <li>
+                <Link href="#pricing" className="hover:text-white transition-colors">
+                  Pricing Plans
+                </Link>
+              </li>
+              <li>
+                <Link href="#download" className="hover:text-white transition-colors">
+                  Live Wall Slideshow
+                </Link>
+              </li>
             </ul>
           </div>
 
+          {/* Column 2: Company */}
           <div>
-            <p className="text-[11px] font-semibold tracking-[.1em] uppercase text-white/40 mb-5">Product</p>
-            <ul className="space-y-3">
-              {["How It Works", "Pricing", "API Docs", "Changelog", "Integrations"].map((item) => (
-                <li key={item}>
-                  <Link href="#" className="text-white/55 hover:text-white/85 text-[13px] transition-all">
-                    {item}
-                  </Link>
-                </li>
-              ))}
+            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-300 mb-4">
+              Company
+            </h4>
+            <ul className="space-y-2.5 text-xs sm:text-sm text-zinc-400 font-normal">
+              <li>
+                <Link href="#" className="hover:text-white transition-colors">
+                  About
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-white transition-colors">
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-white transition-colors">
+                  Press & Media
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-white transition-colors">
+                  Careers
+                </Link>
+              </li>
             </ul>
           </div>
 
+          {/* Column 3: Contact & Legal */}
           <div>
-            <p className="text-[11px] font-semibold tracking-[.1em] uppercase text-white/40 mb-5">Newsletter</p>
-            <p className="text-[13px] text-white/55 font-light leading-[1.6] mb-5">
-              Event photography tips and product updates. No spam, ever.
-            </p>
-            <form onSubmit={(e) => e.preventDefault()} className="flex gap-2">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="bg-white/5 border border-white/10 rounded-2xl px-4 py-2 text-white text-sm outline-none w-full focus:border-white/25 transition-all placeholder:text-white/40"
-                required
-              />
-              <button
-                type="submit"
-                className="bg-white text-[#1c1b19] rounded-2xl px-4 py-2 text-sm font-semibold hover:bg-white/90 transition-all"
-              >
-                Subscribe
-              </button>
-            </form>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-zinc-300 mb-4">
+              Help & Contact
+            </h4>
+            <ul className="space-y-2.5 text-xs sm:text-sm text-zinc-400 font-normal">
+              <li>
+                <Link href="#faq" className="hover:text-white transition-colors">
+                  Support & FAQ
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="hover:text-white transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+              <li className="text-zinc-500 pt-1 text-xs">
+                hello@glimpse.app <br />
+                San Francisco, CA
+              </li>
+            </ul>
           </div>
         </div>
-      </div>
-
-      <div className="border-t border-white/[.08] pt-8 pb-2 flex flex-col items-center gap-6">
-        <span
-          className="text-center font-bold text-[clamp(3rem,8vw,5.5rem)] tracking-[-.04em] leading-none text-transparent select-none transition-all"
-          style={{ WebkitTextStroke: "1.5px rgba(255,255,255,0.3)" }}
-        >
-          Glimpse
-        </span>
-        <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-          {["Privacy Policy", "Terms of Service", "GDPR", "Security"].map((item, idx) => (
-            <React.Fragment key={item}>
-              <Link href="#" className="text-white/45 hover:text-white/75 text-[12px] transition-all">
-                {item}
-              </Link>
-              {idx < 3 && <span className="text-white/15">·</span>}
-            </React.Fragment>
-          ))}
-        </div>
-        <p className="text-[12px] text-white/40">© 2025 Glimpse Inc. All rights reserved.</p>
       </div>
     </footer>
   );
