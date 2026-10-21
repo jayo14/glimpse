@@ -8,7 +8,7 @@ AI-powered event media platform for photographers, hosts, and guests. Glimpse au
 
 - [Product Requirements Document (PRD)](PRD.md)
 - [Design System & Branding (DESIGN.md)](DESIGN.md)
-- [Figma Link:](https://www.figma.com/design/FbOrLIFy2Asr60nvCOXmTF/Design-Glimpse-Mobile-Screens)
+- [Figma Link](https://www.figma.com/design/yBbhapBRagJhCJXjzimJYG/Glimpse-App?node-id=0-1&t=qQ1epiPwRlDmaAC6-1)
 
 ---
 
