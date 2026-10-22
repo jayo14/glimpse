@@ -21,7 +21,7 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
     html.style.scrollBehavior = "auto";
     ScrollTrigger.config({ ignoreMobileResize: true });
 
-    let matchTimer: any;
+    let matchTimer: ReturnType<typeof setTimeout> | null;
     let stopped = false;
     let glowRaf: number | null = null;
     let glowObs: IntersectionObserver | null = null;
@@ -29,12 +29,6 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
     /* --- A. Core behaviours --- */
     const tiles = [...root.querySelectorAll<HTMLElement>(".t")];
     const cnt = root.querySelector<HTMLBRElement>("#cnt");
-    const freeze = () => {
-      if (stopped) return;
-      stopped = true;
-      hits.forEach((i) => tiles[i].classList.add("hit2"));
-      if (cnt) cnt.textContent = "5";
-    };
     function run() {
       if (stopped) return;
       tiles.forEach((t) => t.classList.remove("hit"));
@@ -166,7 +160,7 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
             anticipatePin: 1,
             scrub: 0.7,
             invalidateOnRefresh: true,
-            onUpdate: (s: any) => s.progress > 0 && freezeStory(),
+            onUpdate: (s: unknown) => (s as { progress: number }).progress > 0 && freezeStory(),
           },
         });
         L.to(".tiles", { backgroundColor: "rgba(10,10,10,0)", duration: 1 })
@@ -360,9 +354,9 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
         /* nav auto-hide */
         ScrollTrigger.create({
           start: 100,
-          onUpdate: (s: any) =>
+          onUpdate: (s: unknown) =>
             gsap.to("nav", {
-              yPercent: s.direction === 1 ? -130 : 0,
+              yPercent: (s as { direction: number }).direction === 1 ? -130 : 0,
               duration: 0.45,
               ease: "power3.out",
               overwrite: true,
@@ -389,7 +383,7 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
         fit();
         (document.fonts ? document.fonts.ready : Promise.resolve()).then(fit);
         const play = () => {
-          if (glowRaf !== null) cancelAnimationFrame(glowRaf);
+      if (glowRaf !== null) cancelAnimationFrame(glowRaf as number);
           if (!bb) return;
           const w = bb.width;
           const band = w * 0.32;
@@ -433,9 +427,9 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
 
     return () => {
       stopped = true;
-      clearTimeout(matchTimer);
+      if (matchTimer) clearTimeout(matchTimer);
       io.disconnect();
-      if (glowRaf !== null) cancelAnimationFrame(glowRaf);
+      if (glowRaf) cancelAnimationFrame(glowRaf as number);
       if (glowObs) glowObs.disconnect();
       if (ctx) ctx.revert();
       html.style.scrollBehavior = prevScrollBehavior;

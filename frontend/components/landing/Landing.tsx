@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { Nav } from "./NavHeroStatement";
 import { Hero } from "./NavHeroStatement";
 import { Statement } from "./NavHeroStatement";

@@ -1,10 +1,10 @@
 const r = (i: number, n: number) => {
-  let x = Math.sin(i * 97.1 + n * 13.7) * 1e4;
+  const x = Math.sin(i * 97.1 + n * 13.7) * 1e4;
   return x - Math.floor(x);
 };
 
 const q = (w: number, n: number) => {
-  let x = Math.sin(w * 57.3 + n * 7.9) * 1e4;
+  const x = Math.sin(w * 57.3 + n * 7.9) * 1e4;
   return x - Math.floor(x);
 };
 

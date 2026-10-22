@@ -1,8 +1,5 @@
 import { art, qr } from "@/lib/art";
-import Link from "next/link";
 
-const APPLE = "M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.9-3.5.9s-1.8-.8-3-.8C6.9 7.4 5.4 8.300 4.600 9.700c-1.700 2.900-.4 7.200 1.200 9.500.8 1.100 1.700 2.400 2.900 2.300 1.200 0 1.600-.7 3-.7s1.800.7 3 .7c1.300 0 2.100-1.100 2.800-2.300.9-1.300 1.300-2.600 1.300-2.700 0 0-2.400-.9-2.400-3.900zM14.200 5.700c.6-.8 1.100-1.800.9-2.900-.9 0-2 .6-2.700 1.400-.6.700-1.100 1.800-1 2.800 1 .1 2-.5 2.800-1.300z";
-const PLAY = "M4 2.800c-.3.300-.5.800-.5 1.400v15.600c0 .6.2 1.100.5 1.400L12.600 12 4 2.800zM14 13.400l2.600 2.600-10.800 6.100 8.200-8.700zM16.600 8 14 10.600 5.800 1.900 16.600 8zM21 10.900c.6.400 1 .9 1 1.100s-.4.800-1 1.100l-2.700 1.500L15.400 12l2.900-2.600L21 10.900z";
 
 const img = (i: number, w: number) => ({ "--img": `url("${art(i, w)}")` } as unknown as React.CSSProperties);
 
@@ -135,17 +132,6 @@ const stepVisual = (k: number) => {
   return V[k];
 };
 
-const AL = [
-  ["Hope & Victor’s Wedding", 5],
-  ["Grandpa’s 97th Birthday", 12],
-  ["AI Bootcamp", 48],
-  ["Ada’s Graduation Day", 23],
-  ["Lagos Tech Week", 86],
-  ["Founders’ Dinner", 17],
-  ["Naming Ceremony", 31],
-  ["Beach Party ’26", 64],
-  ["Sunday Brunch", 9],
-];
 
 const Steps = () => (
   <section id="how">
