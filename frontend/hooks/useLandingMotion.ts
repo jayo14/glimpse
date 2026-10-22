@@ -74,7 +74,7 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
           .filter((t) => !!t && t.offsetParent);
         const N = hitT.length;
 
-        const gal = root.querySelector<HTMLElement>("#gal2");
+        const gal = root.querySelector<HTMLElement>("#gal2")!;
         const als = gal ? [...gal.children] : [];
 
         const cntEl = root.querySelector<HTMLElement>("#cnt");
@@ -83,12 +83,12 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
         const rel = (t: HTMLElement) => {
           const a = t.getBoundingClientRect();
           const b = sh.getBoundingClientRect();
-          const X = gsap.getProperty(t, "x");
-          const Y = gsap.getProperty(t, "y");
+          const X = gsap.getProperty(t, "x") as number;
+          const Y = gsap.getProperty(t, "y") as number;
           return {
             x: a.left - b.left + a.width / 2 - X,
             y: a.top - b.top + a.height / 2 - Y,
-            w: a.width / gsap.getProperty(t, "scaleX"),
+            w: a.width / (gsap.getProperty(t, "scaleX") as number),
           };
         };
         const fan = (j: number) => ({
@@ -396,9 +396,11 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
           const t0 = performance.now();
           const D = 3000;
           const f = (n: number) => {
+            const b = bb;
+            if (!b) return;
             let p = Math.min(1, (n - t0) / D);
             p = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-            const x = bb.x - band + p * (w + band * 1.4);
+            const x = b.x - band + p * (w + band * 1.4);
             glEl.setAttribute("x1", String(x));
             glEl.setAttribute("x2", String(x + band));
             if (p < 1) {

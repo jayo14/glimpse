@@ -22,12 +22,12 @@ export function Sheet() {
       <div
         key={i}
         className="t"
-        style={{
+        style={({
           "--g": `linear-gradient(${150 + i * 7}deg,hsl(0 0% ${v}%),hsl(0 0% ${v - 30}%))`,
           "--b": `hsl(0 0% ${v - 18}%)`,
           "--h": `hsl(0 0% ${v - 8}%)`,
           "--img": `url("${art(i, isHit ? 0 : i + 1)}")`,
-        }}
+        } as unknown as React.CSSProperties)}
       >
         <i>✓</i>
       </div>
@@ -66,10 +66,10 @@ export function Sheet() {
                   return (
                     <i
                       key={j}
-                      style={{
+                      style={({
                         "--img": `url("${art(seed, w)}")`,
                         transform: `rotate(${(j - c) * 8}deg) translateX(${(j - c) * 14}%)`,
-                      }}
+                      } as unknown as React.CSSProperties)}
                     />
                   );
                 })}
