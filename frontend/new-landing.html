@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Glimpse — Find yourself in every event photo</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--ink:#0a0a0a;--mute:#737373;--line:#e8e8e8;--soft:#f5f5f5;--k:#0a0a0a;--w:#fff;--serif:'Instrument Serif',Georgia,serif;--sans:'Hanken Grotesk',system-ui,sans-serif;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--ink:#fafafa;--mute:#a3a3a3;--line:#262626;--soft:#141414}}
+:root[data-theme="dark"]{--bg:#000;--ink:#fafafa;--mute:#a3a3a3;--line:#262626;--soft:#141414}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.55 var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+h1,h2,h3{font-family:var(--serif);font-weight:400;letter-spacing:-.025em;line-height:.95}
+h2{font-size:clamp(44px,7vw,104px)}
+.mute{color:var(--mute)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--ink);color:var(--bg);padding:15px 26px;border-radius:99px;font-weight:500;font-size:15px;border:1px solid var(--ink);transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.btn:hover{transform:scale(1.04)}.btn.o{background:transparent;color:var(--ink);border-color:var(--line)}
+.on-k .btn{background:var(--w);color:var(--k);border-color:var(--w)}.on-k .btn.o{background:transparent;color:var(--w);border-color:#333}
+nav{position:fixed;top:env(safe-area-inset-top,0px);left:0;right:0;z-index:50;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;mix-blend-mode:normal}
+.logo{display:flex;align-items:center;gap:9px;font:400 26px var(--serif)}
+.mk{width:28px;height:28px;border-radius:9px;background:var(--ink);display:grid;place-items:center}.mk:after{content:"";width:10px;height:10px;border-radius:50%;border:2px solid var(--bg)}
+nav .l{display:flex;gap:6px;background:color-mix(in srgb,var(--bg) 75%,transparent);backdrop-filter:blur(16px);border:1px solid var(--line);border-radius:99px;padding:6px;font-size:14px}
+nav .l a{padding:8px 16px;border-radius:99px}nav .l a:hover{background:var(--soft)}
+nav .btn{padding:10px 20px;font-size:14px}
+@media(max-width:760px){nav .l{display:none}}
+/* hero */
+.hero{padding:140px 0 70px;text-align:center}
+.hero h1{font-size:clamp(60px,12.5vw,190px);line-height:.84}
+.hero h1 i{color:var(--mute)}
+.hero p{max-width:42ch;margin:28px auto 0;font-size:19px}
+.cta{display:flex;gap:12px;justify-content:center;margin-top:30px;flex-wrap:wrap}
+.sheet{position:relative;margin:64px auto 0;max-width:1240px;padding:0 24px}
+.tiles{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;background:var(--k);padding:10px;border-radius:32px}
+@media(max-width:760px){.tiles{grid-template-columns:repeat(4,1fr);border-radius:22px}.tiles .t:nth-child(n+17){display:none}}
+.t{aspect-ratio:3/4;border-radius:14px;position:relative;overflow:hidden;filter:grayscale(1) brightness(.5);transition:filter .6s,transform .6s,box-shadow .6s}
+.t:before{content:"";position:absolute;inset:0;background:var(--img) center/cover,var(--g)}
+.t:after{display:none}
+.t.hit{filter:none;transform:scale(1.06);box-shadow:0 0 0 3px #fff,0 20px 40px rgba(0,0,0,.5);z-index:2}
+.t.hit i{position:absolute;top:8px;right:8px;width:22px;height:22px;border-radius:50%;background:#fff;color:#000;font:600 12px/22px var(--sans);text-align:center;z-index:3;font-style:normal}
+.t i{display:none}.t.hit i{display:block}
+.pillm{position:absolute;left:50%;bottom:-26px;transform:translateX(-50%);background:var(--bg);color:var(--ink);border:1px solid var(--line);border-radius:99px;padding:14px 26px;display:flex;gap:16px;align-items:center;box-shadow:0 30px 60px -20px rgba(0,0,0,.4);z-index:5;white-space:nowrap}
+.selfie{width:42px;height:42px;border-radius:50%;background:var(--ink);position:relative;overflow:hidden}
+.selfie:after{content:"";position:absolute;left:50%;top:22%;width:44%;aspect-ratio:1;border-radius:50%;background:var(--bg);transform:translateX(-50%);box-shadow:0 18px 0 6px var(--bg)}
+.pillm b{font:400 30px/1 var(--serif)}
+/* statement */
+.state{background:var(--k);color:var(--w);padding:190px 0 150px;margin-top:20px}
+.state p{font:400 clamp(36px,6vw,92px)/1.02 var(--serif);letter-spacing:-.02em;max-width:18em}
+.state span{opacity:.18;transition:opacity .3s}.state span.lit{opacity:1}
+/* steps */
+section{padding:150px 0}
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;flex-wrap:wrap;margin-bottom:60px}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+@media(max-width:860px){.steps{grid-template-columns:1fr}}
+.step{background:var(--soft);border-radius:36px;padding:36px;min-height:520px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.step:nth-child(2){background:var(--k);color:var(--w)}
+.step .n{font:400 120px/.8 var(--serif);letter-spacing:-.05em}
+.step h3{font-size:44px;margin-bottom:12px}.step p{color:var(--mute);max-width:30ch;font-size:16px}
+.step:nth-child(2) p{color:#a3a3a3}
+.vis{height:210px;display:grid;place-items:center}
+.qrv{width:150px;height:150px;border-radius:18px;background:var(--bg);padding:14px}
+.qrv i{display:block;height:100%;background:conic-gradient(var(--ink) 25%,transparent 0 50%,var(--ink) 0 75%,transparent 0) 0 0/20px 20px}
+.ring{width:150px;height:150px;border-radius:50%;border:2px solid #fff;position:relative;display:grid;place-items:center;animation:pulse 2.6s ease-in-out infinite}
+.ring:before{content:"";width:60px;height:60px;border-radius:50%;background:#fff;box-shadow:0 74px 0 20px #fff;transform:translateY(-8px);clip-path:inset(0 0 0 0)}
+.ring:after{content:"";position:absolute;left:-12%;right:-12%;height:2px;background:#fff;box-shadow:0 0 20px 4px #fff;animation:sweep 2.6s ease-in-out infinite}
+@keyframes sweep{0%,100%{top:8%}50%{top:92%}}@keyframes pulse{50%{transform:scale(1.05)}}
+.tray{display:grid;grid-template-columns:repeat(3,56px);gap:8px}.tray i{aspect-ratio:1;border-radius:12px;background:var(--ink);animation:pop 3s infinite both}.tray i:nth-child(even){background:#888}
+.tray i:nth-child(2){animation-delay:.3s}.tray i:nth-child(3){animation-delay:.6s}.tray i:nth-child(4){animation-delay:.9s}.tray i:nth-child(5){animation-delay:1.2s}.tray i:nth-child(6){animation-delay:1.5s}
+@keyframes pop{0%,100%{opacity:.2;transform:scale(.88)}40%,70%{opacity:1;transform:none}}
+/* features */
+.row{display:grid;grid-template-columns:1fr 1.2fr auto;gap:30px;align-items:center;padding:34px 24px;border-top:1px solid var(--line);transition:background .4s,color .4s,padding .4s;border-radius:0}
+.row:last-child{border-bottom:1px solid var(--line)}
+.row h3{font-size:clamp(34px,4.6vw,64px)}.row p{color:var(--mute);max-width:44ch;transition:color .4s}
+.row .ar{width:52px;height:52px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-size:20px;transition:.4s}
+.row:hover{background:var(--k);color:var(--w);padding-left:44px;border-radius:28px}.row:hover p{color:#a3a3a3}.row:hover .ar{background:#fff;color:#000;transform:rotate(-45deg)}
+@media(max-width:760px){.row{grid-template-columns:1fr auto}.row p{grid-column:1/-1;order:3}}
+/* rail */
+.rail{display:flex;gap:16px;overflow-x:auto;padding:0 max(24px,calc((100vw - 1240px)/2)) 24px;scroll-snap-type:x mandatory;scrollbar-width:none}.rail::-webkit-scrollbar{display:none}
+.ph{flex:0 0 270px;height:540px;border-radius:44px;background:#000;padding:9px;scroll-snap-align:start;box-shadow:0 0 0 1px var(--line);transition:transform .5s}
+.ph:hover{transform:translateY(-10px)}
+.ph>div{height:100%;border-radius:36px;position:relative;overflow:hidden;background:var(--img) center/cover,var(--g);display:flex;flex-direction:column;justify-content:flex-end;padding:22px;color:#fff}
+.ph>div:before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(0,0,0,.85))}
+.ph>div:after{display:none}
+.ph h3,.ph p{position:relative;z-index:2}.ph h3{font-size:32px}.ph p{font-size:13px;opacity:.75}
+/* stats */
+.stats{background:var(--k);color:var(--w);border-radius:56px;margin:0 12px;padding:120px 0}
+.sg{display:grid;grid-template-columns:repeat(3,1fr);gap:40px}
+@media(max-width:760px){.sg{grid-template-columns:1fr}}
+.sg b{display:block;font:400 clamp(80px,12vw,180px)/.85 var(--serif);letter-spacing:-.05em}.sg span{color:#a3a3a3}
+/* pricing */
+.price{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:stretch}
+@media(max-width:860px){.price{grid-template-columns:1fr}}
+.pc{border:1px solid var(--line);border-radius:36px;padding:38px;display:flex;flex-direction:column}
+.pc.hot{background:var(--k);color:var(--w);border-color:var(--k)}
+.pc h3{font-size:34px}.pc .n{font:400 90px/1 var(--serif);letter-spacing:-.04em;margin:20px 0 4px}
+.pc small{color:var(--mute)}.pc.hot small{color:#a3a3a3}
+.pc ul{list-style:none;padding:0;margin:28px 0 34px;display:grid;gap:12px;font-size:15px;flex:1;align-content:start}.pc li:before{content:"✓";margin-right:10px;color:var(--mute)}
+.pc.hot .btn{background:#fff;color:#000;border-color:#fff}
+/* quotes */
+.qs{border-top:1px solid var(--line)}
+.q{display:grid;grid-template-columns:1fr 2.6fr;gap:30px;padding:48px 0;border-bottom:1px solid var(--line)}
+.q p{font:400 clamp(28px,3.8vw,52px)/1.05 var(--serif);letter-spacing:-.02em}
+.q small{color:var(--mute);font-size:15px;line-height:1.4}.q small b{display:block;color:var(--ink);font-weight:500}
+@media(max-width:760px){.q{grid-template-columns:1fr}}
+/* faq */
+details{border-bottom:1px solid var(--line);padding:28px 0}details:first-of-type{border-top:1px solid var(--line)}
+summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:20px;font:400 clamp(26px,3vw,38px)/1.1 var(--serif)}
+summary::-webkit-details-marker{display:none}summary:after{content:"+";font:300 32px var(--sans);transition:transform .4s}details[open] summary:after{transform:rotate(45deg)}
+details p{color:var(--mute);margin-top:14px;max-width:60ch}
+/* cta + footer */
+.fin{background:var(--k);color:var(--w);text-align:center;padding:170px 0 0;margin-top:140px;overflow:hidden}
+.fin h2{font-size:clamp(56px,10vw,150px);line-height:.88}
+.fg{display:grid;grid-template-columns:1.6fr repeat(3,1fr);gap:40px;text-align:left;font-size:15px;margin-top:130px;padding-top:50px;border-top:1px solid #262626}
+@media(max-width:760px){.fg{grid-template-columns:1fr 1fr}}
+.fg h4{font-weight:500;color:#a3a3a3;margin-bottom:12px;font-size:14px}.fg a{display:block;padding:4px 0}
+.news{display:flex;background:#171717;border-radius:99px;padding:5px;margin-top:18px}.news input{flex:1;min-width:0;background:none;border:0;color:#fff;padding:0 16px;font:inherit}
+.news .btn{padding:10px 18px}
+.big{font:400 clamp(130px,34vw,500px)/.78 var(--serif);letter-spacing:-.05em;color:#1c1c1c;margin-top:50px;transform:translateY(12%);user-select:none}
+.rv{opacity:0;transform:translateY(36px);transition:1s cubic-bezier(.2,.8,.2,1)}.rv.in{opacity:1;transform:none}
+.g .rv{transition:none;opacity:1;transform:none}
+.btn svg{width:20px;height:20px;fill:currentColor;flex:none}
+@media(max-width:560px){.pillm{white-space:normal;padding:10px 18px;gap:10px;font-size:14px;max-width:92vw;width:max-content}.pillm>span:nth-child(2){display:none}.hero{padding-top:120px}.cta .btn{width:100%;max-width:320px}}
+.alb{display:none;padding:0}.g .alb{display:block}.alb+.state{margin-top:0}
+.stage2{position:relative;height:100vh;overflow:hidden;background:var(--bg);color:var(--ink)}
+.stage2>*{position:absolute}
+.atxt{left:0;right:0;top:13vh;text-align:center;padding:0 24px}.atxt h2{font-size:clamp(40px,7vw,100px)}
+.deck{left:50%;top:50%;width:300px;height:300px;margin:-150px 0 0 -150px}
+.ac{position:absolute;left:20%;top:12%;width:60%;aspect-ratio:3/4;border-radius:16px;background:var(--img) center/cover;box-shadow:0 24px 50px -16px rgba(0,0,0,.55);border:3px solid #fff}
+.atitle{left:0;right:0;top:calc(50% + 190px);text-align:center;padding:0 20px}.atitle h3{font-size:clamp(36px,5vw,64px)}.atitle small{color:var(--mute)}
+.gh{left:0;right:0;top:9vh;text-align:center;font:400 clamp(30px,4vw,54px)/1 var(--serif);letter-spacing:-.02em;z-index:3;padding:0 20px}
+.gal{left:50%;top:0;width:min(1040px,92vw);margin-left:calc(min(1040px,92vw)/-2);display:grid;grid-template-columns:repeat(3,1fr);gap:48px 28px;padding:24vh 0 30vh}
+@media(max-width:700px){.gal{grid-template-columns:repeat(2,1fr);gap:36px 16px}.deck{width:240px;height:240px;margin:-120px 0 0 -120px}.atitle{top:calc(50% + 150px)}}
+.al .cv{position:relative;aspect-ratio:1;background:var(--soft);border-radius:28px;overflow:hidden}
+.al .cv i{position:absolute;left:20%;top:12%;width:60%;aspect-ratio:3/4;border-radius:12px;background:var(--img) center/cover;border:3px solid #fff;box-shadow:0 14px 30px -10px rgba(0,0,0,.5)}
+.al .cv i:nth-child(1){transform:rotate(-9deg) translateX(-14%)}.al .cv i:nth-child(2){transform:rotate(8deg) translateX(14%)}.al .cv i:nth-child(3){transform:rotate(-1deg)}
+.al h3{font-size:clamp(24px,2.6vw,34px);margin-top:14px;line-height:1}.al small{color:var(--mute)}
+.fx{left:0;right:0;top:50%;text-align:center;opacity:0;color:#fff;padding:0 20px}.fx h2{font-size:clamp(56px,10vw,150px);line-height:.88}
+.alb,.g .alb{display:none!important}
+header.hero{padding-bottom:0}.state{margin-top:0}
+.t.hit{transform:none}.t.fly{transition:filter .6s,box-shadow .6s}
+.t.hit2{filter:none;box-shadow:0 0 0 3px #fff,0 20px 40px rgba(0,0,0,.5)}.t.hit2 i{display:block}
+.sheet.stage2{max-width:none;width:100%;margin:0;padding:0}
+.sheet.stage2>.tiles{position:relative;width:min(1192px,calc(100% - 32px));margin:70px auto 0}
+.stage2>.pillm{bottom:7vh;z-index:6}
+.atitle{top:calc(50% + min(165px,26vw))}
+.big{font-size:0;line-height:0}
+.bg{position:absolute;inset:0;background:var(--img) center/cover}
+.ln{position:absolute;left:0;right:0;height:2px;background:#fff;box-shadow:0 0 18px 3px #fff;animation:sweep 2.6s ease-in-out infinite;z-index:3}
+.ov{position:absolute;left:50%;top:44%;width:96px;height:124px;margin:-62px 0 0 -48px;border:2px dashed rgba(255,255,255,.85);border-radius:50%;z-index:2}
+.vis{height:270px}
+.tent{width:176px;background:#fff;color:#0a0a0a;border-radius:18px;padding:16px;text-align:center;box-shadow:0 36px 50px -22px rgba(0,0,0,.4);transform:perspective(600px) rotateX(10deg) rotateZ(-4deg);line-height:1.2}
+.tent .tq{aspect-ratio:1;margin-bottom:10px}.tent .tq svg{width:100%;height:100%;display:block}
+.tent b{display:block;font:400 21px/1 var(--serif)}.tent small{color:#737373;font-size:11px}
+.sf{width:160px;height:236px;border-radius:28px;overflow:hidden;position:relative;border:3px solid #3a3a3a;background:#000}
+.pillx{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);background:#fff;color:#000;border-radius:99px;padding:5px 12px;font:600 11px var(--sans);white-space:nowrap;z-index:4}
+.cr{display:grid;grid-template-columns:repeat(3,62px);gap:6px;background:#fff;padding:8px;border-radius:20px;box-shadow:0 30px 50px -22px rgba(0,0,0,.35)}
+.cr i{aspect-ratio:3/4;border-radius:10px;background:var(--img) center/cover;position:relative}
+.cr i:after{content:"✓";position:absolute;right:4px;bottom:4px;width:16px;height:16px;border-radius:50%;background:#fff;color:#000;font:700 10px/16px var(--sans);text-align:center}
+.toast{margin-top:12px;background:#0a0a0a;color:#fff;border-radius:99px;padding:8px 16px;font:500 13px var(--sans);text-align:center;width:max-content;margin-inline:auto}
+.ph>div{padding:0!important;justify-content:flex-start!important;background:#111!important}.ph>div:before{display:none}
+.ph .u{flex:1;position:relative;overflow:hidden}
+.ph .cap{position:relative;z-index:5;padding:14px 22px 22px;background:#000}.ph .cap h3{font-size:30px}
+.sb{display:flex;justify-content:space-between;padding:12px 24px 6px;font:600 11px var(--sans);color:#fff;position:relative;z-index:4}
+.qf{position:absolute;left:50%;top:46%;width:150px;height:150px;margin:-75px 0 0 -75px;z-index:2}
+.qf .c{position:absolute;inset:0;background:#fff;border-radius:10px;padding:12px;transform:rotate(-3deg)}.qf .c svg{width:100%;height:100%;display:block}
+.qf b{position:absolute;width:28px;height:28px;border:solid #fff;z-index:3;margin:-10px}
+.qf b:nth-of-type(1){left:0;top:0;border-width:3px 0 0 3px;border-radius:12px 0 0 0}.qf b:nth-of-type(2){right:0;top:0;border-width:3px 3px 0 0;border-radius:0 12px 0 0}.qf b:nth-of-type(3){left:0;bottom:0;border-width:0 0 3px 3px;border-radius:0 0 0 12px}.qf b:nth-of-type(4){right:0;bottom:0;border-width:0 3px 3px 0;border-radius:0 0 12px 0}
+.hint{position:absolute;bottom:22px;left:0;right:0;text-align:center;font-size:12px;color:#ddd;z-index:3}
+.ph .ov{width:150px;height:190px;margin:-95px 0 0 -75px}
+.bar2{position:absolute;left:20px;right:20px;bottom:22px;background:rgba(0,0,0,.7);border-radius:16px;padding:12px 14px;font-size:12px;z-index:4}.bar2 i{display:block;height:4px;border-radius:4px;background:#333;margin-top:8px;overflow:hidden}.bar2 i:after{content:"";display:block;width:92%;height:100%;background:#fff}
+.gh2{display:flex;justify-content:space-between;align-items:baseline;padding:8px 18px 10px;font:400 28px var(--serif)}.gh2 span{font:500 12px var(--sans);color:#aaa}
+.chips{display:flex;gap:6px;padding:0 18px 10px;font-size:11px}.chips span{padding:5px 11px;border-radius:99px;border:1px solid #333;color:#aaa}.chips span:first-child{background:#fff;color:#000;border-color:#fff}
+.gg{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:0 14px}.gg i{aspect-ratio:3/4;border-radius:8px;background:var(--img) center/cover}
+.fab{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);background:#fff;color:#000;border-radius:99px;padding:10px 18px;font:600 12px var(--sans);white-space:nowrap;z-index:4}
+.tvw{margin:14px 14px 10px;aspect-ratio:16/9;border-radius:10px;border:3px solid #333;position:relative;overflow:hidden}.tvw .bg{background-position:center 35%}
+.live{position:absolute;left:8px;top:8px;background:#000a;border-radius:99px;padding:2px 9px;font:600 10px var(--sans);z-index:2}
+.th{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;padding:0 14px}.th i{aspect-ratio:1;border-radius:8px;background:var(--img) center/cover;opacity:.6}.th i:first-child{opacity:1;outline:2px solid #fff}
+.msg{display:flex;gap:9px;padding:0 16px;margin-bottom:12px;align-items:flex-end}.msg u{width:28px;height:28px;border-radius:50%;background:var(--img) center/cover;flex:none}.msg p{background:#232323;border-radius:16px 16px 16px 4px;padding:9px 12px;font-size:12px;line-height:1.35}.msg.me{flex-direction:row-reverse}.msg.me p{background:#fff;color:#000;border-radius:16px 16px 4px 16px}
+.inp{position:absolute;left:14px;right:14px;bottom:16px;border:1px solid #333;border-radius:99px;padding:9px 14px;font-size:12px;color:#888;z-index:4}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}.state span{opacity:1}}
+</style>
+</head>
+<body>
+<nav><a class="logo" href="#"><span class="mk"></span>Glimpse</a><div class="l"><a href="#how">How it works</a><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></div><a class="btn" href="#get">Get the app</a></nav>
+
+<header class="hero"><div class="wrap">
+<h1>Find yourself<br><i>in every frame.</i></h1>
+<p class="mute">One selfie. Every photo you’re in, from every moment of the event, delivered in seconds.</p>
+<div class="cta"><a class="btn" href="#get"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.9-3.5.9s-1.8-.8-3-.8C6.9 7.4 5.4 8.300 4.600 9.700c-1.700 2.900-.4 7.200 1.200 9.500.8 1.100 1.700 2.400 2.900 2.300 1.200 0 1.600-.7 3-.7s1.800.7 3 .7c1.300 0 2.100-1.100 2.800-2.300.9-1.300 1.300-2.600 1.300-2.700 0 0-2.400-.9-2.400-3.900zM14.200 5.700c.6-.8 1.100-1.800.9-2.900-.9 0-2 .6-2.700 1.400-.6.700-1.100 1.800-1 2.800 1 .1 2-.5 2.800-1.300z"/></svg>Download on the App Store</a><a class="btn o" href="#get"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.800c-.3.300-.5.800-.5 1.400v15.600c0 .6.2 1.100.5 1.400L12.600 12 4 2.800zM14 13.400l2.600 2.600-10.800 6.100 8.200-8.700zM16.600 8 14 10.600 5.800 1.900 16.600 8zM21 10.900c.6.400 1 .9 1 1.100s-.4.800-1 1.100l-2.700 1.500L15.400 12l2.900-2.600L21 10.900z"/></svg>Get it on Google Play</a></div></div>
+<div class="sheet"><div class="tiles" id="tiles"></div>
+<div class="pillm"><span class="selfie"></span><span>Matching your selfie</span><b id="cnt">0</b><span class="mute">photos found</span></div></div>
+</header>
+
+<section class="alb" id="album"><div class="stage2">
+<div class="atxt"><h2>5 photos found.<br><i class="mute">Now they’re yours.</i></h2></div>
+<div class="deck" id="deck"></div>
+<div class="atitle"><h3>Hope &amp; Victor’s Wedding</h3><small>5 photos from your night</small></div>
+<div class="gh">Every event, in one place</div>
+<div class="gal" id="gal"></div>
+<div class="fx"><h2>Every moment,<br>kept in albums.</h2></div>
+</div></section>
+<div class="state"><div class="wrap"><p id="stmt">Hundreds of photos. Thousands of guests. Nobody should have to scroll through a thousand strangers to find their own smile.</p></div></div>
+
+<section id="how"><div class="wrap">
+<div class="hd rv"><h2>Three taps.<br>All your memories.</h2><p class="mute" style="max-width:34ch">No app to install, no account to create. Just scan, smile and save.</p></div>
+<div class="steps">
+<div class="step rv"><div><div class="n">1</div></div><div><div class="vis"><div class="qrv"><i></i></div></div><h3>Scan the code</h3><p>Scan the QR code at the event. Glimpse opens instantly in your browser.</p></div></div>
+<div class="step rv"><div><div class="n">2</div></div><div><div class="vis"><div class="ring"></div></div><h3>Take a selfie</h3><p>Face matching finds every photo you appear in within seconds.</p></div></div>
+<div class="step rv"><div><div class="n">3</div></div><div><div class="vis"><div class="tray"><i></i><i></i><i></i><i></i><i></i><i></i></div></div><h3>Save the originals</h3><p>Full-resolution downloads with no watermarks, straight to your camera roll.</p></div></div>
+</div></div></section>
+
+<section id="features" style="padding-top:20px"><div class="wrap">
+<div class="hd rv"><h2>Everything you need.<br>Nothing you don’t.</h2></div>
+<div class="rv"><a class="row" href="#"><h3>Instant face matching</h3><p>Guests find all their photos with a 10-second selfie.</p><span class="ar">→</span></a>
+<a class="row" href="#"><h3>Fast photographer upload</h3><p>Bulk upload from SD cards or tethered cameras. Thousands of shots processed in minutes.</p><span class="ar">→</span></a>
+<a class="row" href="#"><h3>Live TV slideshow</h3><p>Stream new photos to venue screens as they are shot.</p><span class="ar">→</span></a>
+<a class="row" href="#"><h3>Secure and encrypted</h3><p>Face data is encrypted, never shared and deleted on your schedule.</p><span class="ar">→</span></a></div>
+</div></section>
+
+<section style="padding-top:20px"><div class="wrap"><div class="hd rv"><h2>Made for every screen.</h2></div></div>
+<div class="rail">
+<div class="ph" style="--g:linear-gradient(160deg,#777,#222)"><div><h3>Instant scanner</h3><p>Scan, snap, done.</p></div></div>
+<div class="ph" style="--g:linear-gradient(160deg,#222,#999)"><div><h3>Biometric match</h3><p>Accurate in any light.</p></div></div>
+<div class="ph" style="--g:linear-gradient(160deg,#bbb,#333)"><div><h3>Personal gallery</h3><p>Only the photos you’re in.</p></div></div>
+<div class="ph" style="--g:linear-gradient(160deg,#111,#666)"><div><h3>TV wall</h3><p>Shots hit the big screen live.</p></div></div>
+<div class="ph" style="--g:linear-gradient(160deg,#888,#1a1a1a)"><div><h3>Guestbook</h3><p>Messages beside the moments.</p></div></div></div></section>
+
+<div class="stats" style="margin-top:60px"><div class="wrap"><div class="sg">
+<div class="rv"><b>3s</b><span>from selfie to gallery</span></div><div class="rv"><b>25k</b><span>photos delivered at one festival</span></div><div class="rv"><b>0</b><span>apps for guests to install</span></div></div></div></div>
+
+<section id="pricing"><div class="wrap">
+<div class="hd rv"><h2>Plans for every<br>kind of event.</h2><p class="mute" style="max-width:30ch">Start free. Upgrade when you need more. Cancel any time.</p></div>
+<div class="price">
+<div class="pc rv"><h3>Guest &amp; Casual</h3><div class="n">$0</div><small>forever</small><ul><li>Unlimited face matching</li><li>Instant web galleries</li><li>Standard downloads</li></ul><a class="btn o" href="#get">Start free</a></div>
+<div class="pc hot rv"><h3>Host Pro</h3><div class="n">$29</div><small>per event</small><ul><li>Full-resolution downloads</li><li>Live TV wall and QR kits</li><li>Custom branding</li><li>90-day secure archive</li></ul><a class="btn" href="#get">Get Host Pro</a></div>
+<div class="pc rv"><h3>Studio &amp; Agency</h3><div class="n">$79</div><small>per month</small><ul><li>Unlimited events</li><li>Multi-photographer upload</li><li>White-label galleries</li></ul><a class="btn o" href="#">Contact sales</a></div>
+</div></div></section>
+
+<section style="padding-top:20px"><div class="wrap"><div class="hd rv"><h2>Real people.<br>Real results.</h2></div>
+<div class="qs">
+<div class="q rv"><small><b>Marcus Vasco</b>Wedding photographer</small><p>We cut photo delivery from three weeks to three minutes. Guests were amazed.</p></div>
+<div class="q rv"><small><b>Sarah Khan</b>Conference director</small><p>Half our attendees found their photos before the keynote ended.</p></div>
+<div class="q rv"><small><b>Elena Rivera</b>Festival organiser</small><p>25,000 photos, 2,000 guests, zero slowdown.</p></div></div></div></section>
+
+<section id="faq" style="padding-top:20px"><div class="wrap" style="max-width:900px"><div class="hd rv"><h2>Questions, answered.</h2></div>
+<details open><summary>Do guests need to download an app?</summary><p>No. Guests scan a QR code, take a selfie in their mobile browser and get their gallery instantly.</p></details>
+<details><summary>How does face matching work?</summary><p>Glimpse compares a guest’s selfie with the faces in the event gallery and returns only their photos.</p></details>
+<details><summary>Is biometric data private?</summary><p>Yes. Face data is encrypted, never shared and can be deleted at any time.</p></details>
+<details><summary>How fast do photos appear?</summary><p>Photos are matched as the photographer uploads, so new shots show up within moments.</p></details>
+<details><summary>Can we show a live slideshow at the venue?</summary><p>Yes. Cast the Live TV slideshow to any screen and photos appear as they arrive.</p></details></div></section>
+
+<footer class="fin on-k" id="get"><div class="wrap">
+<h2>Take control of<br>your event photos.</h2>
+<div class="cta"><a class="btn" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.4 12.6c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.9-3.5.9s-1.8-.8-3-.8C6.9 7.4 5.4 8.300 4.600 9.700c-1.700 2.900-.4 7.200 1.200 9.500.8 1.100 1.700 2.400 2.900 2.300 1.200 0 1.600-.7 3-.7s1.800.7 3 .7c1.300 0 2.100-1.100 2.800-2.300.9-1.300 1.300-2.600 1.300-2.700 0 0-2.400-.9-2.400-3.900zM14.200 5.700c.6-.8 1.100-1.800.9-2.900-.9 0-2 .6-2.700 1.400-.6.700-1.100 1.800-1 2.800 1 .1 2-.5 2.800-1.300z"/></svg>App Store</a><a class="btn o" href="#"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 2.800c-.3.300-.5.800-.5 1.400v15.600c0 .6.2 1.100.5 1.400L12.600 12 4 2.800zM14 13.400l2.600 2.600-10.800 6.100 8.200-8.700zM16.600 8 14 10.600 5.800 1.900 16.600 8zM21 10.900c.6.400 1 .9 1 1.100s-.4.800-1 1.100l-2.700 1.500L15.400 12l2.900-2.600L21 10.900z"/></svg>Google Play</a></div>
+<div class="fg"><div><a class="logo" href="#"><span class="mk" style="background:#fff"></span>Glimpse</a><div class="news"><input type="email" placeholder="Your email" aria-label="Email"><a class="btn" href="#">Subscribe</a></div></div>
+<div><h4>Product</h4><a href="#features">Features</a><a href="#pricing">Pricing</a><a href="#how">How it works</a></div>
+<div><h4>Company</h4><a href="#">About</a><a href="#">Blog</a><a href="#">Careers</a></div>
+<div><h4>Support</h4><a href="#faq">FAQ</a><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+<div class="big" aria-hidden="true">Glimpse</div></div></footer>
+
+<script>
+const art=(i,w)=>{const r=n=>{let x=Math.sin(i*97.1+n*13.7)*1e4;return x-Math.floor(x)},q=n=>{let x=Math.sin(w*57.3+n*7.9)*1e4;return x-Math.floor(x)};
+const bg=Math.round(22+r(1)*40),sk=Math.round(64+q(2)*26),hr=Math.round(6+q(3)*26),st=q(4),sh=Math.round(hr+22+q(6)*30);
+let bk='';for(let k=0;k<8;k++)bk+=`<circle cx="${r(k+5)*300|0}" cy="${r(k+9)*280|0}" r="${20+r(k+12)*44|0}" fill="hsl(0 0% ${60+r(k)*40|0}%)" opacity=".${3+(r(k+3)*4|0)}"/>`;
+const back=st<.33?`<rect x="96" y="130" width="108" height="170" rx="50" fill="hsl(0 0% ${hr}%)"/>`:st<.66?'':`<circle cx="150" cy="112" r="24" fill="hsl(0 0% ${hr}%)"/>`;
+const s=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="hsl(0 0% ${bg+22}%)"/><stop offset="1" stop-color="hsl(0 0% ${bg-16}%)"/></linearGradient><filter id="b"><feGaussianBlur stdDeviation="13"/></filter></defs><rect width="300" height="400" fill="url(#g)"/><g filter="url(#b)">${bk}</g>${back}<path d="M10 400Q22 292 150 278Q278 292 290 400Z" fill="hsl(0 0% ${sh}%)"/><rect x="130" y="232" width="40" height="58" rx="14" fill="hsl(0 0% ${sk-14}%)"/><ellipse cx="150" cy="190" rx="43" ry="53" fill="hsl(0 0% ${sk}%)"/><ellipse cx="150" cy="146" rx="47" ry="${st<.66?30:24}" fill="hsl(0 0% ${hr}%)"/><circle cx="136" cy="190" r="2.8" fill="#111" opacity=".55"/><circle cx="164" cy="190" r="2.8" fill="#111" opacity=".55"/><path d="M137 216Q150 227 163 216" stroke="#111" stroke-opacity=".4" stroke-width="3" fill="none" stroke-linecap="round"/></svg>`;
+return 'data:image/svg+xml;utf8,'+encodeURIComponent(s)};
+const T=document.getElementById('tiles'),hits=[2,9,13,20,26];
+for(let i=0;i<32;i++){const v=40+((i*53)%50),t=document.createElement('div');t.className='t';
+t.style.cssText=`--g:linear-gradient(${150+i*7}deg,hsl(0 0% ${v}%),hsl(0 0% ${v-30}%));--b:hsl(0 0% ${v-18}%);--h:hsl(0 0% ${v-8}%)`;t.style.setProperty('--img',`url("${art(i,hits.includes(i)?0:i+1)}")`);t.innerHTML='<i>✓</i>';T.appendChild(t)}
+document.querySelectorAll('.ph>div').forEach((d,k)=>d.style.setProperty('--img',`url("${art(50+k,50+k)}")`));
+const tiles=[...T.children],cnt=document.getElementById('cnt');
+function run(){tiles.forEach(t=>t.classList.remove('hit'));cnt.textContent=0;
+hits.forEach((h,k)=>setTimeout(()=>{tiles[h].classList.add('hit');cnt.textContent=k+1},900+k*700));setTimeout(run,900+hits.length*700+3500)}
+run();
+const io=new IntersectionObserver(e=>e.forEach(x=>x.isIntersecting&&x.target.classList.add('in')),{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+const s=document.getElementById('stmt');s.innerHTML=s.textContent.split(' ').map(w=>`<span>${w}</span>`).join(' ');
+const ws=[...s.children];
+function sc(){const r=s.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight*.85-r.top)/(r.height+innerHeight*.3)));ws.forEach((w,i)=>w.classList.toggle('lit',i/ws.length<p))}
+addEventListener('scroll',sc,{passive:true});sc();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+if(false){
+gsap.registerPlugin(ScrollTrigger);document.documentElement.classList.add('g');
+const $=s=>document.querySelectorAll(s);
+const pg=document.createElement('div');pg.style.cssText='position:fixed;top:0;left:0;height:3px;width:100%;background:var(--ink);transform-origin:0 50%;transform:scaleX(0);z-index:60';document.body.appendChild(pg);
+gsap.to(pg,{scaleX:1,ease:'none',scrollTrigger:{scrub:.3,start:0,end:'max'}});
+ScrollTrigger.create({start:100,onUpdate:s=>gsap.to('nav',{yPercent:s.direction===1?-130:0,duration:.45,ease:'power3.out',overwrite:true})});
+// hero intro
+const tl=gsap.timeline({defaults:{ease:'expo.out',duration:1.4}});
+tl.from('.hero h1',{yPercent:35,opacity:0,scale:.96}).from('.hero p,.cta',{y:30,opacity:0,stagger:.12,duration:1},'-=1')
+.from('.t',{y:70,opacity:0,scale:.8,stagger:{each:.025,from:'center',grid:[4,8]},duration:1.1,clearProps:'transform,opacity'},'-=.9').from('.pillm',{y:40,opacity:0,duration:1},'-=.6');
+gsap.to('.hero h1',{yPercent:-18,opacity:.15,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+gsap.fromTo('.tiles',{scale:.9},{scale:1.02,ease:'none',scrollTrigger:{trigger:'.sheet',start:'top 95%',end:'bottom 40%',scrub:true}});
+// statement: pinned word-by-word reveal
+const w=$('.state span');gsap.set(w,{opacity:.14});
+gsap.to(w,{opacity:1,stagger:.12,ease:'none',scrollTrigger:{trigger:'.state',start:'top top',end:'+=130%',pin:true,scrub:.6}});
+// steps
+gsap.from('.step',{y:160,rotate:2.5,opacity:0,stagger:.18,duration:1.3,ease:'expo.out',clearProps:'transform,opacity',scrollTrigger:{trigger:'.steps',start:'top 80%'}});
+$('.step .n').forEach(n=>gsap.fromTo(n,{yPercent:30},{yPercent:-20,ease:'none',scrollTrigger:{trigger:n,start:'top bottom',end:'bottom top',scrub:true}}));
+// feature rows
+$('.row').forEach(r=>gsap.from(r,{x:-80,opacity:0,duration:1.1,ease:'expo.out',clearProps:'transform,opacity',scrollTrigger:{trigger:r,start:'top 88%'}}));
+// pinned horizontal screens
+const mm=gsap.matchMedia();
+mm.add('(min-width:861px)',()=>{const rail=document.querySelector('.rail'),sec=rail.parentElement,d=()=>rail.scrollWidth-innerWidth+80;
+rail.style.overflow='visible';rail.style.scrollSnapType='none';
+gsap.to(rail,{x:()=>-d(),ease:'none',scrollTrigger:{trigger:sec,start:'top 8%',end:()=>'+='+d(),pin:true,scrub:1,invalidateOnRefresh:true}});
+gsap.utils.toArray('.ph').forEach((p,i)=>gsap.fromTo(p,{yPercent:i%2?6:-4,rotate:i%2?1.5:-1.5},{yPercent:i%2?-6:4,rotate:0,ease:'none',scrollTrigger:{trigger:sec,start:'top 60%',end:()=>'+='+d(),scrub:true}}));
+return()=>{rail.style.overflow='';rail.style.scrollSnapType=''}});
+// stats
+gsap.fromTo('.stats',{scale:.88,borderRadius:120},{scale:1,borderRadius:56,ease:'none',scrollTrigger:{trigger:'.stats',start:'top 95%',end:'top 35%',scrub:true}});
+$('.sg b').forEach(b=>{const t=b.textContent,n=parseInt(t),suf=t.replace(n,''),o={v:0};ScrollTrigger.create({trigger:b,start:'top 88%',once:true,onEnter:()=>gsap.to(o,{v:n,duration:2.2,ease:'power3.out',onUpdate:()=>b.textContent=Math.round(o.v)+suf})})});
+// pricing, quotes
+gsap.from('.pc',{y:120,opacity:0,scale:.94,stagger:.15,duration:1.2,ease:'expo.out',clearProps:'transform,opacity',scrollTrigger:{trigger:'.price',start:'top 80%'}});
+$('.q').forEach(q=>{gsap.from(q.querySelector('p'),{yPercent:30,opacity:0,duration:1.2,ease:'expo.out',scrollTrigger:{trigger:q,start:'top 82%'}});gsap.from(q,{borderBottomColor:'transparent',scrollTrigger:{trigger:q,start:'top 82%'}})});
+// finale
+gsap.from('.fin h2',{yPercent:40,opacity:0,duration:1.4,ease:'expo.out',scrollTrigger:{trigger:'.fin',start:'top 70%'}});
+gsap.fromTo('.big',{yPercent:45},{yPercent:12,ease:'none',scrollTrigger:{trigger:'.fin',start:'bottom 130%',end:'bottom bottom',scrub:true}});
+// album story: found photos -> album -> gallery -> finale
+const AL=[['Hope & Victor’s Wedding',5],['Grandpa’s 97th Birthday',12],['AI Bootcamp',48],['Ada’s Graduation Day',23],['Lagos Tech Week',86],['Founders’ Dinner',17],['Naming Ceremony',31],['Beach Party ’26',64],['Sunday Brunch',9]];
+const gal=document.getElementById('gal'),deck=document.getElementById('deck');
+gal.innerHTML=AL.map((a,k)=>`<div class="al"><div class="cv">${[0,1,2].map(j=>`<i style='--img:url("${art(70+k*3+j,k?70+k*3+j:0)}")'></i>`).join('')}</div><h3>${a[0]}</h3><small>${a[1]} photos</small></div>`).join('');
+deck.innerHTML=[0,1,2,3,4].map(j=>`<div class="ac" style='--img:url("${art(90+j,0)}")'></div>`).join('');
+const ac=[...deck.children],als=[...gal.children];
+const fan=i=>({x:(i-2)*34,y:Math.abs(i-2)*8,rotation:(i-2)*8});
+const rnd=(i,s)=>{const x=Math.sin(i*12.9+s)*1e4;return x-Math.floor(x)-.5};
+const slot=()=>{const m=innerWidth<=700,c=m?2:3,g=m?16:28,W=Math.min(1040,innerWidth*.92),cw=(W-g*(c-1))/c;return{x:-W/2+cw/2,y:innerHeight*.24+cw/2-innerHeight/2,s:cw/(m?240:300)}};
+gsap.set('.fx',{yPercent:-50});
+gsap.set(ac,{opacity:0,scale:.7,x:i=>rnd(i,1)*innerWidth*1.2,y:i=>rnd(i,2)*innerHeight*1.1,rotation:i=>rnd(i,3)*70});
+gsap.set(als,{opacity:0,y:60});gsap.set('.gh,.atitle',{opacity:0,y:20});
+const st=gsap.timeline({defaults:{ease:'power2.inOut'},scrollTrigger:{trigger:'.stage2',start:'top top',end:()=>'+='+innerHeight*7,pin:true,scrub:.8,invalidateOnRefresh:true}});
+st.to(ac,{opacity:1,scale:.85,stagger:.12,duration:1})
+.to(ac,{x:i=>fan(i).x,y:i=>fan(i).y,rotation:i=>fan(i).rotation,scale:1,duration:1.6,stagger:.05,ease:'power3.inOut'},'+=.2')
+.to('.atxt',{opacity:0,y:-40,duration:.8},'<')
+.to('.atitle',{opacity:1,y:0,duration:.8},'>-.4')
+.to({},{duration:.6})
+.to('.atitle',{opacity:0,duration:.5})
+.to(deck,{x:()=>slot().x,y:()=>slot().y,scale:()=>slot().s,duration:1.6,ease:'power3.inOut'},'<')
+.to('.gh',{opacity:1,y:0,duration:.8},'-=.6')
+.to(als.slice(1),{opacity:1,y:0,stagger:.1,duration:.8},'-=.8')
+.set(als[0],{opacity:1,y:0}).set(deck,{opacity:0})
+.to(gal,{y:()=>-(gal.scrollHeight-innerHeight*.75),duration:4,ease:'none'},'+=.3')
+.to(gal,{scale:.9,opacity:0,duration:1})
+.to('.gh',{opacity:0,duration:.5},'<')
+.to('.stage2',{backgroundColor:'#0a0a0a',duration:1},'<')
+.to('.fx',{opacity:1,duration:1},'-=.4')
+.to({},{duration:.8});
+addEventListener('load',()=>ScrollTrigger.refresh());
+}
+</script>
+<script>
+if(window.gsap&&window.ScrollTrigger&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+gsap.registerPlugin(ScrollTrigger);
+const R=document.documentElement;R.classList.add('g');R.style.scrollBehavior='auto';
+ScrollTrigger.config({ignoreMobileResize:true});
+const $=s=>[...document.querySelectorAll(s)];
+const pg=document.createElement('div');pg.style.cssText='position:fixed;top:0;left:0;height:3px;width:100%;background:var(--ink);transform-origin:0 50%;transform:scaleX(0);z-index:60';document.body.appendChild(pg);
+gsap.to(pg,{scaleX:1,ease:'none',scrollTrigger:{scrub:.3,start:0,end:'max'}});
+ScrollTrigger.create({start:100,onUpdate:s=>gsap.to('nav',{yPercent:s.direction===1?-130:0,duration:.45,ease:'power3.out',overwrite:true})});
+/* 1. HERO + ONE CONTINUOUS STORY (grid > set > album > gallery > blur) */
+const sh=document.querySelector('.sheet');sh.classList.add('stage2');
+const tiles=$('.t');tiles.forEach(t=>t.classList.add('fly'));
+const hitT=hits.map(i=>tiles[i]).filter(t=>t.offsetParent),N=hitT.length;
+sh.insertAdjacentHTML('beforeend','<div class="atxt"><h2>5 photos found.<br><i class="mute">Now they’re yours.</i></h2></div><div class="atitle"><h3>Hope &amp; Victor’s Wedding</h3><small>5 photos from your night</small></div><div class="gh">Every event, in one place</div><div class="gal" id="gal2"></div><div class="fx"><h2>Every moment,<br>kept in albums.</h2></div>');
+const AL=[['Hope & Victor’s Wedding',5],['Grandpa’s 97th Birthday',12],['AI Bootcamp',48],['Ada’s Graduation Day',23],['Lagos Tech Week',86],['Founders’ Dinner',17],['Naming Ceremony',31],['Beach Party ’26',64],['Sunday Brunch',9]];
+const gal=document.getElementById('gal2');
+gal.innerHTML=AL.map((a,k)=>{const n=k?3:5,c=(n-1)/2;return `<div class="al"><div class="cv">${Array.from({length:n},(_,j)=>`<i style='--img:url("${art(70+k*3+j,k?70+k*3+j:0)}");transform:rotate(${(j-c)*8}deg) translateX(${(j-c)*14}%)'></i>`).join('')}</div><h3>${a[0]}</h3><small>${a[1]} photos</small></div>`}).join('');
+const als=[...gal.children],cnt=document.getElementById('cnt');
+const vis=innerWidth<=700,Dw=()=>Math.min(180,innerWidth*.34);
+const rel=t=>{const a=t.getBoundingClientRect(),b=sh.getBoundingClientRect(),X=gsap.getProperty(t,'x'),Y=gsap.getProperty(t,'y');return{x:a.left-b.left+a.width/2-X,y:a.top-b.top+a.height/2-Y,w:a.width/gsap.getProperty(t,'scaleX')}};
+const fan=j=>({x:(j-(N-1)/2)*Dw()*.19,y:Math.abs(j-(N-1)/2)*8,r:(j-(N-1)/2)*8});
+const slot=()=>{const m=innerWidth<=700,c=m?2:3,g=m?16:28,W=Math.min(1040,innerWidth*.92),cw=(W-g*(c-1))/c;return{x:sh.clientWidth/2-W/2+cw/2,y:innerHeight*.24+cw/2+cw*.02,cw}};
+const slotJ=j=>{const s=slot(),k=j-(N-1)/2;return{x:s.x+k*.14*.6*s.cw*(5/N>1?1:1),y:s.y,sc:.6*s.cw}};
+gsap.set(hitT,{zIndex:j=>20+j});
+gsap.set('.fx',{yPercent:-50,filter:'blur(24px)'});gsap.set(als,{opacity:0,y:60});gsap.set('.gh,.atitle,.atxt',{opacity:0,y:20});
+let frozen=false;const freeze=()=>{if(frozen)return;frozen=true;hits.forEach(i=>tiles[i].classList.add('hit2'));cnt.textContent=5};
+const intro=gsap.timeline({defaults:{ease:'expo.out',duration:1.4}});
+intro.from('.hero h1',{yPercent:30,opacity:0}).from('.hero p,.cta',{y:30,opacity:0,stagger:.12,duration:1},'-=1').from(tiles,{y:60,opacity:0,scale:.85,stagger:{each:.02,from:'center',grid:[4,8]},duration:1,clearProps:'transform,opacity'},'-=.9').from('.pillm',{opacity:0,duration:.8},'-=.4');
+const L=gsap.timeline({defaults:{ease:'power2.inOut'},scrollTrigger:{trigger:sh,start:'top top',end:()=>'+='+innerHeight*8,pin:true,anticipatePin:1,scrub:.7,invalidateOnRefresh:true,onUpdate:s=>s.progress>0&&freeze()}});
+const rest=tiles.filter(t=>!hitT.includes(t));
+L.to('.tiles',{backgroundColor:'rgba(10,10,10,0)',duration:1})
+.to(rest,{opacity:0,scale:.8,duration:1,stagger:{each:.02,from:'random'}},'<')
+.to('.pillm',{opacity:0,duration:.6},'<.2')
+.to(hitT,{x:(j,t)=>sh.clientWidth/2-rel(t).x+fan(j).x,y:(j,t)=>innerHeight/2-30-rel(t).y+fan(j).y,rotation:j=>fan(j).r,scale:(j,t)=>Dw()/rel(t).w,duration:1.8,stagger:.06,ease:'power3.inOut'},'>-.4')
+.to('.atxt',{opacity:1,y:0,duration:.8},'<.7')
+.to('.atitle',{opacity:1,y:0,duration:.8},'>-.2')
+.to({},{duration:.5})
+.to('.atxt,.atitle',{opacity:0,duration:.6})
+.to(hitT,{x:(j,t)=>slotJ(j).x-rel(t).x,y:(j,t)=>slotJ(j).y-rel(t).y,scale:(j,t)=>slotJ(j).sc/rel(t).w,duration:1.8,stagger:.04,ease:'power3.inOut'},'<')
+.to('.gh',{opacity:1,y:0,duration:.8},'-=.6')
+.to(als.slice(1),{opacity:1,y:0,stagger:.1,duration:.8},'-=.8')
+.set(als[0],{opacity:1,y:0}).set(hitT,{opacity:0})
+.to(gal,{y:()=>-(gal.scrollHeight-innerHeight*.75),duration:4,ease:'none'},'+=.3')
+.to(gal,{filter:'blur(18px)',opacity:0,scale:.92,duration:1.2})
+.to('.gh',{opacity:0,filter:'blur(10px)',duration:.8},'<')
+.to(sh,{backgroundColor:'#0a0a0a',duration:1.2},'<')
+.to('.fx',{opacity:1,filter:'blur(0px)',duration:1.2},'-=.5')
+.to({},{duration:.8});
+/* 2. STATEMENT */
+const w=$('.state span');gsap.set(w,{opacity:.14});
+gsap.to(w,{opacity:1,stagger:.12,ease:'none',scrollTrigger:{trigger:'.state',start:'top top',end:'+=130%',pin:true,anticipatePin:1,scrub:.6}});
+/* 3. STEPS + FEATURES */
+gsap.from('.step',{y:140,rotate:2.5,opacity:0,stagger:.18,duration:1.3,ease:'expo.out',clearProps:'transform,opacity',scrollTrigger:{trigger:'.steps',start:'top 80%'}});
+$('.row').forEach(r=>gsap.from(r,{x:-80,opacity:0,duration:1.1,ease:'expo.out',clearProps:'transform,opacity',scrollTrigger:{trigger:r,start:'top 90%'}}));
+/* 4. SCREENS (desktop pinned horizontal) */
+gsap.matchMedia().add('(min-width:861px)',()=>{const rail=document.querySelector('.rail'),sec=rail.parentElement,d=()=>Math.max(0,rail.scrollWidth-innerWidth+80);
+rail.style.overflow='visible';rail.style.scrollSnapType='none';
+gsap.to(rail,{x:()=>-d(),ease:'none',scrollTrigger:{trigger:sec,start:'top 8%',end:()=>'+='+d(),pin:true,anticipatePin:1,scrub:1,invalidateOnRefresh:true}});
+return()=>{rail.style.overflow='';rail.style.scrollSnapType=''}});
+/* 5. STATS, PRICING, QUOTES, FINALE */
+$('.sg b').forEach(b=>{const t=b.textContent,n=parseInt(t),suf=t.replace(n,''),o={v:0};ScrollTrigger.create({trigger:b,start:'top 88%',once:true,onEnter:()=>gsap.to(o,{v:n,duration:2.2,ease:'power3.out',onUpdate:()=>b.textContent=Math.round(o.v)+suf})})});
+gsap.from('.pc',{y:100,opacity:0,stagger:.15,duration:1.2,ease:'expo.out',clearProps:'transform,opacity',scrollTrigger:{trigger:'.price',start:'top 82%'}});
+$('.q p').forEach(p=>gsap.from(p,{y:40,opacity:0,duration:1.2,ease:'expo.out',clearProps:'transform,opacity',scrollTrigger:{trigger:p,start:'top 88%'}}));
+gsap.from('.fin h2',{y:80,opacity:0,duration:1.4,ease:'expo.out',clearProps:'transform,opacity',scrollTrigger:{trigger:'.fin',start:'top 70%'}});
+document.fonts&&document.fonts.ready.then(()=>ScrollTrigger.refresh());
+addEventListener('load',()=>ScrollTrigger.refresh());
+}
+</script>
+<script>
+(()=>{
+const a=(i,w)=>art(i,w),B=(i,w,x='')=>`<div class="bg" style="--img:url('${a(i,w)}');${x}"></div>`;
+const qr=n=>{let r='';const f=(x,y)=>{for(const[ox,oy]of[[0,0],[n-7,0],[0,n-7]]){const dx=x-ox,dy=y-oy;if(dx>=0&&dx<7&&dy>=0&&dy<7)return dx==0||dx==6||dy==0||dy==6||(dx>1&&dx<5&&dy>1&&dy<5)?1:0;if(dx>=-1&&dx<8&&dy>=-1&&dy<8)return 0}return null};for(let y=0;y<n;y++)for(let x=0;x<n;x++){let v=f(x,y);if(v===null){const h=Math.sin(x*12.9898+y*78.233)*43758.5453;v=(h-Math.floor(h))>.5?1:0}if(v)r+=`<rect x="${x}" y="${y}" width="1.03" height="1.03"/>`}return `<svg viewBox="0 0 ${n} ${n}" fill="#0a0a0a" shape-rendering="crispEdges">${r}</svg>`};
+const sb='<div class="sb"><span>9:41</span><span>●●● ▮</span></div>';
+const gi=(n,o)=>Array.from({length:n},(_,k)=>`<i style="--img:url('${a(o+k,k%2?o+k:0)}')"></i>`).join('');
+const U=[
+`${B(1,1,'filter:grayscale(1) blur(2px) brightness(.4)')}${sb}<div class="qf"><b></b><b></b><b></b><b></b><div class="c">${qr(21)}</div></div><i class="ln"></i><div class="hint">Point at the event QR code</div>`,
+`${B(0,0)}${sb}<i class="ov"></i><i class="ln"></i><div class="bar2">Matching your face… 92%<i></i></div>`,
+`${sb}<div class="gh2"><b style="font-weight:400">Your photos</b><span>42 found</span></div><div class="chips"><span>All</span><span>Favourites</span><span>Group</span></div><div class="gg">${gi(9,100)}</div><div class="fab">Save all originals</div>`,
+`${sb}<div class="gh2"><b style="font-weight:400">Live slideshow</b><span>Lobby TV</span></div><div class="tvw">${B(3,0)}<span class="live">● Live</span></div><div class="th">${gi(4,120)}</div><div class="fab">Casting · 128 photos</div>`,
+`${sb}<div class="gh2"><b style="font-weight:400">Guestbook</b><span>34 notes</span></div><div class="msg"><u style="--img:url('${a(140,141)}')"></u><p>Best night ever. Thank you for the photos!</p></div><div class="msg"><u style="--img:url('${a(142,143)}')"></u><p>Found 12 of me in seconds.</p></div><div class="msg me"><u style="--img:url('${a(144,0)}')"></u><p>Congratulations again!</p></div><div class="inp">Write a note…</div>`];
+const C=[['Instant scanner','Point, scan, done.'],['Biometric match','Accurate in any light.'],['Personal gallery','Only the photos you’re in.'],['TV wall','Shots hit the big screen live.'],['Guestbook','Messages beside the moments.']];
+document.querySelectorAll('.ph>div').forEach((d,k)=>{d.innerHTML=`<div class="u">${U[k]}</div><div class="cap"><h3>${C[k][0]}</h3><p>${C[k][1]}</p></div>`});
+const V=document.querySelectorAll('.vis');
+V[0].innerHTML=`<div class="tent"><div class="tq">${qr(25)}</div><b>Scan to find your photos</b><small>Glimpse · Hope &amp; Victor</small></div>`;
+V[1].innerHTML=`<div class="sf">${B(0,0)}<i class="ov"></i><i class="ln"></i><span class="pillx">Hold still · matching</span></div>`;
+V[2].innerHTML=`<div><div class="cr">${gi(6,160)}</div><div class="toast">Saved 42 originals</div></div>`;
+/* footer wordmark: light running along the letter edges */
+const big=document.querySelector('.big');
+big.innerHTML=`<svg id="gsvg" viewBox="0 0 1000 340" style="display:block;width:100%;height:auto;overflow:visible"><defs><linearGradient id="gl" gradientUnits="userSpaceOnUse" x1="-900" x2="-500" y1="0" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient><filter id="gb" x="-10%" y="-10%" width="120%" height="120%"><feGaussianBlur stdDeviation="7"/></filter></defs><g font-family="'Instrument Serif',Georgia,serif" font-size="340" letter-spacing="-17" text-anchor="middle"><text x="500" y="255" fill="#1c1c1c" stroke="#2c2c2c" stroke-width="1">Glimpse</text><text x="500" y="255" fill="none" stroke="url(#gl)" stroke-width="6" filter="url(#gb)">Glimpse</text><text x="500" y="255" fill="none" stroke="url(#gl)" stroke-width="1.8">Glimpse</text></g></svg>`;
+const gl=document.getElementById('gl'),sv=document.getElementById('gsvg'),T0=sv.querySelector('text');let bb,raf,ran=false;
+const fit=()=>{bb=T0.getBBox();sv.setAttribute('viewBox',`${bb.x-10} ${bb.y} ${bb.width+20} ${bb.height}`)};
+fit();(document.fonts?document.fonts.ready:Promise.resolve()).then(fit);
+const play=()=>{cancelAnimationFrame(raf);const w=bb.width,band=w*.32,t0=performance.now(),D=3000;const f=n=>{let p=Math.min(1,(n-t0)/D);p=p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;const x=bb.x-band+p*(w+band*1.4);gl.setAttribute('x1',x);gl.setAttribute('x2',x+band);if(p<1)raf=requestAnimationFrame(f);else{gl.setAttribute('x1',-9999);gl.setAttribute('x2',-9000)}};raf=requestAnimationFrame(f)};
+if(!matchMedia('(prefers-reduced-motion:reduce)').matches)new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting){if(!ran){ran=true;play()}}else ran=false}),{threshold:.35}).observe(big);
+})();
+</script>
+</body>
+</html>
