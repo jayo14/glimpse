@@ -1,5 +1,6 @@
 import { Metadata, Viewport } from "next";
 import Landing from "@/components/landing/Landing";
+import "./glimpse.css";
 
 export const metadata: Metadata = {
   title: "Glimpse — Find yourself in every event photo",

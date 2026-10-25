@@ -15,7 +15,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={`${instrumentSerif.className} ${hankenGrotesk.className} antialiased`}>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${instrumentSerif.variable} ${hankenGrotesk.variable} ${instrumentSerif.className} ${hankenGrotesk.className} antialiased`}
+    >
       <head>
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
