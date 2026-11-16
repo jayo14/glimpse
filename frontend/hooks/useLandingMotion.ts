@@ -350,6 +350,8 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
           ease: "none",
           scrollTrigger: { scrub: 0.3, start: 0, end: "max" },
         });
+        // Store reference for cleanup
+        (window as unknown as { __glimpseProgressBar?: HTMLDivElement }).__glimpseProgressBar = pg;
 
         /* nav auto-hide */
         ScrollTrigger.create({
@@ -432,6 +434,9 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
       if (glowRaf) cancelAnimationFrame(glowRaf as number);
       if (glowObs) glowObs.disconnect();
       if (ctx) ctx.revert();
+      // Clean up progress bar
+      const pg = (window as unknown as { __glimpseProgressBar?: HTMLDivElement }).__glimpseProgressBar;
+      if (pg && pg.parentNode) pg.parentNode.removeChild(pg);
       html.style.scrollBehavior = prevScrollBehavior;
       root.classList.remove("g");
     };
