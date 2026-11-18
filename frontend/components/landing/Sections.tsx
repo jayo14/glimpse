@@ -7,9 +7,16 @@ const Qr = ({ n }: { n: number }) => (
   <div dangerouslySetInnerHTML={{ __html: qr(n) }} />
 );
 
+const sb = (
+  <div className="sb">
+    <span>9:41</span>
+    <span>●●● ▮</span>
+  </div>
+);
+
 const screenUI = (k: number) => {
   const C = [
-    ["Instant scanner", "Scan, snap, done."],
+    ["Instant scanner", "Point, scan, done."],
     ["Biometric match", "Accurate in any light."],
     ["Personal gallery", "Only the photos you’re in."],
     ["TV wall", "Shots hit the big screen live."],
@@ -19,7 +26,7 @@ const screenUI = (k: number) => {
     (
       <>
         <div className="bg" style={{ ...img(1, 1), filter: "grayscale(1) blur(2px) brightness(.4)" }}></div>
-        <div className="sb"><span>9:41</span><span>●●● ▮</span></div>
+        {sb}
         <div className="qf"><b></b><b></b><b></b><b></b><div className="c"><Qr n={21} /></div></div>
         <i className="ln"></i>
         <div className="hint">Point at the event QR code</div>
@@ -28,6 +35,7 @@ const screenUI = (k: number) => {
     (
       <>
         <div className="bg" style={img(0, 0)}></div>
+        {sb}
         <i className="ov"></i>
         <i className="ln"></i>
         <div className="bar2">
@@ -37,12 +45,13 @@ const screenUI = (k: number) => {
     ),
     (
       <>
+        {sb}
         <div className="gh2">
-          <b style={{ fontWeight: 400 }}>{C[k][0]}</b>
+          <b style={{ fontWeight: 400 }}>Your photos</b>
           <span>42 found</span>
         </div>
         <div className="chips"><span>All</span><span>Favourites</span><span>Group</span></div>
-        <div className="gg">{[0, 1, 2].map((j) => (
+        <div className="gg">{[...Array(9)].map((_, j) => (
           <i key={j} style={img(100 + j, j % 2 ? 100 + j : 0)} />
         ))}</div>
         <div className="fab">Save all originals</div>
@@ -50,15 +59,16 @@ const screenUI = (k: number) => {
     ),
     (
       <>
+        {sb}
         <div className="gh2">
-          <b style={{ fontWeight: 400 }}>{C[k][0]}</b>
+          <b style={{ fontWeight: 400 }}>Live slideshow</b>
           <span>Lobby TV</span>
         </div>
         <div className="tvw">
           <div className="bg" style={{ ...img(3, 0), backgroundPosition: "center 35%" }} />
           <span className="live">● Live</span>
         </div>
-        <div className="th">{[0, 1, 2, 3].map((j) => (
+        <div className="th">{[...Array(4)].map((_, j) => (
           <i key={j} style={img(120 + j, j % 2 ? 120 + j : 0)} />
         ))}</div>
         <div className="fab">Casting · 128 photos</div>
@@ -66,8 +76,9 @@ const screenUI = (k: number) => {
     ),
     (
       <>
+        {sb}
         <div className="gh2">
-          <b style={{ fontWeight: 400 }}>{C[k][0]}</b>
+          <b style={{ fontWeight: 400 }}>Guestbook</b>
           <span>34 notes</span>
         </div>
         <div className="msg">
@@ -161,7 +172,7 @@ const Steps = () => (
 );
 
 const Features = () => (
-  <section style={{ paddingTop: 20 }}>
+  <section id="features" style={{ paddingTop: 20 }}>
     <div className="wrap">
       <div className="hd rv">
         <h2>Everything you need.<br />Nothing you don’t.</h2>
@@ -193,12 +204,10 @@ const Features = () => (
 );
 
 const Screens = () => (
-  <>
-    <section style={{ paddingTop: 20 }}>
-      <div className="wrap">
-        <div className="hd rv"><h2>Made for every screen.</h2></div>
-      </div>
-    </section>
+  <section style={{ paddingTop: 20 }}>
+    <div className="wrap">
+      <div className="hd rv"><h2>Made for every screen.</h2></div>
+    </div>
     <div className="rail">
       {[0, 1, 2, 3, 4].map((k) => (
         <div
@@ -219,7 +228,7 @@ const Screens = () => (
         </div>
       ))}
     </div>
-  </>
+  </section>
 );
 
 const Stats = () => (

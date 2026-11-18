@@ -55,9 +55,9 @@ export function Statement() {
     "Hundreds of photos. Thousands of guests. Nobody should have to scroll through a thousand strangers to find their own smile.";
   const words = text.split(" ");
   return (
-    <section className="state" id="stmt">
+    <div className="state">
       <div className="wrap">
-        <p>
+        <p id="stmt">
           {words.map((w, i) => (
             <span key={i}>
               {w}
@@ -66,6 +66,6 @@ export function Statement() {
           ))}
         </p>
       </div>
-    </section>
+    </div>
   );
 }

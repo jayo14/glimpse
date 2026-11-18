@@ -25,6 +25,7 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
     let stopped = false;
     let glowRaf: number | null = null;
     let glowObs: IntersectionObserver | null = null;
+    let pgEl: HTMLDivElement | null = null;
 
     /* --- A. Core behaviours --- */
     const tiles = [...root.querySelectorAll<HTMLElement>(".t")];
@@ -188,10 +189,10 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
               stagger: 0.06,
               ease: "power3.inOut",
             },
-            ">- .4"
+            ">-.4"
           )
           .to(".atxt", { opacity: 1, y: 0, duration: 0.8 }, "<.7")
-          .to(".atitle", { opacity: 1, y: 0, duration: 0.8 }, ">- .2")
+          .to(".atitle", { opacity: 1, y: 0, duration: 0.8 }, ">-.2")
           .to({}, { duration: 0.5 })
           .to(".atxt,.atitle", { opacity: 0, duration: 0.6 })
           .to(
@@ -342,16 +343,15 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
 
         /* top progress bar */
         const pg = document.createElement("div");
+        pgEl = pg;
         pg.style.cssText =
-          "position:fixed;top:0;left:0;height:3px;width:100%;background:var(--ink);transform-origin:0 50%;transform:scaleX(0);z-index:60";
-        document.body.appendChild(pg);
+          "position:fixed;top:0;left:0;height:3px;width:100%;background:var(--ink,#0a0a0a);transform-origin:0 50%;transform:scaleX(0);z-index:60";
+        root.appendChild(pg);
         gsap.to(pg, {
           scaleX: 1,
           ease: "none",
           scrollTrigger: { scrub: 0.3, start: 0, end: "max" },
         });
-        // Store reference for cleanup
-        (window as unknown as { __glimpseProgressBar?: HTMLDivElement }).__glimpseProgressBar = pg;
 
         /* nav auto-hide */
         ScrollTrigger.create({
@@ -364,6 +364,8 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
               overwrite: true,
             }),
         });
+
+        document.fonts?.ready.then(() => ScrollTrigger.refresh());
       }, root);
 
       /* --- footer glow (library-free rAF), outside GSAP context --- */
@@ -434,9 +436,7 @@ export function useLandingMotion(rootRef: { current: HTMLDivElement | null }) {
       if (glowRaf) cancelAnimationFrame(glowRaf as number);
       if (glowObs) glowObs.disconnect();
       if (ctx) ctx.revert();
-      // Clean up progress bar
-      const pg = (window as unknown as { __glimpseProgressBar?: HTMLDivElement }).__glimpseProgressBar;
-      if (pg && pg.parentNode) pg.parentNode.removeChild(pg);
+      if (pgEl && pgEl.parentNode) pgEl.parentNode.removeChild(pgEl);
       html.style.scrollBehavior = prevScrollBehavior;
       root.classList.remove("g");
     };

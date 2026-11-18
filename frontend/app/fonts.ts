@@ -6,6 +6,7 @@ export const instrumentSerif = Instrument_Serif({
   display: "swap",
   variable: "--font-serif-next",
   subsets: ["latin"],
+  adjustFontFallback: false,
 });
 
 export const hankenGrotesk = Hanken_Grotesk({
@@ -13,4 +14,5 @@ export const hankenGrotesk = Hanken_Grotesk({
   display: "swap",
   variable: "--font-sans-next",
   subsets: ["latin"],
+  adjustFontFallback: false,
 });
